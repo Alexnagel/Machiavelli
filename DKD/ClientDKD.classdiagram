@@ -135,6 +135,17 @@
             <elementDefinition Id="fac5d840-3b31-4258-a077-05b55b77b134" />
           </association>
         </targetEnds>
+        <ownedAttributesInternal>
+          <property Id="5de9f507-c867-4a47-83ef-17dcad279d29" name="Hand" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="6f485943-ddcf-4318-ac06-16ecffbe143a" />
+          </property>
+          <property Id="413fc05a-e682-4af7-8b55-6afb3f2d25ca" name="Buildings" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="deed1765-9922-4376-8de2-743e12908b42" />
+          </property>
+          <property Id="bf000339-5c88-47a9-b64d-e0c5ccb85440" name="Gold" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="55fa10e4-bea4-4477-98b8-371b5ce40702" />
+          </property>
+        </ownedAttributesInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>

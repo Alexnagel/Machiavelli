@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4C58F894-481A-4E79-AF02-BB2CB28615F0}</ProjectGuid>
-    <RootNamespace>Machiavelli</RootNamespace>
+    <ProjectGuid>{876C17EC-AF14-4FC9-97C6-5F7695595E2E}</ProjectGuid>
+    <RootNamespace>Server</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -64,25 +64,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BuildCard.h" />
-    <ClInclude Include="Card.h" />
-    <ClInclude Include="FileIO.h" />
-    <ClInclude Include="GameManager.h" />
-    <ClInclude Include="GoldCard.h" />
-    <ClInclude Include="Networking.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerCard.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="BuildCard.cpp" />
-    <ClCompile Include="Card.cpp" />
-    <ClCompile Include="FileIO.cpp" />
-    <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="GoldCard.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Networking.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerCard.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -13,15 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Model">
-      <UniqueIdentifier>{a1367010-364c-4635-9874-71b7847394bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Controller">
-      <UniqueIdentifier>{b85785d7-981e-41dd-ace2-8e0619d1c7bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Services">
-      <UniqueIdentifier>{d9a0f234-4591-4283-bde7-303a94685a92}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Model">
       <UniqueIdentifier>{37b3b2e2-2647-4cff-9ed7-b021cddec9b9}</UniqueIdentifier>
     </Filter>
@@ -31,32 +22,15 @@
     <Filter Include="Source Files\Services">
       <UniqueIdentifier>{0b321961-fcf3-4cc0-bb0b-fd6cccdb9c18}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="PlayerCard.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="GoldCard.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Card.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="BuildCard.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="GameManager.h">
-      <Filter>Header Files\Controller</Filter>
-    </ClInclude>
-    <ClInclude Include="FileIO.h">
-      <Filter>Header Files\Services</Filter>
-    </ClInclude>
-    <ClInclude Include="Networking.h">
-      <Filter>Header Files\Services</Filter>
-    </ClInclude>
+    <Filter Include="Header Files\Controller">
+      <UniqueIdentifier>{5b3e1953-7660-4cce-a77b-77a7041662cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model">
+      <UniqueIdentifier>{35bb7052-3c1e-4680-b2f2-dc5de4a6a790}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Services">
+      <UniqueIdentifier>{d0031374-0054-4dde-9e5a-7685653fb55b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BuildCard.cpp">
@@ -86,5 +60,31 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameManager.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildCard.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Card.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="GoldCard.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCard.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="FileIO.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Networking.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

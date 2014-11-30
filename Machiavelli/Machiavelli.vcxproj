@@ -71,7 +71,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GoldCard.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Networking.cpp" />
+    <ClCompile Include="NetworkServices.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCard.cpp" />
   </ItemGroup>
@@ -81,7 +81,7 @@
     <ClInclude Include="FileIO.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GoldCard.h" />
-    <ClInclude Include="Networking.h" />
+    <ClInclude Include="NetworkServices.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerCard.h" />
   </ItemGroup>

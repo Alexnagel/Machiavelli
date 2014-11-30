@@ -54,11 +54,11 @@
     <ClCompile Include="FileIO.cpp">
       <Filter>Source Files\Services</Filter>
     </ClCompile>
-    <ClCompile Include="Networking.cpp">
-      <Filter>Source Files\Services</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkServices.cpp">
+      <Filter>Source Files\Services</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,7 +83,7 @@
     <ClInclude Include="FileIO.h">
       <Filter>Header Files\Services</Filter>
     </ClInclude>
-    <ClInclude Include="Networking.h">
+    <ClInclude Include="NetworkServices.h">
       <Filter>Header Files\Services</Filter>
     </ClInclude>
   </ItemGroup>

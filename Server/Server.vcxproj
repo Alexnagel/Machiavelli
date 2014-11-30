@@ -64,8 +64,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\Dropbox\School\Jaar4\Minor\C++2\socketexample\Socket.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Dropbox\School\Jaar4\Minor\C++2\socketexample\throw.cpp" />
     <ClCompile Include="BuildCard.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -73,18 +71,20 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCard.cpp" />
+    <ClCompile Include="Socket.cpp" />
+    <ClCompile Include="Throw.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\..\Dropbox\School\Jaar4\Minor\C++2\socketexample\ClientCommand.h" />
-    <ClInclude Include="..\..\..\..\..\..\Dropbox\School\Jaar4\Minor\C++2\socketexample\Socket.h" />
-    <ClInclude Include="..\..\..\..\..\..\Dropbox\School\Jaar4\Minor\C++2\socketexample\Sync_queue.h" />
-    <ClInclude Include="..\..\..\..\..\..\Dropbox\School\Jaar4\Minor\C++2\socketexample\throw.h" />
     <ClInclude Include="BuildCard.h" />
     <ClInclude Include="Card.h" />
+    <ClInclude Include="ClientCommand.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GoldCard.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerCard.h" />
+    <ClInclude Include="Socket.h" />
+    <ClInclude Include="Sync_queue.h" />
+    <ClInclude Include="Throw.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

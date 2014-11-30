@@ -48,12 +48,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Dropbox\School\Jaar4\Minor\C++2\socketexample\throw.cpp">
-      <Filter>Source Files\Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Dropbox\School\Jaar4\Minor\C++2\socketexample\Socket.cpp">
-      <Filter>Source Files\Network</Filter>
-    </ClCompile>
     <ClCompile Include="BuildCard.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
@@ -72,20 +66,14 @@
     <ClCompile Include="GameManager.cpp">
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
+    <ClCompile Include="Socket.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Throw.cpp">
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\..\Dropbox\School\Jaar4\Minor\C++2\socketexample\ClientCommand.h">
-      <Filter>Header Files\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Dropbox\School\Jaar4\Minor\C++2\socketexample\Socket.h">
-      <Filter>Header Files\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Dropbox\School\Jaar4\Minor\C++2\socketexample\Sync_queue.h">
-      <Filter>Header Files\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Dropbox\School\Jaar4\Minor\C++2\socketexample\throw.h">
-      <Filter>Header Files\Exceptions</Filter>
-    </ClInclude>
     <ClInclude Include="BuildCard.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
@@ -103,6 +91,18 @@
     </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket.h">
+      <Filter>Header Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientCommand.h">
+      <Filter>Header Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Throw.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Sync_queue.h">
+      <Filter>Header Files\Services</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

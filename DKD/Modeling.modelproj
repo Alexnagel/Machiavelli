@@ -22,13 +22,22 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
+    <Content Include="ModelDefinition\Package1_1019.uml">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="ModelDefinition\Package1_1025.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package_1019.uml">
       <SubType>Content</SubType>
     </Content>
     <Content Include="ModelDefinition\Package_1024.uml">
       <SubType>Content</SubType>
     </Content>
     <Content Include="ModelDefinition\Package_1025.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ModelDefinition\Package_1041.uml">
       <SubType>Content</SubType>
     </Content>
     <Content Include="ServerDKD.classdiagram">

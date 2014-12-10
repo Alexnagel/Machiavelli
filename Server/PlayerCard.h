@@ -5,6 +5,6 @@ class PlayerCard :
 {
 public:
 	PlayerCard();
-	~PlayerCard();
+	virtual ~PlayerCard();
 };
 

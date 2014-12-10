@@ -26,10 +26,14 @@ typedef long ssize_t;
 
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <cstring>
+#include <stdexcept>
+#include <memory>
 
-//=============================================================================
+#include "throw.h"
+
 class Socket
-	//=============================================================================
 {
 protected:
 	SOCKET sock;
@@ -51,21 +55,3 @@ public:
 	void write(const std::string& msg);
 	void write(const char *buf, size_t len);
 };
-
-//=============================================================================
-class ServerSocket : public Socket
-	//=============================================================================
-{
-public:
-	ServerSocket(int port);
-	Socket* accept();
-};
-
-//=============================================================================
-class ClientSocket : public Socket
-	//=============================================================================
-{
-public:
-	ClientSocket(const char *host, int port);
-};
-

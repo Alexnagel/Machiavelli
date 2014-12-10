@@ -6,15 +6,7 @@
 // Implementation of classes Socket, ServerSocket and CientSocket
 //=============================================================================
 
-
 #include "Socket.h"
-#include "throw.h"
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <cstring>
-#include <stdexcept>
-#include <memory>
 
 #if defined(__APPLE__) || defined(__linux__)
 
@@ -38,16 +30,7 @@
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "AdvApi32.lib")
 
-//=============================================================================
 class WSA
-	//=============================================================================
-	// ONLY NEEDED IN MS-WINDOWS
-	//
-	// An instance of this class is created globally.
-	// So constructor is automatically called before main()
-	// and destructor is automatically called after main().
-	// Result: Windows Socket API is active when needed.
-	//=============================================================================
 {
 private:
 	WSADATA data;
@@ -104,85 +87,32 @@ void Socket::write(const char *buf, size_t len)
 	throw_if_min1((int)::send(sock, buf, (int)len, 0));
 }
 
-Socket::~Socket()
+std::string Socket::get_dotted_ip() const
 {
-	if (sock > 0) close();
+    if (addr.sa_family == AF_INET || addr.sa_family == AF_INET6) {
+        char textbuf[INET6_ADDRSTRLEN]; // large enough for both IPv4 and IPv6 addresses
+        
+        return ::inet_ntop(addr.sa_family, (void*)&addr, textbuf, INET6_ADDRSTRLEN);
+    }
+    return "n/a";
 }
 
 void Socket::close()
 {
-	std::cerr << "will close socket " << sock << std::endl;
+    std::cerr << "will close socket " << sock << std::endl;
+    
 #if defined(__APPLE__) || defined(__linux__)
-	throw_if_min1(::close(sock));
+    throw_if_min1(::close(sock));
 #else
-	::closesocket(sock);
+    ::closesocket(sock);
 #endif
-	sock = 0;
+    
+    sock = 0;
 }
 
-std::string Socket::get_dotted_ip() const
+Socket::~Socket()
 {
-	if (addr.sa_family == AF_INET || addr.sa_family == AF_INET6) {
-		char textbuf[INET6_ADDRSTRLEN]; // large enough for both IPv4 and IPv6 addresses
-		return ::inet_ntop(addr.sa_family, (void*)&addr, textbuf, INET6_ADDRSTRLEN);
-	}
-	return "n/a";
+	if (sock > 0) close();
 }
-
 #pragma mark ServerSocket
 
-ServerSocket::ServerSocket(int port)
-{
-	throw_if_min1(sock = ::socket(AF_INET, SOCK_STREAM, 0));
-
-	struct sockaddr_in saServer;
-	saServer.sin_family = AF_INET;
-	saServer.sin_addr.s_addr = INADDR_ANY;
-	saServer.sin_port = htons(port);
-
-	throw_if_min1(::bind(sock, (struct sockaddr*)&saServer, sizeof(struct sockaddr)));
-	throw_if_min1(::listen(sock, 100));  // the number of clients that can be queued
-}
-
-Socket *ServerSocket::accept()
-{
-	struct sockaddr client_addr;
-	client_addr.sa_family = AF_INET;
-	socklen_t len = sizeof(client_addr);
-	int fd;
-	throw_if_min1(fd = ::accept(sock, &client_addr, &len));
-	Socket* client = new Socket(fd, client_addr);
-	std::cerr << "Connection accepted from " << client->get_dotted_ip() << ", with socket " << fd << std::endl;
-	return client;
-}
-
-#pragma mark ClientSocket
-
-ClientSocket::ClientSocket(const char *host, int port)
-{
-	// construct network address for server
-	struct addrinfo hint;
-	std::memset(&hint, 0, sizeof(hint));
-	hint.ai_family = AF_INET;
-	hint.ai_socktype = SOCK_STREAM;
-	struct addrinfo* infolist{ nullptr };
-	int gai_error = ::getaddrinfo(host, std::to_string(port).c_str(), &hint, &infolist);
-	if (gai_error) {
-		std::ostringstream oss;
-		oss << "getaddrinfo error " << gai_error << ": " << gai_strerror(gai_error) << " (" << __FILE__ << ":" << __LINE__ << ")";
-		throw std::runtime_error(oss.str());
-	}
-	// wrap our list pointer inside unique_ptr for auto cleanup
-#if defined(__APPLE__) || defined(__linux__)
-	using cleanup_func = void(*)(struct addrinfo*);
-	std::unique_ptr<struct addrinfo, cleanup_func> list{ infolist, ::freeaddrinfo };
-#else // Windows
-	using cleanup_func = void(__stdcall*)(PADDRINFOA);
-	std::unique_ptr<struct addrinfo, cleanup_func> list(infolist, ::freeaddrinfo);
-#endif
-	// create socket
-	throw_if_min1(sock = ::socket(list->ai_family, list->ai_socktype, list->ai_protocol));
-
-	// connect to server
-	throw_if_min1(::connect(sock, (struct sockaddr*)list->ai_addr, list->ai_addrlen));
-}

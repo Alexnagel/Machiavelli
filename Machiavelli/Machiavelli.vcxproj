@@ -74,6 +74,9 @@
     <ClCompile Include="NetworkServices.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCard.cpp" />
+    <ClCompile Include="ClientSocket.cpp" />
+    <ClCompile Include="Socket.cpp" />
+    <ClCompile Include="Throw.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BuildCard.h" />
@@ -84,6 +87,9 @@
     <ClInclude Include="NetworkServices.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerCard.h" />
+    <ClCompile Include="ClientSocket.h" />
+    <ClCompile Include="Socket.h" />
+    <ClCompile Include="Throw.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,5 +6,7 @@ class Builder :
 public:
 	Builder();
 	~Builder();
+
+	void PerformCharacteristic();
 };
 

@@ -6,5 +6,7 @@ class Merchant :
 public:
 	Merchant();
 	~Merchant();
+
+	void PerformCharacteristic();
 };
 

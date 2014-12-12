@@ -1,7 +1,7 @@
 #include "Card.h"
 
 
-Card::Card()
+Card::Card(std::string name) : name(name)
 {
 }
 

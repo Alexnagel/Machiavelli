@@ -6,5 +6,7 @@ class Magician :
 public:
 	Magician();
 	~Magician();
+
+	void PerformCharacteristic();
 };
 

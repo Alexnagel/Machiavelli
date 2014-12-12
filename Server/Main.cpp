@@ -14,6 +14,7 @@
 #include "Socket.h"
 #include "Sync_queue.h"
 #include "ClientCommand.h"
+#include "ServerSocket.h"
 
 namespace socketexample {
 	const int tcp_port{ 1080 };

@@ -6,5 +6,7 @@ class Murderer :
 public:
 	Murderer();
 	~Murderer();
+
+	void PerformCharacteristic();
 };
 

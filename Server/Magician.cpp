@@ -1,11 +1,17 @@
 #include "Magician.h"
 
 
-Magician::Magician()
+Magician::Magician() : PlayerCard("Magician")
 {
 }
 
 
 Magician::~Magician()
 {
+}
+
+
+void Magician::PerformCharacteristic()
+{
+
 }

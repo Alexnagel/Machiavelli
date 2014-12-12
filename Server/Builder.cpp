@@ -1,11 +1,17 @@
 #include "Builder.h"
 
 
-Builder::Builder()
+Builder::Builder() : PlayerCard("Builder")
 {
 }
 
 
 Builder::~Builder()
 {
+}
+
+
+void Builder::PerformCharacteristic()
+{
+
 }

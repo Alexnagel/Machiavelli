@@ -6,5 +6,7 @@ class King :
 public:
 	King();
 	~King();
+
+	void PerformCharacteristic();
 };
 

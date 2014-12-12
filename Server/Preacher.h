@@ -6,5 +6,7 @@ class Preacher :
 public:
 	Preacher();
 	~Preacher();
+
+	void PerformCharacteristic();
 };
 

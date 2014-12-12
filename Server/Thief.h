@@ -6,5 +6,7 @@ class Thief :
 public:
 	Thief();
 	~Thief();
+
+	void PerformCharacteristic();
 };
 

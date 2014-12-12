@@ -87,6 +87,7 @@
     <ClInclude Include="BuildCard.h" />
     <ClInclude Include="Builder.h" />
     <ClInclude Include="Card.h" />
+    <ClInclude Include="CardColor.h" />
     <ClInclude Include="ClientCommand.h" />
     <ClInclude Include="Condottiere.h" />
     <ClInclude Include="GameManager.h" />

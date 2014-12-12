@@ -1,11 +1,17 @@
 #include "King.h"
 
 
-King::King()
+King::King() : PlayerCard("King")
 {
 }
 
 
 King::~King()
 {
+}
+
+
+void King::PerformCharacteristic()
+{
+
 }

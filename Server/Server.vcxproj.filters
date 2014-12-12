@@ -81,9 +81,6 @@
     <ClCompile Include="Magician.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
     <ClCompile Include="Merchant.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
@@ -99,6 +96,7 @@
     <ClCompile Include="Gold.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BuildCard.h">
@@ -156,6 +154,9 @@
       <Filter>Header Files\Network</Filter>
     </ClInclude>
     <ClInclude Include="Gold.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="CardColor.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,5 +6,7 @@ class Condottiere :
 public:
 	Condottiere();
 	~Condottiere();
+
+	void PerformCharacteristic();
 };
 

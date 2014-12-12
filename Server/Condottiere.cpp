@@ -1,11 +1,17 @@
 #include "Condottiere.h"
 
 
-Condottiere::Condottiere()
+Condottiere::Condottiere() : PlayerCard("Condottiere")
 {
 }
 
 
 Condottiere::~Condottiere()
 {
+}
+
+
+void Condottiere::PerformCharacteristic()
+{
+
 }

@@ -1,11 +1,17 @@
 #include "Preacher.h"
 
 
-Preacher::Preacher()
+Preacher::Preacher() : PlayerCard("Preacher")
 {
 }
 
 
 Preacher::~Preacher()
 {
+}
+
+
+void Preacher::PerformCharacteristic()
+{
+
 }

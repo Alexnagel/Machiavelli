@@ -69,12 +69,12 @@
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Condottiere.cpp" />
     <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="Gold.cpp" />
     <ClCompile Include="King.cpp" />
     <ClCompile Include="Magician.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="Murderer.cpp" />
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCard.cpp" />
     <ClCompile Include="Preacher.cpp" />
@@ -91,11 +91,11 @@
     <ClInclude Include="ClientCommand.h" />
     <ClInclude Include="Condottiere.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="Gold.h" />
     <ClInclude Include="King.h" />
     <ClInclude Include="Magician.h" />
     <ClInclude Include="Merchant.h" />
     <ClInclude Include="Murderer.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerCard.h" />
     <ClInclude Include="Preacher.h" />

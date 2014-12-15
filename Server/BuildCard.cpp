@@ -1,7 +1,7 @@
 #include "BuildCard.h"
 
 
-BuildCard::BuildCard(std::string name, int cost, CardColor color) : Card(name), cost(cost), color(color)
+BuildCard::BuildCard(std::string name, int cost, CardColor color, std::string description) : Card(name), cost(cost), color(color), description(description)
 {
 }
 

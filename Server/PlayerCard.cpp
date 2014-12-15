@@ -10,3 +10,12 @@ PlayerCard::~PlayerCard()
 {
 }
 
+std::string PlayerCard::GetName()
+{
+	return name;
+}
+
+void PlayerCard::PerformCharacteristic()
+{
+
+}

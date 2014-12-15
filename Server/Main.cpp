@@ -84,6 +84,25 @@ void handle_client(Socket* socket) // this function runs in a separate thread
 	//}
 }
 
+#include "Parser.h"
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
+
+#include "BuildCard.h"
+#include "PlayerCard.h"
+#include "Builder.h"
+#include "Condottiere.h"
+#include "King.h"
+#include "Magician.h"
+#include "Merchant.h"
+#include "Murderer.h"
+#include "Preacher.h"
+#include "Thief.h"
+
 int main(int argc, const char * argv[])
 {
 	//// start command consumer thread
@@ -110,6 +129,9 @@ int main(int argc, const char * argv[])
 	//		std::cerr << ex.what() << ", resuming..." << '\n';
 	//	}
 	//}
+
+	std::vector<PlayerCard> player_cards = Parser::LoadCharacterFile();
+	std::vector<BuildCard> build_cards = Parser::LoadBuildingFile();
 
 	return 0;
 }

@@ -7,10 +7,11 @@ class BuildCard : public Card
 {
 private:
 	int cost;
+	std::string description;
 	CardColor color;
 
 public:
-	BuildCard(std::string name, int cost, CardColor color);
+	BuildCard(std::string name, int cost, CardColor color, std::string description = "");
 	~BuildCard();
 
 	// Getters

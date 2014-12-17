@@ -63,10 +63,12 @@ ClientSocket::ClientSocket(const char *host, int port)
     
     struct addrinfo* infolist{ nullptr };
     int gai_error = ::getaddrinfo(host, std::to_string(port).c_str(), &hint, &infolist);
-    if (gai_error) {
+    
+    if (gai_error)
+    {
         std::ostringstream oss;
         oss << "getaddrinfo error " << gai_error << ": " << gai_strerror(gai_error) << " (" << __FILE__ << ":" << __LINE__ << ")";
-        throw std::runtime_error(oss.str());
+        throw ConnectionException(oss.str());
     }
     
     // wrap our list pointer inside unique_ptr for auto cleanup
@@ -84,3 +86,7 @@ ClientSocket::ClientSocket(const char *host, int port)
     // connect to server
     throw_if_min1(::connect(sock, (struct sockaddr*)list->ai_addr, list->ai_addrlen));
 }
+
+
+
+

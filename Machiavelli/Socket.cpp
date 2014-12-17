@@ -25,3 +25,8 @@ void Socket::set(SOCKET sock)
 {
     this->sock = sock;
 }
+
+Socket::~Socket()
+{
+    
+}

@@ -15,6 +15,8 @@
 #include <stdexcept>
 #include <memory>
 
+#include "ConnectionException.h"
+
 class ClientSocket : public Socket
 {
 public:

@@ -9,9 +9,10 @@
 #ifndef __Machiavelli__ServerSocket__
 #define __Machiavelli__ServerSocket__
 
+#include "Socket.h"
+
 #if defined(__APPLE__) || defined(__linux__)
 
-#include "Socket.h"
 #include <sys/socket.h>
 #include <sys/ioctl.h>
 #include <net/route.h>
@@ -32,25 +33,6 @@
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "AdvApi32.lib")
-
-class WSA
-{
-private:
-    WSADATA data;
-public:
-    WSA()
-    {
-        int iResult = WSAStartup(MAKEWORD(2, 2), &data);
-        if (iResult != 0) {
-            std::cerr << "WSAStartup failed with error: " << iResult << '\n';
-        }
-    }
-    ~WSA()
-    {
-        WSACleanup();
-    }
-} wsa; // instance
-
 #endif // Windows
 
 class ServerSocket : public Socket

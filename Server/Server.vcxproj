@@ -74,10 +74,12 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="Murderer.cpp" />
+    <ClCompile Include="NetworkServices.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCard.cpp" />
     <ClCompile Include="Preacher.cpp" />
+    <ClCompile Include="ServerSocket.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="Thief.cpp" />
     <ClCompile Include="Throw.cpp" />
@@ -94,10 +96,12 @@
     <ClInclude Include="Magician.h" />
     <ClInclude Include="Merchant.h" />
     <ClInclude Include="Murderer.h" />
+    <ClInclude Include="NetworkServices.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerCard.h" />
     <ClInclude Include="Preacher.h" />
+    <ClInclude Include="ServerSocket.h" />
     <ClInclude Include="Socket.h" />
     <ClInclude Include="Sync_queue.h" />
     <ClInclude Include="Thief.h" />

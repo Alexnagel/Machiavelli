@@ -1,3 +1,5 @@
+#include "ClientSocket.h"
+
 #pragma once
 class GameManager
 {

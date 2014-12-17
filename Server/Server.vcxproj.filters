@@ -90,9 +90,6 @@
     <ClCompile Include="Preacher.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
-    <ClCompile Include="SocketHandler.cpp">
-      <Filter>Source Files\Network</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Parser.cpp">
       <Filter>Source Files\Services</Filter>
@@ -149,9 +146,6 @@
     </ClInclude>
     <ClInclude Include="Preacher.h">
       <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="SocketHandler.h">
-      <Filter>Header Files\Network</Filter>
     </ClInclude>
     <ClInclude Include="CardColor.h">
       <Filter>Header Files\Model</Filter>

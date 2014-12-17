@@ -20,6 +20,7 @@
 #include <netdb.h>
 #include <ifaddrs.h>
 #include <unistd.h>
+#include <netinet/ip.h>
 
 #else // Windows
 

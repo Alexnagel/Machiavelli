@@ -3,9 +3,13 @@
 
 GameManager::GameManager()
 {
+	// Init decks
+	Parser::LoadBuildingFile();
+	Parser::LoadCharacterFile();
 }
 
 
 GameManager::~GameManager()
 {
 }
+

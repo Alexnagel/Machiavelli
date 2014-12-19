@@ -68,6 +68,7 @@
     <ClCompile Include="Builder.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Condottiere.cpp" />
+    <ClCompile Include="Deck.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="King.cpp" />
     <ClCompile Include="Magician.cpp" />
@@ -91,6 +92,7 @@
     <ClInclude Include="CardColor.h" />
     <ClInclude Include="ClientCommand.h" />
     <ClInclude Include="Condottiere.h" />
+    <ClInclude Include="Deck.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="King.h" />
     <ClInclude Include="Magician.h" />

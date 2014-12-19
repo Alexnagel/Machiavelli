@@ -17,7 +17,7 @@ bool NetworkServices::ConnectToServer()
     }
     catch (const ConnectionException &e)
     {
-        std::cout << e.what() << std::endl;
+		std::cout << e.what() << std::endl;
         return false;
     }
     return true;

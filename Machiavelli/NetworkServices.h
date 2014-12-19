@@ -1,8 +1,8 @@
 #pragma once
 #include "ClientSocket.h"
-
 #include "ConnectionException.h"
 
+class ClientSocket;
 class NetworkServices
 {
 public:

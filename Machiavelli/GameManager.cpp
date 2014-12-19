@@ -3,7 +3,7 @@
 
 GameManager::GameManager()
 {
-    ClientSocket("127.0.0.1", 10001);
+    //ClientSocket("127.0.0.1", 1080);
 }
 
 

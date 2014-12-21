@@ -15,6 +15,7 @@
 #include "Sync_queue.h"
 #include "ClientCommand.h"
 #include "ServerSocket.h"
+#include "GameManager.h"
 
 namespace socketexample {
 	const int tcp_port{ 1080 };
@@ -90,6 +91,9 @@ int main(int argc, const char * argv[])
 	std::thread consumer{ consume_command };
 	consumer.detach(); // detaching is usually ugly, but in this case the right thing to do
 
+	// Create the manager
+	GameManager manager;
+
 	// create a server socket
 	ServerSocket server(socketexample::tcp_port);
 
@@ -100,6 +104,9 @@ int main(int argc, const char * argv[])
 			Socket* client = nullptr;
 
 			while ((client = server.accept()) != nullptr) {
+				// Add player
+				manager.AddPlayer();
+
 				// communicate with client over new socket in separate thread
 				std::thread handler{ handle_client, client };
 				handler.detach(); // detaching is usually ugly, but in this case the right thing to do

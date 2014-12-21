@@ -10,13 +10,13 @@ Parser::~Parser()
 {
 }
 
-std::vector<BuildCard> Parser::LoadBuildingFile()
+Deck<BuildCard> Parser::LoadBuildingFile()
 {
-	std::vector<BuildCard> build_cards;
+	Deck<BuildCard> build_cards;
 	std::string line, name, color, description;
 	int price;
 
-	std::ifstream file("C://Users//Sjoerd//Documents//Bouwkaarten.csv");
+	std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//Bouwkaarten.csv");
 	while (std::getline(file, line))
 	{
 		try
@@ -42,9 +42,9 @@ std::vector<BuildCard> Parser::LoadBuildingFile()
 
 			// Add the buildcard
 			if (description.empty())
-				build_cards.push_back(BuildCard(name, price, GetColor(color)));
+				build_cards.Add(BuildCard(name, price, GetColor(color)));
 			else
-				build_cards.push_back(BuildCard(name, price, GetColor(color), description));
+				build_cards.Add(BuildCard(name, price, GetColor(color), description));
 		}
 		catch (...){}
 	}
@@ -67,13 +67,13 @@ CardColor Parser::GetColor(std::string color)
 		return CardColor::PURPLE;
 }
 
-std::vector<PlayerCard> Parser::LoadCharacterFile()
+Deck<PlayerCard> Parser::LoadCharacterFile()
 {
-	std::vector<PlayerCard> player_cards;
+	Deck<PlayerCard> player_cards;
 	std::string line, player;
 	int nr;
 
-	std::ifstream file("C://Users//Sjoerd//Documents//karakterkaarten.csv");
+	std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//karakterkaarten.csv");
 	while (std::getline(file, line))
 	{
 		try 
@@ -89,7 +89,7 @@ std::vector<PlayerCard> Parser::LoadCharacterFile()
 			}
 
 			// Add the player card
-			player_cards.push_back(GetPlayerCard(player));
+			player_cards.Add(GetPlayerCard(player));
 		}
 		catch (...){}
 	}

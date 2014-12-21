@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+#include "Deck.h"
 #include "BuildCard.h"
 #include "PlayerCard.h"
 #include "Builder.h"
@@ -27,6 +28,6 @@ public:
 	Parser();
 	~Parser();
 
-	static std::vector<BuildCard> LoadBuildingFile();
-	static std::vector<PlayerCard> LoadCharacterFile();
+	static Deck<BuildCard> LoadBuildingFile();
+	static Deck<PlayerCard> LoadCharacterFile();
 };

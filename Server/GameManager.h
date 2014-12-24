@@ -13,9 +13,9 @@ class GameManager
 {
 private:
 	// Variables
-	std::vector<Player> players;
-	Deck<PlayerCard> player_card_deck;
-	Deck<BuildCard> building_card_deck;
+	std::vector<std::shared_ptr<Player>> players;
+	Deck<std::shared_ptr<PlayerCard>> player_card_deck;
+	Deck<std::shared_ptr<BuildCard>> building_card_deck;
 
 	// Functions
 
@@ -28,9 +28,9 @@ public:
 	void Start();
 
 	// Getters
-	Player GetPlayer(int i) const;
+	std::shared_ptr<Player> GetPlayer(int i) const;
 	
 	// Setters
-	void AddPlayer();
+	void AddPlayer(std::string name);
 };
 

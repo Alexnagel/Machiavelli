@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "Deck.h"
 #include "BuildCard.h"
@@ -22,12 +23,12 @@ class Parser
 {
 private:
 	static CardColor GetColor(std::string color);
-	static PlayerCard GetPlayerCard(std::string player);
+	static std::shared_ptr<PlayerCard> GetPlayerCard(std::string player);
 
 public:
 	Parser();
 	~Parser();
 
-	static Deck<BuildCard> LoadBuildingFile();
-	static Deck<PlayerCard> LoadCharacterFile();
+	static Deck<std::shared_ptr<BuildCard>> LoadBuildingFile();
+	static Deck<std::shared_ptr<PlayerCard>> LoadCharacterFile();
 };

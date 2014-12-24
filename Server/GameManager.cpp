@@ -6,6 +6,10 @@ GameManager::GameManager()
 	// Init decks
 	building_card_deck = Parser::LoadBuildingFile();
 	player_card_deck = Parser::LoadCharacterFile();
+
+	// Shuffle the decks
+	player_card_deck.Shuffle();
+	building_card_deck.Shuffle();
 }
 
 
@@ -18,15 +22,19 @@ void GameManager::Start()
 
 }
 
-Player GameManager::GetPlayer(int i) const
+std::shared_ptr<Player> GameManager::GetPlayer(int i) const
 {
 	if (players.size() > i)
 		return players.at(i);
 	else
-		return Player();
+		return nullptr;
 }
 
-void GameManager::AddPlayer()
+void GameManager::AddPlayer(std::string name)
 {
-	players.push_back(Player());
+	if (name.empty())
+		name = "Player" + players.size();
+
+	// Add the player
+	players.push_back(std::make_shared<Player>(name));
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <algorithm>
 #include "Utils.h"
 
 template<typename T>
@@ -29,12 +30,14 @@ public:
 		return list.size();
 	}
 
-	T Get(int) const
+	T Get(int index) const
 	{
-		if (index < list.size())
+		try {
 			return list.at(index);
-		else
-			return;
+		}
+		catch (...)	{
+			std::cout << "Index doesnt exist" << std::endl;
+		}
 	}
 
 	// Setters
@@ -45,7 +48,8 @@ public:
 
 	void Shuffle()
 	{
-		std::shuffle(list.begin(), list.end(), Utils::RandomNumber(list.size() - 1))
+		//shuffle(vec.begin(), vec.end(), dre);
+		std::shuffle(list.begin(), list.end(), Utils::GetRandomEngine());
 	}
 };
 

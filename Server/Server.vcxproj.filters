@@ -100,9 +100,6 @@
     <ClCompile Include="ServerSocket.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
-    <ClCompile Include="Deck.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files\Services</Filter>
     </ClCompile>
@@ -176,6 +173,9 @@
     </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Header Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="TurnEnum.h">
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

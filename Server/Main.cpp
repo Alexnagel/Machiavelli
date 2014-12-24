@@ -105,7 +105,7 @@ int main(int argc, const char * argv[])
 
 			while ((client = server.accept()) != nullptr) {
 				// Add player
-				manager.AddPlayer();
+				manager.AddPlayer("");
 
 				// communicate with client over new socket in separate thread
 				std::thread handler{ handle_client, client };

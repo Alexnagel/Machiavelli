@@ -12,3 +12,10 @@ int Utils::RandomNumber(int min, int max)
 {
 	return std::uniform_int_distribution<int>(min, max)(rng);
 }
+
+std::default_random_engine Utils::GetRandomEngine()
+{
+	std::random_device dev;
+	std::default_random_engine dre(dev());
+	return dre;
+}

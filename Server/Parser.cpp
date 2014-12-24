@@ -10,9 +10,9 @@ Parser::~Parser()
 {
 }
 
-Deck<BuildCard> Parser::LoadBuildingFile()
+Deck<std::shared_ptr<BuildCard>> Parser::LoadBuildingFile()
 {
-	Deck<BuildCard> build_cards;
+	Deck<std::shared_ptr<BuildCard>> build_cards;
 	std::string line, name, color, description;
 	int price;
 
@@ -42,9 +42,9 @@ Deck<BuildCard> Parser::LoadBuildingFile()
 
 			// Add the buildcard
 			if (description.empty())
-				build_cards.Add(BuildCard(name, price, GetColor(color)));
+				build_cards.Add(std::make_shared<BuildCard>(name, price, GetColor(color)));
 			else
-				build_cards.Add(BuildCard(name, price, GetColor(color), description));
+				build_cards.Add(std::make_shared<BuildCard>(name, price, GetColor(color), description));
 		}
 		catch (...){}
 	}
@@ -67,9 +67,9 @@ CardColor Parser::GetColor(std::string color)
 		return CardColor::PURPLE;
 }
 
-Deck<PlayerCard> Parser::LoadCharacterFile()
+Deck<std::shared_ptr<PlayerCard>> Parser::LoadCharacterFile()
 {
-	Deck<PlayerCard> player_cards;
+	Deck<std::shared_ptr<PlayerCard>> player_cards;
 	std::string line, player;
 	int nr;
 
@@ -98,24 +98,24 @@ Deck<PlayerCard> Parser::LoadCharacterFile()
 	return player_cards;
 }
 
-PlayerCard Parser::GetPlayerCard(std::string player)
+std::shared_ptr<PlayerCard> Parser::GetPlayerCard(std::string player)
 {
 	if (player == "Moordenaar")
-		return Murderer();
+		return std::make_shared<Murderer>();
 	else if (player == "Dief")
-		return Thief();
+		return std::make_shared<Thief>();
 	else if (player == "Magiër")
-		return Magician();
+		return std::make_shared<Magician>();
 	else if (player == "Koning")
-		return King();
+		return std::make_shared<King>();
 	else if (player == "Prediker")
-		return Preacher();
+		return std::make_shared<Preacher>();
 	else if (player == "Koopman")
-		return Merchant();
+		return std::make_shared<Merchant>();
 	else if (player == "Bouwmeester")
-		return Builder();
+		return std::make_shared<Builder>();
 	else if (player == "Condottiere")
-		return Condottiere();
+		return std::make_shared<Condottiere>();
 	else
-		return PlayerCard("");
+		return nullptr;
 }

@@ -1,5 +1,8 @@
 #pragma once
 
+#include <thread>
+#include <exception>
+#include <memory>
 #include <iostream>
 #include <vector>
 
@@ -8,6 +11,10 @@
 #include "Player.h"
 #include "PlayerCard.h"
 #include "BuildCard.h"
+#include "Socket.h"
+#include "Sync_queue.h"
+#include "ClientCommand.h"
+#include "ServerSocket.h"
 
 class GameManager
 {
@@ -17,15 +24,16 @@ private:
 	Deck<std::shared_ptr<PlayerCard>> player_card_deck;
 	Deck<std::shared_ptr<BuildCard>> building_card_deck;
 
-	// Functions
+	// Server functions
+	void ConsumeCommand();
+	void HandleClient(Socket* socket);
 
+	// Functions
+	void Start();
 
 public:
 	GameManager();
 	~GameManager();
-
-	// Functions
-	void Start();
 
 	// Getters
 	std::shared_ptr<Player> GetPlayer(int i) const;

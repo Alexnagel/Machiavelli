@@ -17,6 +17,11 @@ std::string Player::GetName()
 	return name;
 }
 
+std::shared_ptr<Socket> Player::GetSocket()
+{
+	return socket;
+}
+
 std::shared_ptr<PlayerCard> Player::GetPlayerCard()
 {
 	return player_card;
@@ -40,6 +45,11 @@ std::vector<std::shared_ptr<BuildCard>> Player::GetBuildedBuildings()
 	return builded_buildings;
 }
 
+std::vector<std::shared_ptr<PlayerCard>> Player::GetPlayerCards()
+{
+	return player_card_collection;
+}
+
 int Player::GetPoints()
 {
 	return points;
@@ -55,6 +65,11 @@ int Player::GetGold()
 void Player::SetPlayerCard(std::shared_ptr<PlayerCard> player_card)
 {
 	this->player_card = player_card;
+}
+
+void Player::AddPlayerCard(std::shared_ptr<PlayerCard> player_card)
+{
+	player_card_collection.push_back(player_card);
 }
 
 void Player::AddBuildCard(std::shared_ptr<BuildCard> build_card)
@@ -80,6 +95,10 @@ void Player::AddPoints(int points)
 	this->points += points;
 }
 
+void Player::SetSocket(std::shared_ptr<Socket> socket)
+{
+	this->socket = socket;
+}
 
 // Functions
 void Player::Turn(TurnEnum turn, std::shared_ptr<BuildCard> build_card)

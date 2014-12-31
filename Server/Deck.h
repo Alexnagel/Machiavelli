@@ -40,10 +40,42 @@ public:
 		}
 	}
 
+	T TakeCard(int index)
+	{
+		try {
+			T temp = list.at(index);
+			list.erase(index);
+			return T;
+		}
+		catch (...) {
+			std::cout << "Index doesnt exist" << std::endl;
+		}
+	}
+
+	T Peek()
+	{
+		return list.at(list.size() - 1);
+	}
+
+	T Pop()
+	{
+		T temp = list.at(list.size() - 1);
+		list.erase(list.size() - 1);
+		return temp;
+	}
+
 	// Setters
 	void Add(const T& elem)
 	{
 		list.push_back(elem);
+	}
+
+	void RemoveLast()
+	{
+		if (list.size() > 0)
+		{
+			list.erase(list.size() - 1);
+		}
 	}
 
 	void Shuffle()

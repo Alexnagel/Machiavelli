@@ -65,32 +65,39 @@ void GameManager::ConsumeCommand() // runs in its own thread
 
 void GameManager::HandleClient(Socket* socket) // this function runs in a separate thread
 {
-	std::shared_ptr<Socket> client{ socket };
-	client->write("Welcome to the Machiavelli Server!\n");
-	client->write("What is your name?\n");
-	client->write(socketexample::prompt);
+	socket->write("Welcome to the Machiavelli Server!\n");
+	socket->write("What is your name?\n");
+	socket->write(socketexample::prompt);
 
 	// Add the player
-	std::string username = client->readline();
-	AddPlayer(username);
+	std::string username = socket->readline();
+	
+	std::shared_ptr<Player> player;
+	if (username.empty())
+		player = std::make_shared<Player>("Player" + std::to_string(players.size()));
+	else
+		player = std::make_shared<Player>(username);
+
+	// Add the player
+	players.push_back(player);
 
 	// Create a welcome message
-	client->write("Welcome " + username + "!\n\n");
+	player->GetSocket()->write("Welcome " + player->GetName() + "!\n\n");
 
 	// Show the user how to quit
-	client->write("To exit this Machiavelli server enter 'quit'.\n");
+	player->GetSocket()->write("To exit this Machiavelli server enter 'quit'.\n");
 
 	while (true) { // game loop
 		try {
 			// read first line of request
-			std::string cmd = client->readline();
-			std::cerr << "client (" << client->get() << ") said: " << cmd << '\n';
+			std::string cmd = player->GetSocket()->readline();
+			std::cerr << "client (" << player->GetSocket()->get() << ") said: " << cmd << '\n';
 
-			ClientCommand command{ cmd, client };
+			ClientCommand command{ cmd, player->GetSocket() };
 
 			if (cmd == "quit") 
 			{
-				client->write("Bye!\n");
+				player->GetSocket()->write("Bye!\n");
 				break; // out of game loop, will end this thread and close connection
 			}
 			else if (cmd == "start")
@@ -100,7 +107,7 @@ void GameManager::HandleClient(Socket* socket) // this function runs in a separa
 					Start();
 
 					// Show that the game has started
-					command = ClientCommand{ "The game has started!", client };
+					command = ClientCommand{ "The game has started!", player->GetSocket() };
 					queue.put(command);
 				}
 				else
@@ -110,18 +117,18 @@ void GameManager::HandleClient(Socket* socket) // this function runs in a separa
 					output.append(std::to_string(players.size()));
 
 					// Show the error message
-					command = ClientCommand{ output, client };
+					command = ClientCommand{ output, player->GetSocket() };
 					queue.put(command);
 				}
 			}
 		}
 		catch (const std::exception& ex) {
-			client->write("ERROR: ");
-			client->write(ex.what());
-			client->write("\n");
+			player->GetSocket()->write("ERROR: ");
+			player->GetSocket()->write(ex.what());
+			player->GetSocket()->write("\n");
 		}
 		catch (...) {
-			client->write("ERROR: something went wrong during handling of your request. Sorry!\n");
+			player->GetSocket()->write("ERROR: something went wrong during handling of your request. Sorry!\n");
 		}
 	}
 }
@@ -137,6 +144,56 @@ void GameManager::Start()
 	// Shuffle the decks
 	player_card_deck.Shuffle();
 	building_card_deck.Shuffle();
+
+	// The first player may choose his cards
+	if (players.size() > 1)
+	{
+		std::shared_ptr<Player> first_player = players.at(0);
+		std::shared_ptr<Socket> socket = first_player->GetSocket();
+
+		// Pop the first character card of the deck
+		player_card_deck.RemoveLast();
+		
+
+		socket->write("You can choose a card");
+	}
+}
+
+void GameManager::GetPlayerCard(std::shared_ptr<Player> player)
+{
+	int counter = 0;
+	for (int i = 0; i < player_card_deck.Size(); i++)
+	{
+		std::shared_ptr<Player> first_player;
+		std::shared_ptr<PlayerCard> card;
+
+		// Set Player
+		if (counter - i <= 0)
+			first_player = players.at(i);
+		else
+			first_player = players.at(counter - i);
+
+		// Get the socket
+		std::shared_ptr<Socket> socket = first_player->GetSocket();
+
+		// Remove the first character card of the deck
+		player_card_deck.RemoveLast();
+
+		// Let the player choose a card
+		bool card_not_set = true;
+		while (card_not_set)
+		{
+			// print cards
+			// Let the user pick a card...
+			// Check if this card exists
+		}
+
+		// Add the card to the player
+		player->AddPlayerCard(card);
+
+		// Shuffle the deck
+		player_card_deck.Shuffle();
+	}
 }
 
 std::shared_ptr<Player> GameManager::GetPlayer(int i) const

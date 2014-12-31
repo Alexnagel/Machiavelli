@@ -30,6 +30,7 @@ private:
 
 	// Functions
 	void Start();
+	void GetPlayerCard(std::shared_ptr<Player> player);
 
 public:
 	GameManager();

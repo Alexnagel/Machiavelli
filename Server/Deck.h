@@ -70,11 +70,19 @@ public:
 		list.push_back(elem);
 	}
 
+	void Remove(int i)
+	{
+		if (list.size() > i)
+		{
+			list.erase(list.begin() + i);
+		}
+	}
+
 	void RemoveLast()
 	{
 		if (list.size() > 0)
 		{
-			list.erase(list.size() - 1);
+			list.erase(list.end() - 1);
 		}
 	}
 

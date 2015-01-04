@@ -78,6 +78,9 @@ void GameManager::HandleClient(Socket* socket) // this function runs in a separa
 	else
 		player = std::make_shared<Player>(username);
 
+	// Add the socket to the player
+	player->SetSocket(std::make_shared<Socket>(*socket));
+
 	// Add the player
 	players.push_back(player);
 
@@ -154,6 +157,8 @@ void GameManager::Start()
 		// Pop the first character card of the deck
 		player_card_deck.RemoveLast();
 		
+		// Let the player choose a card
+		GetPlayerCard(first_player);
 
 		socket->write("You can choose a card");
 	}
@@ -162,7 +167,7 @@ void GameManager::Start()
 void GameManager::GetPlayerCard(std::shared_ptr<Player> player)
 {
 	int counter = 0;
-	for (int i = 0; i < player_card_deck.Size(); i++)
+	for (int i = 0; i < players.size(); i++)
 	{
 		std::shared_ptr<Player> first_player;
 		std::shared_ptr<PlayerCard> card;
@@ -184,8 +189,35 @@ void GameManager::GetPlayerCard(std::shared_ptr<Player> player)
 		while (card_not_set)
 		{
 			// print cards
+			first_player->GetSocket()->write("Available cards:\n");
+			for (int i = 0; i < player_card_deck.Size(); i++)
+			{
+				first_player->GetSocket()->write(player_card_deck.Get(i)->GetName() + "\n");
+			}
+
 			// Let the user pick a card...
+			first_player->GetSocket()->write("Choose your card:\n");
+			std::string card_name = socket->readline();
+
 			// Check if this card exists
+			if (card_name == "builder") {
+				card_not_set = false;
+				for (int i = 0; i < player_card_deck.Size(); i++)
+				{
+					if (player_card_deck.Get(i)->GetName() == "builder")
+					{
+						first_player->AddPlayerCard(player_card_deck.Get(i));
+						player_card_deck.Remove(i);
+						break;
+					}
+				}
+			} else if (card_name == "builder") {
+				card_not_set = false;
+			} else if (card_name == "builder") {
+				card_not_set = false;
+			} else if (card_name == "builder") {
+				card_not_set = false;
+			}
 		}
 
 		// Add the card to the player

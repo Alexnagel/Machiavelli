@@ -38,14 +38,15 @@ public:
 		catch (...)	{
 			std::cout << "Index doesnt exist" << std::endl;
 		}
+        return T();
 	}
 
 	T TakeCard(int index)
 	{
 		try {
 			T temp = list.at(index);
-			list.erase(index);
-			return T;
+			list.erase(list.begin() + index);
+			return temp;
 		}
 		catch (...) {
 			std::cout << "Index doesnt exist" << std::endl;
@@ -92,4 +93,3 @@ public:
 		std::shuffle(list.begin(), list.end(), Utils::GetRandomEngine());
 	}
 };
-

@@ -23,6 +23,17 @@ bool NetworkServices::ConnectToServer()
     return true;
 }
 
+void NetworkServices::ConsumeServerCommands()
+{
+    while (true)
+    {
+        ServerCommand serverCommand;
+        //queue.get(serverCommand);
+        //std::shared_ptr<clientSocket>
+        
+    }
+}
+
 NetworkServices::~NetworkServices()
 {
 }

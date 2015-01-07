@@ -65,6 +65,9 @@ CardColor Parser::GetColor(std::string color)
 		return CardColor::RED;
 	else if (color == "lila")
 		return CardColor::PURPLE;
+    
+    // Default value for xcode
+    return CardColor::BLUE;
 }
 
 Deck<std::shared_ptr<PlayerCard>> Parser::LoadCharacterFile()

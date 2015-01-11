@@ -65,28 +65,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BuildCard.cpp" />
-    <ClCompile Include="Card.cpp" />
-    <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="GoldCard.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NetworkServices.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerCard.cpp" />
     <ClCompile Include="ClientSocket.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="Throw.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BuildCard.h" />
-    <ClInclude Include="Card.h" />
     <ClInclude Include="FileIO.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="GoldCard.h" />
     <ClInclude Include="NetworkServices.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerCard.h" />
     <ClCompile Include="ClientSocket.h" />
     <ClCompile Include="Socket.h" />
     <ClCompile Include="Throw.h" />

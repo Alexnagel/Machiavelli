@@ -21,6 +21,10 @@ public:
     
     bool StartServer();
     void ListenForClients();
+    
+    void WriteToClient(std::string command, std::shared_ptr<Socket> socket);
+    void WriteToClient(std::string command, std::shared_ptr<Socket> socket, bool prompt);
+    std::string PromptClient(std::shared_ptr<Socket> socket);
 private:
     static const int PORT;
     std::unique_ptr<GameManager> gameManager;

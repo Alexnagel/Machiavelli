@@ -39,7 +39,7 @@ void GameManager::Start()
 		// Let the player choose a card
 		GetPlayerCard(first_player);
 
-		socket->write("You can choose a card");
+        networkServices->WriteToClient("You can choose a card", socket);
 	}
 }
 
@@ -68,15 +68,16 @@ void GameManager::GetPlayerCard(std::shared_ptr<Player> player)
 		while (card_not_set)
 		{
 			// print cards
-			first_player->GetSocket()->write("Available cards:\n");
+            std::string availableCards = "Available cards:\n";
 			for (int i = 0; i < player_card_deck.Size(); i++)
 			{
-				first_player->GetSocket()->write(player_card_deck.Get(i)->GetName() + "\n");
+				availableCards.append(player_card_deck.Get(i)->GetName() + "\n");
 			}
+            networkServices->WriteToClient(availableCards, socket, false);
 
 			// Let the user pick a card...
-			first_player->GetSocket()->write("Choose your card:\n");
-			std::string card_name = socket->readline();
+			networkServices->WriteToClient("Choose your card\n", socket);
+            std::string card_name = networkServices->PromptClient(socket);
 
 			// Check if this card exists
 			if (card_name == "builder") {
@@ -97,6 +98,10 @@ void GameManager::GetPlayerCard(std::shared_ptr<Player> player)
 			} else if (card_name == "builder") {
 				card_not_set = false;
 			}
+            else
+            {
+                networkServices->WriteToClient("This is not a valid card", socket);
+            }
 		}
 
 		// Add the card to the player

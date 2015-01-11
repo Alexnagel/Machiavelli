@@ -25,6 +25,6 @@ private:
     std::unique_ptr<ClientSocket> clientSocket;
     
     void ConsumeServerCommands();
-    void PromptUser();
+    void ConsumeUserCommands();
     bool isConnected;
 };

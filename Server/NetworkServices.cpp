@@ -149,6 +149,37 @@ void NetworkServices::HandleClient(Socket *socket)
     }
 }
 
+void NetworkServices::WriteToClient(std::string command, std::shared_ptr<Socket> socket, bool prompt)
+{
+    ClientCommand clientCommand = ClientCommand { command, socket, prompt };
+    queue.put(clientCommand);
+}
+
+void NetworkServices::WriteToClient(std::string command, std::shared_ptr<Socket> socket)
+{
+    ClientCommand clientCommand = ClientCommand { command, socket };
+    queue.put(clientCommand);
+}
+
+std::string NetworkServices::PromptClient(std::shared_ptr<Socket> socket)
+{
+    std::string answer;
+    
+    while (answer.empty())
+    {
+        try
+        {
+            answer = socket->readline();
+        }
+        catch (...)
+        {
+            std::cerr << "Something went wrong reading the client response" << '\n';
+        }
+    }
+    
+    return answer;
+}
+
 NetworkServices::~NetworkServices()
 {
 }

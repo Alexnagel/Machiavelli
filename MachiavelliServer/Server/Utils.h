@@ -16,5 +16,6 @@ public:
 	static int RandomNumber(int min, int max);
 
 	static std::default_random_engine GetRandomEngine();
+	static std::string ToLowerCase(std::string string);
 };
 

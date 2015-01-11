@@ -8,5 +8,6 @@ public:
 	~Preacher();
 
 	void PerformCharacteristic();
+	PlayerCardType GetType();
 };
 

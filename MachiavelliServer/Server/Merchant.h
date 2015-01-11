@@ -8,5 +8,6 @@ public:
 	~Merchant();
 
 	void PerformCharacteristic();
+	PlayerCardType GetType();
 };
 

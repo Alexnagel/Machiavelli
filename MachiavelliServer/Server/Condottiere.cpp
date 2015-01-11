@@ -22,3 +22,8 @@ void Condottiere::PerformCharacteristic()
 	hij voor zich heeft liggen.
 	*/
 }
+
+PlayerCardType Condottiere::GetType()
+{
+	return PlayerCardType::CONDOTTIERE;
+}

@@ -19,3 +19,8 @@ void PlayerCard::PerformCharacteristic()
 {
 
 }
+
+PlayerCardType PlayerCard::GetType()
+{
+	return PlayerCardType::NONE;
+}

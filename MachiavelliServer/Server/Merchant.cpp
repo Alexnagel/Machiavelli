@@ -18,3 +18,8 @@ void Merchant::PerformCharacteristic()
 	liggen.
 	*/
 }
+
+PlayerCardType Merchant::GetType()
+{
+	return PlayerCardType::MERCHANT;
+}

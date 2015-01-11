@@ -20,3 +20,8 @@ void Murderer::PerformCharacteristic()
 	*/
 
 }
+
+PlayerCardType Murderer::GetType()
+{
+	return PlayerCardType::MURDERER;
+}

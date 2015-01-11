@@ -21,3 +21,8 @@ void Thief::PerformCharacteristic()
 	houden.
 	*/
 }
+
+PlayerCardType Thief::GetType()
+{
+	return PlayerCardType::THIEF;
+}

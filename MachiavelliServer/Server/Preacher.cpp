@@ -18,3 +18,8 @@ void Preacher::PerformCharacteristic()
 	voor elk blauw gebouw dat hij voor zich heeft liggen.
 	*/
 }
+
+PlayerCardType Preacher::GetType()
+{
+	return PlayerCardType::PREACHER;
+}

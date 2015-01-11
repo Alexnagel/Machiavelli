@@ -177,5 +177,8 @@
     <ClInclude Include="TurnEnum.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerCardType.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

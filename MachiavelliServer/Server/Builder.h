@@ -8,5 +8,6 @@ public:
 	~Builder();
 
 	void PerformCharacteristic();
+	PlayerCardType GetType();
 };
 

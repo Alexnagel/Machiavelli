@@ -19,3 +19,8 @@ void Magician::PerformCharacteristic()
 	- naar keuze een aantal handkaarten afleggen en een gelijk aantal gebouwenkaarten trekken
 	*/
 }
+
+PlayerCardType Magician::GetType()
+{
+	return PlayerCardType::MAGICIAN;
+}

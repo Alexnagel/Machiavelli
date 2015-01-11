@@ -19,3 +19,12 @@ std::default_random_engine Utils::GetRandomEngine()
 	std::default_random_engine dre(dev());
 	return dre;
 }
+
+std::string Utils::ToLowerCase(std::string string)
+{
+	for (int i = 0; i < string.length(); i++)
+	{
+		string[i] = tolower(string[i]);
+	}
+	return string;
+}

@@ -8,5 +8,6 @@ public:
 	~Thief();
 
 	void PerformCharacteristic();
+	PlayerCardType GetType();
 };
 

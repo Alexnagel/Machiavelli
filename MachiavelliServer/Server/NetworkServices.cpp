@@ -131,6 +131,7 @@ void NetworkServices::HandleClient(Socket *socket)
                     std::string output = "There need to be atleast 2 players to start the game.\n";
                     output.append("Players in lobby: ");
                     output.append(std::to_string(gameManager->GetPlayerAmount()));
+					output.append("\n");
                     
                     // Show the error message
                     command = ClientCommand{ output, player->GetSocket() };

@@ -28,3 +28,8 @@ void King::PerformCharacteristic()
 	- Als de koningskaart is afgelegd, blijft de zittende Koning ook de volgende ronde in ambt.
 	*/
 }
+
+PlayerCardType King::GetType()
+{
+	return PlayerCardType::KING;
+}

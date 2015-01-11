@@ -1,5 +1,8 @@
 #pragma once
+
 #include "Card.h"
+#include "PlayerCardType.h"
+
 class PlayerCard : public Card
 {
 public:
@@ -8,5 +11,6 @@ public:
 
 	virtual std::string GetName();
 	virtual void PerformCharacteristic();
+	virtual PlayerCardType GetType();
 };
 

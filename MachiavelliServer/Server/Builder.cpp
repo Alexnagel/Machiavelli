@@ -18,3 +18,8 @@ void Builder::PerformCharacteristic()
 	bouwmeester kan derhalve aan het einde van het spel als enige meer dan 8 gebouwen bezitten.
 	*/
 }
+
+PlayerCardType Builder::GetType()
+{
+	return PlayerCardType::BUILDER;
+}

@@ -8,5 +8,6 @@ public:
 	~King();
 
 	void PerformCharacteristic();
+	PlayerCardType GetType();
 };
 

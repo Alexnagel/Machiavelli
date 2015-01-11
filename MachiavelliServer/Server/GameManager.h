@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "PlayerCard.h"
 #include "BuildCard.h"
+#include "PlayerCardType.h"
 
 class NetworkServices;
 class GameManager
@@ -21,9 +22,16 @@ private:
 	std::vector<std::shared_ptr<Player>> players;
 	Deck<std::shared_ptr<PlayerCard>> player_card_deck;
 	Deck<std::shared_ptr<BuildCard>> building_card_deck;
+	PlayerCardType killed_player;
+	PlayerCardType robbed_player;
 
 	// Functions
-	void GetPlayerCard(std::shared_ptr<Player> player);
+	void GetPlayerCard();
+	void StartRound();
+	void EndGame();
+
+	bool CheckCard(std::string card_name, std::shared_ptr<Player> player);
+	void AddCard(PlayerCardType type, std::shared_ptr<Player> player);
 
 public:
 	GameManager();

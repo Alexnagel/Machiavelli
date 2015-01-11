@@ -8,5 +8,6 @@ public:
 	~Magician();
 
 	void PerformCharacteristic();
+	PlayerCardType GetType();
 };
 

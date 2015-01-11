@@ -17,7 +17,7 @@ private:
 	std::vector<std::shared_ptr<BuildCard>> builded_buildings;
 	std::vector<std::shared_ptr<BuildCard>> build_card_collection;
 	std::vector<std::shared_ptr<PlayerCard>> player_card_collection;
-	std::shared_ptr<PlayerCard> player_card;
+	std::shared_ptr<PlayerCard> current_player_card;
 	int gold;
 	int points;
 
@@ -28,7 +28,7 @@ public:
 	// Getters
 	std::string GetName();
 	std::shared_ptr<Socket> GetSocket();
-	std::shared_ptr<PlayerCard> GetPlayerCard();
+	std::shared_ptr<PlayerCard> GetCurrentPlayerCard();
 	std::shared_ptr<BuildCard> GetBuildCard(int index);
 	std::vector<std::shared_ptr<BuildCard>> GetAllBuildCards();
 	std::vector<std::shared_ptr<BuildCard>> GetBuildedBuildings();
@@ -37,7 +37,7 @@ public:
 	int GetGold();
 
 	// Setters
-	void SetPlayerCard(std::shared_ptr<PlayerCard> player_card);
+	void SetCurrentPlayerCard(std::shared_ptr<PlayerCard> player_card);
 	void AddPlayerCard(std::shared_ptr<PlayerCard> player_card);
 	void AddBuildCard(std::shared_ptr<BuildCard> build_card);
 	void AddBuildCards(std::vector<std::shared_ptr<BuildCard>> build_cards);

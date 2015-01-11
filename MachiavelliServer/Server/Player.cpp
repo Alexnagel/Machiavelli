@@ -22,9 +22,9 @@ std::shared_ptr<Socket> Player::GetSocket()
 	return socket;
 }
 
-std::shared_ptr<PlayerCard> Player::GetPlayerCard()
+std::shared_ptr<PlayerCard> Player::GetCurrentPlayerCard()
 {
-	return player_card;
+	return current_player_card;
 }
 
 std::shared_ptr<BuildCard> Player::GetBuildCard(int index)
@@ -62,9 +62,9 @@ int Player::GetGold()
 
 
 // Setters
-void Player::SetPlayerCard(std::shared_ptr<PlayerCard> player_card)
+void Player::SetCurrentPlayerCard(std::shared_ptr<PlayerCard> player_card)
 {
-	this->player_card = player_card;
+	this->current_player_card = player_card;
 }
 
 void Player::AddPlayerCard(std::shared_ptr<PlayerCard> player_card)

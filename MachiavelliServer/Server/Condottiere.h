@@ -8,5 +8,6 @@ public:
 	~Condottiere();
 
 	void PerformCharacteristic();
+	PlayerCardType GetType();
 };
 

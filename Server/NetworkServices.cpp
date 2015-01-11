@@ -1,8 +1,10 @@
 #include "NetworkServices.h"
 
-const int NetworkServices::PORT = 81;
+const int NetworkServices::PORT = 1080;
+static Sync_queue<ClientCommand> queue;
 
-NetworkServices::NetworkServices()
+NetworkServices::NetworkServices(std::unique_ptr<GameManager> p_gameManager):
+    gameManager(std::move(p_gameManager))
 {
 }
 
@@ -14,6 +16,136 @@ bool NetworkServices::StartServer()
     } catch (std::exception& e) {
         std::cout << e.what();
         return false;
+    }
+}
+
+void NetworkServices::ListenForClients()
+{
+    // start command consumer thread
+    std::thread consumer{ &NetworkServices::ConsumeCommand, this };
+    consumer.detach(); // detaching is usually ugly, but in this case the right thing to do
+    
+    while (true) {
+        try {
+            // wait for connection from client; will create new socket
+            std::cerr << "Server listening" << '\n';
+            Socket* client = nullptr;
+            
+            while ((client = serverSocket->accept()) != nullptr)
+            {
+                // communicate with client over new socket in separate thread
+                std::thread handler{ &NetworkServices::HandleClient, this , client };
+                handler.detach(); // detaching is usually ugly, but in this case the right thing to do
+                
+                std::cerr << "Server listening again" << '\n';
+            }
+        }
+        catch (const std::exception& ex) {
+            std::cerr << ex.what() << ", resuming..." << '\n';
+        }
+    }
+}
+
+void NetworkServices::ConsumeCommand()
+{
+    while (true) {
+        ClientCommand command;
+        queue.get(command); // will block here unless there still are command objects in the queue
+        std::shared_ptr<Socket> client{ command.get_client() };
+        if (client) {
+            try {
+                client->write(command.get_cmd());
+            }
+            catch (const std::exception& ex) {
+                client->write("Sorry, ");
+                client->write(ex.what());
+                client->write("\n");
+            }
+            catch (...) {
+                client->write("Sorry, something went wrong during handling of your request.\n");
+            }
+            client->write("> \n");
+        }
+        else {
+            std::cerr << "trying to handle command for client who has disappeared...\n";
+        }
+    }
+}
+
+void NetworkServices::HandleClient(Socket *socket)
+{
+    socket->write("Welcome to the Machiavelli Server!\n");
+    socket->write("What is your name?\n");
+    socket->write("> \n");
+    
+    // Add the player
+    std::string username;
+    
+    while (username.empty())
+    {
+        try {
+            username = socket->readline();
+        }
+        catch (...)
+        {
+            std::cerr << "hmm";
+        }
+    }
+    
+    std::shared_ptr<Player> player = gameManager->AddPlayer(username, std::make_shared<Socket>(*socket));
+    
+    // Create a welcome message
+    player->GetSocket()->write("Welcome " + player->GetName() + "!\n\n");
+    
+    // Show the user how to quit
+    player->GetSocket()->write("To exit this Machiavelli server enter 'quit'.\n");
+    player->GetSocket()->write("To start the game enter 'start'.\n");
+    player->GetSocket()->write("> \n");
+    
+    while (true) { // game loop
+        try {
+            // read first line of request
+            std::string cmd = player->GetSocket()->readline();
+            std::cerr << "client (" << player->GetSocket()->get() << ") said: " << cmd << '\n';
+            
+            ClientCommand command{ cmd, player->GetSocket() };
+            
+            if (cmd == "quit")
+            {
+                player->GetSocket()->write("Bye!\n");
+                player->GetSocket()->close();
+                break; // out of connection loop, will end this thread and close connection
+            }
+            else if (cmd == "start")
+            {
+                if (gameManager->GetPlayerAmount() > 1)
+                {
+                    gameManager->Start();
+                    
+                    // Show that the game has started
+                    command = ClientCommand{ "The game has started!", player->GetSocket() };
+                    queue.put(command);
+                }
+                else
+                {
+                    std::string output = "There need to be atleast 2 players to start the game.\n";
+                    output.append("Players in lobby: ");
+                    output.append(std::to_string(gameManager->GetPlayerAmount()));
+                    
+                    // Show the error message
+                    command = ClientCommand{ output, player->GetSocket() };
+                    queue.put(command);
+                }
+            }
+        }
+        catch (const std::exception& ex) {
+            player->GetSocket()->write("ERROR: ");
+            player->GetSocket()->write(ex.what());
+            player->GetSocket()->write("\n");
+        }
+        catch (...) {
+            player->GetSocket()->write("ERROR: something went wrong during handling of your request. Sorry!\n");
+        }
     }
 }
 

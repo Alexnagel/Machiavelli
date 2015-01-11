@@ -19,7 +19,7 @@ public:
 	ClientCommand(const std::string& cmd, std::shared_ptr<Socket> client) : cmd(cmd), client(client) {}
 
 	std::string get_cmd() const { return cmd; }
-	void set_cmd(const std::string& command) { cmd = command; }
+	void set_cmd(const std::string& command) { cmd = command + "> "; }
 
 	std::shared_ptr<Socket> get_client() const { return client; }
 	void set_client(std::shared_ptr<Socket> socket) { client = socket; }

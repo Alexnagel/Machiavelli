@@ -14,6 +14,9 @@ public:
 	~NetworkServices();
     
     bool ConnectToServer();
+    
+    void WriteCommand(std::string command);
+    bool IsConnected();
 private:
     static const std::string HOST_IP;
     static const int HOST_PORT;
@@ -22,4 +25,6 @@ private:
     std::unique_ptr<ClientSocket> clientSocket;
     
     void ConsumeServerCommands();
+    void PromptUser();
+    bool isConnected;
 };

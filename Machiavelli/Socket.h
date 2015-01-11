@@ -19,6 +19,12 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <cstring>
+#include <stdexcept>
+#include <memory>
+
+#include "Throw.h"
 
 class Socket
 {

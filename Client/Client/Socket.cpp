@@ -86,7 +86,7 @@ std::string Socket::readline()
 	std::string line;
 	char c;
 	while (ssize_t n = ::recv(sock, &c, 1, 0)) {
-		//throw_if_min1((int)n);
+		throw_if_min1((int)n);
 		if (c == '\n') break;
 		if (c != '\r') line += c;
 	}

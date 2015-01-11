@@ -15,8 +15,11 @@ bool NetworkServices::ConnectToServer()
     {
         clientSocket = std::unique_ptr<ClientSocket>(new ClientSocket(HOST_IP.c_str(), HOST_PORT));
         
-        std::thread handler{ &NetworkServices::ConsumeServerCommands, this};
-        handler.detach(); // detaching is usually ugly, but in this case the right thing to do
+        std::thread serverHandler{ &NetworkServices::ConsumeServerCommands, this};
+        serverHandler.detach(); // detaching is usually ugly, but in this case the right thing to do
+        
+        std::thread userHandler { &NetworkServices::ConsumeUserCommands, this };
+        userHandler.detach();
     }
     catch (const ConnectionException &e)
     {
@@ -48,9 +51,6 @@ void NetworkServices::ConsumeServerCommands()
                 newlineString = "";
             
             std::cerr << cmd << newlineString;
-            
-            if (cmd == "> ")
-                PromptUser();
         }
         catch (std::exception &e)
         {
@@ -59,14 +59,16 @@ void NetworkServices::ConsumeServerCommands()
     }
 }
 
-void NetworkServices::PromptUser()
+void NetworkServices::ConsumeUserCommands()
 {
     std::string s;
-    // Get the user input line
-    getline(std::cin, s);
     
-    // Write the command to the server
-    WriteCommand(s);
+    // Get the user input line
+    while (getline(std::cin, s))
+    {
+        // Write the command to the server
+        WriteCommand(s);
+    }
 }
 
 void NetworkServices::WriteCommand(std::string command)

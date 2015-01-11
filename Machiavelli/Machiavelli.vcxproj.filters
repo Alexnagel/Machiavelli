@@ -45,14 +45,8 @@
     <ClCompile Include="Socket.cpp">
       <Filter>Source Files\Sockets</Filter>
     </ClCompile>
-    <ClCompile Include="ClientSocket.cpp">
-      <Filter>Source Files\Sockets</Filter>
-    </ClCompile>
     <ClCompile Include="Throw.cpp">
       <Filter>Source Files\Sockets</Filter>
-    </ClCompile>
-    <ClCompile Include="ClientSocket.h">
-      <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="Socket.h">
       <Filter>Header Files</Filter>
@@ -60,16 +54,31 @@
     <ClCompile Include="Throw.h">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="ClientSocket.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientSocket.cpp">
+      <Filter>Source Files\Sockets</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectionException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="FileIO.h">
-      <Filter>Header Files\Services</Filter>
-    </ClInclude>
     <ClInclude Include="NetworkServices.h">
       <Filter>Header Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectionException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SyncQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerCommand.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

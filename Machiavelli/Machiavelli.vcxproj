@@ -65,6 +65,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConnectionException.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NetworkServices.cpp" />
@@ -73,12 +74,14 @@
     <ClCompile Include="Throw.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FileIO.h" />
+    <ClInclude Include="ConnectionException.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="NetworkServices.h" />
     <ClCompile Include="ClientSocket.h" />
     <ClCompile Include="Socket.h" />
     <ClCompile Include="Throw.h" />
+    <ClInclude Include="ServerCommand.h" />
+    <ClInclude Include="SyncQueue.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

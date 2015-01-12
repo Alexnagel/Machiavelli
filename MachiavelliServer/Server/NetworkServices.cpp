@@ -104,8 +104,13 @@ void NetworkServices::HandleClient(Socket *socket)
     while (true) { // game loop
         try {
             // read first line of request
-            std::string cmd = player->GetSocket()->readline();
-            std::cerr << "client (" << player->GetSocket()->get() << ") said: " << cmd << '\n';
+            std::string cmd;
+            // Read line if the client isn't being prompted
+            if (!player->GetSocket()->IsClientPrompted())
+            {
+                cmd = player->GetSocket()->readline();
+                std::cerr << "client (" << player->GetSocket()->get() << ") said: " << cmd << '\n';
+            }
             
             ClientCommand command{ cmd, player->GetSocket() };
             
@@ -119,8 +124,8 @@ void NetworkServices::HandleClient(Socket *socket)
             {
                 /*if (gameManager->GetPlayerAmount() > 1)
                 {*/
-					gameManager->Start();
-                    
+					gameManager->Start(player);
+                
                     // Show that the game has started
                     command = ClientCommand{ "The game has started!", player->GetSocket() };
                     queue.put(command);
@@ -161,8 +166,20 @@ void NetworkServices::WriteToClient(std::string command, std::shared_ptr<Socket>
     queue.put(clientCommand);
 }
 
+void NetworkServices::WriteToAllClients(std::string command)
+{
+    for (int i = 0; i < gameManager->GetPlayerAmount(); i++)
+    {
+        ClientCommand clientCommand = ClientCommand { command, gameManager->GetPlayer(i)->GetSocket() };
+        queue.put(clientCommand);
+    }
+}
+
 std::string NetworkServices::PromptClient(std::shared_ptr<Socket> socket)
 {
+    // Set to true so the readline of handleclient doesn't interfere
+    socket->SetClientPrompted(true);
+    
     std::string answer;
     
     while (answer.empty())
@@ -177,6 +194,7 @@ std::string NetworkServices::PromptClient(std::shared_ptr<Socket> socket)
         }
     }
     
+    socket->SetClientPrompted(false);
     return answer;
 }
 

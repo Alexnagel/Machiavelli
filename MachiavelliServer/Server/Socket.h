@@ -38,9 +38,10 @@ class Socket
 protected:
 	SOCKET sock;
 	struct sockaddr addr;
+    bool is_client_prompted;
 
 public:
-	Socket() : sock(0) {}
+	Socket() : sock(0), is_client_prompted(false) {}
 	Socket(SOCKET sock, const struct sockaddr& address) : sock(sock), addr(address) {}
 	virtual ~Socket();
 
@@ -54,4 +55,7 @@ public:
 
 	void write(const std::string& msg);
 	void write(const char *buf, size_t len);
+    
+    bool IsClientPrompted();
+    void SetClientPrompted(bool isPrompted);
 };

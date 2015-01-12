@@ -111,6 +111,16 @@ void Socket::close()
     sock = 0;
 }
 
+bool Socket::IsClientPrompted()
+{
+    return is_client_prompted;
+}
+
+void Socket::SetClientPrompted(bool isPrompted)
+{
+    is_client_prompted = isPrompted;
+}
+
 Socket::~Socket()
 {
 	if (sock > 0) close();

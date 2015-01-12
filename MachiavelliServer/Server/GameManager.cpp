@@ -16,7 +16,7 @@ GameManager::GameManager() : index_king(0)
     
 }
 
-void GameManager::Start()
+void GameManager::Start(std::shared_ptr<Player> player_called_start)
 {
 	// Init decks
 	building_card_deck = Parser::LoadBuildingFile();
@@ -28,13 +28,15 @@ void GameManager::Start()
 	// Shuffle the decks
 	player_card_deck.Shuffle();
 	building_card_deck.Shuffle();
-
-	// Pop the first character card of the deck
-	player_card_deck.RemoveLast();
 		
+    // Send message of starting game
+    networkServices->WriteToAllClients("\nStarting the game!\n");
+    
 	// Let the player choose a card
 	GetPlayerCard();
 
+    // Set the round
+    current_round = 1;
 	// Start the game rounds
 	StartRound();
 }
@@ -69,16 +71,19 @@ void GameManager::GetPlayerCard()
                 
                 // Let the user pick a card
                 networkServices->WriteToClient("Choose your card\n", socket, true);
+                
                 std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
                 
                 // Check if this card exists
                 card_set = CheckCard(card_name, player);
                 if (!card_set)
-                    networkServices->WriteToClient("This is not a valid card", socket);
+                    networkServices->WriteToClient("This is not a valid card \n", socket);
+                else
+                    networkServices->WriteToClient("You have chosen: " + card_name + "\n", socket);
             }
             
             // Let the player remove a card from the deck
-            if (i != index_king || (i == index_king && t != 0))
+            if ((i != index_king || (i == index_king && t != 0)) && i < 3)
             {
                 bool card_removed = false;
                 while (!card_removed)
@@ -93,18 +98,33 @@ void GameManager::GetPlayerCard()
                     // Check if this card exists
                     card_removed = CheckCard(card_name);
                     if (!card_removed)
-                        networkServices->WriteToClient("This is not a valid card", socket);
+                        networkServices->WriteToClient("This is not a valid card \n", socket);
                 }
             }
             
-            // Shuffle the deck
-            player_card_deck.Shuffle();
+            // remove the last card, no need in letting the player do it
+            if (i > 3)
+            {
+                player_card_deck.RemoveLast();
+                networkServices->WriteToClient("Removed last card", socket);
+            }
+            else
+            {
+                // Else write that the other player is picking cards
+                networkServices->WriteToClient("The other player is picking cards\n", socket);
+                // Shuffle the deck
+                player_card_deck.Shuffle();
+            }
         }
     }
+    
+    // Write to all clients the cards have been picked
+    networkServices->WriteToAllClients("The character cards have been picked.\n");
 }
 
 void GameManager::StartRound()
 {
+    networkServices->WriteToAllClients("\n\nStarting round " + std::to_string(current_round) + "\n");
 	for (int x = 0; x < number_of_player_cards; x++)
 	{
 		for (int y = 0; y < players.size(); y++)
@@ -112,15 +132,53 @@ void GameManager::StartRound()
 			std::shared_ptr<Player> player = players.at(y);
 			if (player->ContainsPlayerCard(PlayerCardType(x)))
 			{
-				// Let the player do his turn
+                networkServices->WriteToAllClients("It's " + player->GetName() + "'s turn \n");
+                Turn(player);
 			}
 		}
 	}
+    networkServices->WriteToAllClients("\n Round " + std::to_string(current_round) + " is finished\n");
+    current_round++;
 }
 
 void GameManager::Turn(std::shared_ptr<Player> player)
 {
+    std::shared_ptr<Socket> socket = player->GetSocket();
+    networkServices->WriteToClient("<line>", socket);
+    
+    ShowPlayerOptions(player);
+}
 
+void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
+{
+    std::shared_ptr<Socket> socket = player->GetSocket();
+    
+    bool option_chosen = false;
+    while (!option_chosen)
+    {
+        std::string player_options;
+        player_options.append("It's your turn, you have the following options to choose from: \n");
+        player_options.append("\t 1: Receive two gold \n");
+        player_options.append("\t 2: Take building cards \n");
+        player_options.append("Please choose one of the given options \n");
+        networkServices->WriteToClient(player_options, socket, true);
+        
+        std::string chosen_option = networkServices->PromptClient(socket);
+        if (chosen_option == "1")
+        {
+            // Add the two gold
+            player->AddGold(2);
+            
+            networkServices->WriteToClient("You have chosen to receive two gold. You now have " + std::to_string(player->GetGold()) + " gold.\n", socket);
+            option_chosen = true;
+        }
+        else if (chosen_option == "2")
+        {
+            option_chosen = true;
+        }
+        else
+            networkServices->WriteToClient("\n This isn't a valid option, please try again \n", socket);
+    }
 }
 
 void GameManager::EndGame()

@@ -52,6 +52,12 @@ void NetworkServices::ConsumeServerCommands()
 			std::string newlineString = "\n";
 			if (cmd == "> ")
 				newlineString = "";
+            if (cmd == "<emptymessage>")
+            {
+                cmd = "";
+                WriteCommand("<stoplistening>\n");
+                continue;
+            }
 
 			std::cerr << cmd << newlineString;
 		}

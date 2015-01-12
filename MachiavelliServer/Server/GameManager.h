@@ -26,12 +26,17 @@ private:
 	PlayerCardType robbed_player;
 	int index_king;
 	int number_of_player_cards;
-
+    int current_round;
+    
+    
 	// Functions
 	void GetPlayerCard();
 	void StartRound();
 	void Turn(std::shared_ptr<Player> player);
 	void EndGame();
+    
+    // Turn functions
+    void ShowPlayerOptions(std::shared_ptr<Player> player);
 
 	bool CheckCard(std::string card_name, std::shared_ptr<Player> player = nullptr);
 	void AddOrRemoveCard(PlayerCardType type, std::shared_ptr<Player> player = nullptr);
@@ -44,7 +49,7 @@ public:
 	~GameManager();
 
     // Functions
-    void Start();
+    void Start(std::shared_ptr<Player> player_called_start);
     
 	// Getters
 	std::shared_ptr<Player> GetPlayer(int i) const;

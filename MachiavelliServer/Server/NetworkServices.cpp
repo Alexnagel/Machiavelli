@@ -118,25 +118,25 @@ void NetworkServices::HandleClient(Socket *socket)
             }
             else if (cmd == "start")
             {
-                if (gameManager->GetPlayerAmount() > 1)
-                {
-                    gameManager->Start();
+                /*if (gameManager->GetPlayerAmount() > 1)
+                {*/
+					gameManager->Start();
                     
                     // Show that the game has started
                     command = ClientCommand{ "The game has started!", player->GetSocket() };
                     queue.put(command);
-                }
-                else
-                {
-                    std::string output = "There need to be atleast 2 players to start the game.\n";
-                    output.append("Players in lobby: ");
-                    output.append(std::to_string(gameManager->GetPlayerAmount()));
-					output.append("\n");
-                    
-                    // Show the error message
-                    command = ClientCommand{ output, player->GetSocket() };
-                    queue.put(command);
-                }
+     //           }
+     //           else
+     //           {
+     //               std::string output = "There need to be atleast 2 players to start the game.\n";
+     //               output.append("Players in lobby: ");
+     //               output.append(std::to_string(gameManager->GetPlayerAmount()));
+					//output.append("\n");
+     //               
+     //               // Show the error message
+     //               command = ClientCommand{ output, player->GetSocket() };
+     //               queue.put(command);
+     //           }
             }
         }
         catch (const std::exception& ex) {

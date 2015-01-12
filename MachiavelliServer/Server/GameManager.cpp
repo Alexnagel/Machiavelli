@@ -1,7 +1,7 @@
 #include "GameManager.h"
 #include "NetworkServices.h"
 
-GameManager::GameManager()
+GameManager::GameManager() : index_king(0)
 {
     networkServices = std::unique_ptr<NetworkServices>(new NetworkServices(std::unique_ptr<GameManager>(this)));
     if (networkServices->StartServer())
@@ -22,27 +22,29 @@ void GameManager::Start()
 	building_card_deck = Parser::LoadBuildingFile();
 	player_card_deck = Parser::LoadCharacterFile();
 
+	// Set the number of player cards
+	number_of_player_cards = player_card_deck.Size();
+
 	// Shuffle the decks
 	player_card_deck.Shuffle();
 	building_card_deck.Shuffle();
 
-	// The first player may choose his cards
-	if (players.size() > 1)
-	{
-		// Pop the first character card of the deck
-		player_card_deck.RemoveLast();
+	// Pop the first character card of the deck
+	player_card_deck.RemoveLast();
 		
-		// Let the player choose a card
-		GetPlayerCard();
+	// Let the player choose a card
+	GetPlayerCard();
 
-		// Start the game rounds
-		StartRound();
-	}
+	// Start the game rounds
+	StartRound();
 }
 
 void GameManager::GetPlayerCard()
 {
-	int counter = 0;
+	// Remove the first character card of the deck
+	player_card_deck.RemoveLast();
+
+	int counter = index_king;
 	for (int i = 0; i < players.size(); i++)
 	{
 		std::shared_ptr<Player> player;
@@ -57,29 +59,37 @@ void GameManager::GetPlayerCard()
 		// Get the socket
 		std::shared_ptr<Socket> socket = player->GetSocket();
 
-		// Remove the first character card of the deck
-		player_card_deck.RemoveLast();
-
 		// Let the player choose a card
-		bool card_not_set = true;
-		while (card_not_set)
+		bool card_set = false;
+		while (!card_set)
 		{
 			// print cards
-            std::string availableCards = "Available cards:\n\n";
-			for (int i = 0; i < player_card_deck.Size(); i++)
-			{
-				availableCards.append(player_card_deck.Get(i)->GetName() + "\n");
-			}
-			availableCards.append("\n");
-            networkServices->WriteToClient(availableCards, socket, false);
+			PrintPlayerCardDeck(socket);
 
-			// Let the user pick a card...
+			// Let the user pick a card
 			networkServices->WriteToClient("Choose your card\n", socket);
-            std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
+			std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
 
 			// Check if this card exists
-			card_not_set = CheckCard(card_name, player);
-			if (card_not_set)
+			card_set = CheckCard(card_name, player);
+			if (!card_set)
+				networkServices->WriteToClient("This is not a valid card", socket);
+		}
+
+		// Let the player remove a card from the deck
+		bool card_removed = false;
+		while (!card_removed)
+		{
+			// print cards
+			PrintPlayerCardDeck(socket);
+
+			// Let the user pick a card
+			networkServices->WriteToClient("Choose the card you want to remove from the deck\n", socket);
+			std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
+
+			// Check if this card exists
+			card_removed = CheckCard(card_name);
+			if (!card_removed)
 				networkServices->WriteToClient("This is not a valid card", socket);
 		}
 
@@ -93,6 +103,21 @@ void GameManager::GetPlayerCard()
 
 void GameManager::StartRound()
 {
+	for (int x = 0; x < number_of_player_cards; x++)
+	{
+		for (int y = 0; y < players.size(); y++)
+		{
+			std::shared_ptr<Player> player = players.at(y);
+			if (player->ContainsPlayerCard(PlayerCardType(x)))
+			{
+				// Let the player do his turn
+			}
+		}
+	}
+}
+
+void GameManager::Turn(std::shared_ptr<Player> player)
+{
 
 }
 
@@ -104,31 +129,39 @@ void GameManager::EndGame()
 bool GameManager::CheckCard(std::string card_name, std::shared_ptr<Player> player)
 {
 	if (card_name == "builder") {
-		AddCard(PlayerCardType::BUILDER, player);
-		return false;
-	} else if (card_name == "condottiere") {
-		AddCard(PlayerCardType::CONDOTTIERE, player);
-		return false;
-	} else if (card_name == "king") {
-		AddCard(PlayerCardType::KING, player);
-		return false;
-	} else if (card_name == "magician") {
-		AddCard(PlayerCardType::MAGICIAN, player);
-		return false;
-	} else if (card_name == "merchant") {
-		AddCard(PlayerCardType::MERCHANT, player);
-		return false;
-	} else if (card_name == "murderer") {
-		AddCard(PlayerCardType::MURDERER, player);
-		return false;
-	} else if (card_name == "preacher") {
-		AddCard(PlayerCardType::PREACHER, player);
-		return false;
-	} else if (card_name == "thief") {
-		AddCard(PlayerCardType::THIEF, player);
-		return false;
-	} else {
+		if (player != nullptr)
+			AddCard(PlayerCardType::BUILDER, player);
 		return true;
+	} else if (card_name == "condottiere") {
+		if (player != nullptr)
+			AddCard(PlayerCardType::CONDOTTIERE, player);
+		return true;
+	} else if (card_name == "king") {
+		if (player != nullptr)
+			AddCard(PlayerCardType::KING, player);
+		return true;
+	} else if (card_name == "magician") {
+		if (player != nullptr)
+			AddCard(PlayerCardType::MAGICIAN, player);
+		return true;
+	} else if (card_name == "merchant") {
+		if (player != nullptr)
+			AddCard(PlayerCardType::MERCHANT, player);
+		return true;
+	} else if (card_name == "murderer") {
+		if (player != nullptr)
+			AddCard(PlayerCardType::MURDERER, player);
+		return true;
+	} else if (card_name == "preacher") {
+		if (player != nullptr)
+			AddCard(PlayerCardType::PREACHER, player);
+		return true;
+	} else if (card_name == "thief") {
+		if (player != nullptr)
+			AddCard(PlayerCardType::THIEF, player);
+		return true;
+	} else {
+		return false;
 	}
 }
 
@@ -139,6 +172,18 @@ void GameManager::AddCard(PlayerCardType type, std::shared_ptr<Player> player)
 		if (player_card_deck.Get(i)->GetType() == type)
 		{
 			player->AddPlayerCard(player_card_deck.Get(i));
+			player_card_deck.Remove(i);
+			break;
+		}
+	}
+}
+
+void GameManager::RemoveCard(PlayerCardType type, std::shared_ptr<Player> player)
+{
+	for (int i = 0; i < player_card_deck.Size(); i++)
+	{
+		if (player_card_deck.Get(i)->GetType() == type)
+		{
 			player_card_deck.Remove(i);
 			break;
 		}
@@ -169,6 +214,17 @@ std::shared_ptr<Player> GameManager::AddPlayer(std::string name, std::shared_ptr
 	players.push_back(player);
     
     return player;
+}
+
+void GameManager::PrintPlayerCardDeck(std::shared_ptr<Socket> socket)
+{
+	std::string availableCards = "Available cards:\n\n";
+	for (int i = 0; i < player_card_deck.Size(); i++)
+	{
+		availableCards.append(player_card_deck.Get(i)->GetName() + "\n");
+	}
+	availableCards.append("\n");
+	networkServices->WriteToClient(availableCards, socket, false);
 }
 
 GameManager::~GameManager()

@@ -16,7 +16,8 @@ Deck<std::shared_ptr<BuildCard>> Parser::LoadBuildingFile()
 	std::string line, name, color, description;
 	int price;
 
-	std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//Bouwkaarten.csv");
+	std::ifstream file("C://Users//Sjoerd//Dropbox//C++//Machiavelli//Bouwkaarten.csv");
+	//std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//Bouwkaarten.csv");
 	while (std::getline(file, line))
 	{
 		try
@@ -76,7 +77,8 @@ Deck<std::shared_ptr<PlayerCard>> Parser::LoadCharacterFile()
 	std::string line, player;
 	int nr;
 
-	std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//karakterkaarten.csv");
+	std::ifstream file("C://Users//Sjoerd//Dropbox//C++//Machiavelli//karakterkaarten.csv");
+	//std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//karakterkaarten.csv");
 	while (std::getline(file, line))
 	{
 		try 

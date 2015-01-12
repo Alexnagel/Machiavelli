@@ -48,5 +48,6 @@ public:
 
 	// Functions
 	void Turn(TurnEnum turn, std::shared_ptr<BuildCard> build_card = nullptr);
+	bool ContainsPlayerCard(PlayerCardType type);
 };
 

@@ -117,3 +117,15 @@ void Player::Turn(TurnEnum turn, std::shared_ptr<BuildCard> build_card)
 		break;
 	}
 }
+
+bool Player::ContainsPlayerCard(PlayerCardType type)
+{
+	for (int i = 0; i < player_card_collection.size(); i++)
+	{
+		if (player_card_collection.at(i)->GetType() == type)
+		{
+			SetCurrentPlayerCard(player_card_collection.at(i));
+			return true;
+		}
+	}
+}

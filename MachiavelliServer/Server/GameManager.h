@@ -24,14 +24,19 @@ private:
 	Deck<std::shared_ptr<BuildCard>> building_card_deck;
 	PlayerCardType killed_player;
 	PlayerCardType robbed_player;
+	int index_king;
+	int number_of_player_cards;
 
 	// Functions
 	void GetPlayerCard();
 	void StartRound();
+	void Turn(std::shared_ptr<Player> player);
 	void EndGame();
 
-	bool CheckCard(std::string card_name, std::shared_ptr<Player> player);
+	bool CheckCard(std::string card_name, std::shared_ptr<Player> player = nullptr);
 	void AddCard(PlayerCardType type, std::shared_ptr<Player> player);
+	void RemoveCard(PlayerCardType type, std::shared_ptr<Player> player);
+	void PrintPlayerCardDeck(std::shared_ptr<Socket> socket);
 
 public:
 	GameManager();

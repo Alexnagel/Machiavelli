@@ -34,8 +34,9 @@ private:
 	void EndGame();
 
 	bool CheckCard(std::string card_name, std::shared_ptr<Player> player = nullptr);
+	void AddOrRemoveCard(PlayerCardType type, std::shared_ptr<Player> player = nullptr);
 	void AddCard(PlayerCardType type, std::shared_ptr<Player> player);
-	void RemoveCard(PlayerCardType type, std::shared_ptr<Player> player);
+	void RemoveCard(PlayerCardType type);
 	void PrintPlayerCardDeck(std::shared_ptr<Socket> socket);
 
 public:

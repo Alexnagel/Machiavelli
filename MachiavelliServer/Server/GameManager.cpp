@@ -48,7 +48,6 @@ void GameManager::GetPlayerCard()
 	for (int i = 0; i < players.size(); i++)
 	{
 		std::shared_ptr<Player> player;
-		std::shared_ptr<PlayerCard> card;
 
 		// Set Player
 		if (counter - i <= 0)
@@ -77,24 +76,24 @@ void GameManager::GetPlayerCard()
 		}
 
 		// Let the player remove a card from the deck
-		bool card_removed = false;
-		while (!card_removed)
+		if (i != index_king)
 		{
-			// print cards
-			PrintPlayerCardDeck(socket);
+			bool card_removed = false;
+			while (!card_removed)
+			{
+				// print cards
+				PrintPlayerCardDeck(socket);
 
-			// Let the user pick a card
-			networkServices->WriteToClient("Choose the card you want to remove from the deck\n", socket);
-			std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
+				// Let the user pick a card
+				networkServices->WriteToClient("Choose the card you want to remove from the deck\n", socket);
+				std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
 
-			// Check if this card exists
-			card_removed = CheckCard(card_name);
-			if (!card_removed)
-				networkServices->WriteToClient("This is not a valid card", socket);
+				// Check if this card exists
+				card_removed = CheckCard(card_name);
+				if (!card_removed)
+					networkServices->WriteToClient("This is not a valid card", socket);
+			}
 		}
-
-		// Add the card to the player
-		player->AddPlayerCard(card);
 
 		// Shuffle the deck
 		player_card_deck.Shuffle();
@@ -129,40 +128,40 @@ void GameManager::EndGame()
 bool GameManager::CheckCard(std::string card_name, std::shared_ptr<Player> player)
 {
 	if (card_name == "builder") {
-		if (player != nullptr)
-			AddCard(PlayerCardType::BUILDER, player);
+		AddOrRemoveCard(PlayerCardType::BUILDER, player);
 		return true;
 	} else if (card_name == "condottiere") {
-		if (player != nullptr)
-			AddCard(PlayerCardType::CONDOTTIERE, player);
+		AddOrRemoveCard(PlayerCardType::CONDOTTIERE, player);
 		return true;
 	} else if (card_name == "king") {
-		if (player != nullptr)
-			AddCard(PlayerCardType::KING, player);
+		AddOrRemoveCard(PlayerCardType::KING, player);
 		return true;
 	} else if (card_name == "magician") {
-		if (player != nullptr)
-			AddCard(PlayerCardType::MAGICIAN, player);
+		AddOrRemoveCard(PlayerCardType::MAGICIAN, player);
 		return true;
 	} else if (card_name == "merchant") {
-		if (player != nullptr)
-			AddCard(PlayerCardType::MERCHANT, player);
+		AddOrRemoveCard(PlayerCardType::MERCHANT, player);
 		return true;
 	} else if (card_name == "murderer") {
-		if (player != nullptr)
-			AddCard(PlayerCardType::MURDERER, player);
+		AddOrRemoveCard(PlayerCardType::MURDERER, player);
 		return true;
 	} else if (card_name == "preacher") {
-		if (player != nullptr)
-			AddCard(PlayerCardType::PREACHER, player);
+		AddOrRemoveCard(PlayerCardType::PREACHER, player);
 		return true;
 	} else if (card_name == "thief") {
-		if (player != nullptr)
-			AddCard(PlayerCardType::THIEF, player);
+		AddOrRemoveCard(PlayerCardType::THIEF, player);
 		return true;
 	} else {
 		return false;
 	}
+}
+
+void GameManager::AddOrRemoveCard(PlayerCardType type, std::shared_ptr<Player> player)
+{
+	if (player != nullptr)
+		AddCard(type, player);
+	else
+		RemoveCard(type);
 }
 
 void GameManager::AddCard(PlayerCardType type, std::shared_ptr<Player> player)
@@ -178,7 +177,7 @@ void GameManager::AddCard(PlayerCardType type, std::shared_ptr<Player> player)
 	}
 }
 
-void GameManager::RemoveCard(PlayerCardType type, std::shared_ptr<Player> player)
+void GameManager::RemoveCard(PlayerCardType type)
 {
 	for (int i = 0; i < player_card_deck.Size(); i++)
 	{

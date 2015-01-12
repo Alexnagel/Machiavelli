@@ -64,7 +64,6 @@ void NetworkServices::ConsumeCommand()
             catch (...) {
                 client->write("Sorry, something went wrong during handling of your request.\n");
             }
-            client->write("> \n");
         }
         else {
             std::cerr << "trying to handle command for client who has disappeared...\n";

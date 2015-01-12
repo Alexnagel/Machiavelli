@@ -7,6 +7,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <system_error>
+#include "ConnectionException.h"
 using namespace std;
 
 #include "throw.h"
@@ -29,6 +30,12 @@ void __throw_if_min1(int x, const char* file, unsigned int line, const char* mes
 		ostringstream ec_str;
 		ec_str << "system error " << ec.value() << ": " << ec.message();
 		string msg{ combine_message_elements(file, line, message, ec_str.str().c_str()) };
+        
+        if (ec.value() == 61)
+        {
+            throw ConnectionException("Unable to connect, the Machiavelli server is offline");
+        }
+        
 		throw system_error(ec, msg);
 	}
 }

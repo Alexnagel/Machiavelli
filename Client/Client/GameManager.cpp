@@ -3,13 +3,19 @@
 
 GameManager::GameManager()
 {
-	//ClientSocket("127.0.0.1", 1080);
 	networkServices = new NetworkServices();
-	networkServices->ConnectToServer();
-
-	while (networkServices->IsConnected()) {
-
-	}
+	bool success = networkServices->ConnectToServer();
+    
+    if (success)
+    {
+        // Wait for the handler threads to finish
+        networkServices->WaitForThreads();
+    }
+    else
+    {
+        std::cerr << "Press 'enter' to close the program";
+        std::cin.ignore();
+    }
 }
 
 GameManager::~GameManager()

@@ -10,14 +10,25 @@ Parser::~Parser()
 {
 }
 
+std::string Parser::CurrentPath()
+{
+    char cCurrentPath[FILENAME_MAX];
+    if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
+        return std::to_string(errno);
+    
+    cCurrentPath[sizeof(cCurrentPath) - 1] = '\0';
+    return std::string(cCurrentPath);
+}
+
 Deck<std::shared_ptr<BuildCard>> Parser::LoadBuildingFile()
 {
 	Deck<std::shared_ptr<BuildCard>> build_cards;
 	std::string line, name, color, description;
 	int price;
 
-	std::ifstream file("C://Users//Sjoerd//Dropbox//C++//Machiavelli//Bouwkaarten.csv");
-	//std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//Bouwkaarten.csv");
+    std::string curPath = CurrentPath();
+    std::ifstream file("/Users/Alex/School/Machiavelli/Build/Products/Debug/bouwkaarten.csv");
+    //std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//Bouwkaarten.csv");
 	while (std::getline(file, line))
 	{
 		try
@@ -77,7 +88,8 @@ Deck<std::shared_ptr<PlayerCard>> Parser::LoadCharacterFile()
 	std::string line, player;
 	int nr;
 
-	std::ifstream file("C://Users//Sjoerd//Dropbox//C++//Machiavelli//karakterkaarten.csv");
+    std::string curPath = CurrentPath();
+	std::ifstream file("/Users/Alex/School/Machiavelli/Build/Products/Debug/karakterkaarten.csv");
 	//std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//karakterkaarten.csv");
 	while (std::getline(file, line))
 	{
@@ -88,6 +100,9 @@ Deck<std::shared_ptr<PlayerCard>> Parser::LoadCharacterFile()
 			{
 				nr = atoi(line.substr(0, position).c_str());
 				player = line.substr(position + 1, line.length());
+                
+                if (!player.empty() && player[player.size() - 1] == '\r')
+                    player.erase(player.size() - 1);
 
 				// Remove the text that is added into a variable
 				line = "";
@@ -109,7 +124,7 @@ std::shared_ptr<PlayerCard> Parser::GetPlayerCard(std::string player)
 		return std::make_shared<Murderer>();
 	else if (player == "Dief")
 		return std::make_shared<Thief>();
-	else if (player == "Magiër")
+	else if (player == "Magier")
 		return std::make_shared<Magician>();
 	else if (player == "Koning")
 		return std::make_shared<King>();

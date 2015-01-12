@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <vector>
 
 #include "ClientSocket.h"
 #include "ConnectionException.h"
@@ -14,14 +15,18 @@ public:
 	~NetworkServices();
 
 	bool ConnectToServer();
-
+    bool IsConnected();
+    void WaitForThreads();
+    
 	void WriteCommand(std::string command);
-	bool IsConnected();
 private:
 	static const std::string HOST_IP;
 	static const int HOST_PORT;
+    
+    std::thread serverHandler;
+    std::thread userHandler;
 	static Sync_queue<ServerCommand> queue;
-
+    
 	std::unique_ptr<ClientSocket> clientSocket;
 
 	void ConsumeServerCommands();

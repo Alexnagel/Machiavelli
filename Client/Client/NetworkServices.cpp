@@ -15,11 +15,8 @@ bool NetworkServices::ConnectToServer()
 	{
 		clientSocket = std::unique_ptr<ClientSocket>(new ClientSocket(HOST_IP.c_str(), HOST_PORT));
 
-		std::thread serverHandler{ &NetworkServices::ConsumeServerCommands, this };
-		serverHandler.detach(); // detaching is usually ugly, but in this case the right thing to do
-
-		std::thread userHandler{ &NetworkServices::ConsumeUserCommands, this };
-		userHandler.detach();
+        serverHandler = std::thread{ &NetworkServices::ConsumeServerCommands, this };
+		userHandler = std::thread{ &NetworkServices::ConsumeUserCommands, this };
 	}
 	catch (const ConnectionException &e)
 	{
@@ -35,6 +32,12 @@ bool NetworkServices::ConnectToServer()
 bool NetworkServices::IsConnected()
 {
 	return isConnected;
+}
+
+void NetworkServices::WaitForThreads()
+{
+    serverHandler.join();
+    userHandler.join();
 }
 
 void NetworkServices::ConsumeServerCommands()

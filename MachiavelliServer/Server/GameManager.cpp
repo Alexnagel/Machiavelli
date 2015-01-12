@@ -44,60 +44,63 @@ void GameManager::GetPlayerCard()
 	// Remove the first character card of the deck
 	player_card_deck.RemoveLast();
 
-	int counter = index_king;
-	for (int i = 0; i < players.size(); i++)
-	{
-		std::shared_ptr<Player> player;
-
-		// Set Player
-		if (counter - i <= 0)
-			player = players.at(i);
-		else
-			player = players.at(counter - i);
-
-		// Get the socket
-		std::shared_ptr<Socket> socket = player->GetSocket();
-
-		// Let the player choose a card
-		bool card_set = false;
-		while (!card_set)
-		{
-			// print cards
-			PrintPlayerCardDeck(socket);
-
-			// Let the user pick a card
-			networkServices->WriteToClient("Choose your card\n", socket);
-			std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
-
-			// Check if this card exists
-			card_set = CheckCard(card_name, player);
-			if (!card_set)
-				networkServices->WriteToClient("This is not a valid card", socket);
-		}
-
-		// Let the player remove a card from the deck
-		if (i != index_king)
-		{
-			bool card_removed = false;
-			while (!card_removed)
-			{
-				// print cards
-				PrintPlayerCardDeck(socket);
-
-				// Let the user pick a card
-				networkServices->WriteToClient("Choose the card you want to remove from the deck\n", socket);
-				std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
-
-				// Check if this card exists
-				card_removed = CheckCard(card_name);
-				if (!card_removed)
-					networkServices->WriteToClient("This is not a valid card", socket);
-			}
-		}
-
-		// Shuffle the deck
-		player_card_deck.Shuffle();
-	}
+    for (int t = 0; t < 2; t++)
+    {
+        int counter = index_king;
+        for (int i = 0; i < players.size(); i++)
+        {
+            std::shared_ptr<Player> player;
+            
+            // Set Player
+            if (counter - i <= 0)
+                player = players.at(i);
+            else
+                player = players.at(counter - i);
+            
+            // Get the socket
+            std::shared_ptr<Socket> socket = player->GetSocket();
+            
+            // Let the player choose a card
+            bool card_set = false;
+            while (!card_set)
+            {
+                // print cards
+                PrintPlayerCardDeck(socket);
+                
+                // Let the user pick a card
+                networkServices->WriteToClient("Choose your card\n", socket, true);
+                std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
+                
+                // Check if this card exists
+                card_set = CheckCard(card_name, player);
+                if (!card_set)
+                    networkServices->WriteToClient("This is not a valid card", socket);
+            }
+            
+            // Let the player remove a card from the deck
+            if (i != index_king || (i == index_king && t != 0))
+            {
+                bool card_removed = false;
+                while (!card_removed)
+                {
+                    // print cards
+                    PrintPlayerCardDeck(socket);
+                    
+                    // Let the user pick a card
+                    networkServices->WriteToClient("Choose the card you want to remove from the deck\n", socket, true);
+                    std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
+                    
+                    // Check if this card exists
+                    card_removed = CheckCard(card_name);
+                    if (!card_removed)
+                        networkServices->WriteToClient("This is not a valid card", socket);
+                }
+            }
+            
+            // Shuffle the deck
+            player_card_deck.Shuffle();
+        }
+    }
 }
 
 void GameManager::StartRound()
@@ -223,7 +226,7 @@ void GameManager::PrintPlayerCardDeck(std::shared_ptr<Socket> socket)
 		availableCards.append(player_card_deck.Get(i)->GetName() + "\n");
 	}
 	availableCards.append("\n");
-	networkServices->WriteToClient(availableCards, socket, false);
+	networkServices->WriteToClient(availableCards, socket);
 }
 
 GameManager::~GameManager()

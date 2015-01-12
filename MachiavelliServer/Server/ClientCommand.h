@@ -19,7 +19,7 @@ public:
 	ClientCommand(const std::string& cmd, std::shared_ptr<Socket> client) : cmd(cmd), client(client), promptUser(false) {}
     ClientCommand(const std::string& cmd, std::shared_ptr<Socket> client, bool prompt) : cmd(cmd), client(client), promptUser(prompt) {}
 
-    std::string get_cmd() const { return promptUser ? cmd + "\n> " : cmd; }
+    std::string get_cmd() const { return ((promptUser) ? cmd + "> \n" : cmd); }
     void set_cmd(const std::string& command) { cmd = command; }
 
 	std::shared_ptr<Socket> get_client() const { return client; }

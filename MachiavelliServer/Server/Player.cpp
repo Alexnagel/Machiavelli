@@ -128,4 +128,5 @@ bool Player::ContainsPlayerCard(PlayerCardType type)
 			return true;
 		}
 	}
+    return false;
 }

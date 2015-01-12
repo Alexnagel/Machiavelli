@@ -115,8 +115,6 @@ std::string Socket::get_dotted_ip() const
 
 void Socket::close()
 {
-	std::cerr << "will close socket " << sock << std::endl;
-
 #if defined(__APPLE__) || defined(__linux__)
 	throw_if_min1(::close(sock));
 #else

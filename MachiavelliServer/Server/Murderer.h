@@ -9,6 +9,7 @@ public:
 	Murderer();
 	~Murderer();
 
+	std::string GetCharacteristicDescription();
 	void PerformCharacteristic();
 	PlayerCardType GetType();
 };

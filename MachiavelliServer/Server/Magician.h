@@ -7,6 +7,7 @@ public:
 	Magician();
 	~Magician();
 
+	std::string GetCharacteristicDescription();
 	void PerformCharacteristic();
 	PlayerCardType GetType();
 };

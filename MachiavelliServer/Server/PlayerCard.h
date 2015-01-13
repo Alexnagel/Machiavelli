@@ -10,6 +10,7 @@ public:
 	virtual ~PlayerCard();
 
 	virtual std::string GetName();
+	virtual std::string GetCharacteristicDescription();
 	virtual void PerformCharacteristic();
 	virtual PlayerCardType GetType();
 };

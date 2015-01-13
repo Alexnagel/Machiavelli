@@ -7,6 +7,7 @@ public:
 	Preacher();
 	~Preacher();
 
+	std::string GetCharacteristicDescription();
 	void PerformCharacteristic();
 	PlayerCardType GetType();
 };

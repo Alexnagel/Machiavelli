@@ -10,6 +10,15 @@ Thief::~Thief()
 {
 }
 
+std::string Thief::GetCharacteristicDescription()
+{
+	std::string output;
+
+	output.append("As a Thief you will choose a character to steal all his gold.");
+	output.append("You will receive the gold when it is this character his turn.");
+
+	return output;
+}
 
 void Thief::PerformCharacteristic()
 {

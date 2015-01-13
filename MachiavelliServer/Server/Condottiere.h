@@ -7,6 +7,7 @@ public:
 	Condottiere();
 	~Condottiere();
 
+	std::string GetCharacteristicDescription();
 	void PerformCharacteristic();
 	PlayerCardType GetType();
 };

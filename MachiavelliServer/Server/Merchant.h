@@ -7,6 +7,7 @@ public:
 	Merchant();
 	~Merchant();
 
+	std::string GetCharacteristicDescription();
 	void PerformCharacteristic();
 	PlayerCardType GetType();
 };

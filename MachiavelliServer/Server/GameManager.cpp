@@ -30,7 +30,8 @@ void GameManager::Start(std::shared_ptr<Player> player_called_start)
 	building_card_deck.Shuffle();
 		
     // Send message of starting game
-    networkServices->WriteToAllClients("\nStarting the game!\n");
+	networkServices->WriteToAllClients("\n");
+    networkServices->WriteToAllClients("Starting the game!\n");
     
 	// Let the player choose a card
 	GetPlayerCard();
@@ -176,6 +177,10 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
         {
             option_chosen = true;
         }
+		else if (chosen_option == "3")
+		{
+			option_chosen = true;
+		}
         else
             networkServices->WriteToClient("\n This isn't a valid option, please try again \n", socket);
     }

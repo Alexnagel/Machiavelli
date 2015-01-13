@@ -10,6 +10,10 @@ King::~King()
 {
 }
 
+std::string King::GetCharacteristicDescription()
+{
+	return "As the king you will earn 1 gold for every yellow building you have build.";
+}
 
 void King::PerformCharacteristic()
 {

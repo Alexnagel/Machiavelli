@@ -7,6 +7,7 @@ public:
 	King();
 	~King();
 
+	std::string GetCharacteristicDescription();
 	void PerformCharacteristic();
 	PlayerCardType GetType();
 };

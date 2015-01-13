@@ -10,6 +10,10 @@ Merchant::~Merchant()
 {
 }
 
+std::string Merchant::GetCharacteristicDescription()
+{
+	return "As a Merchant you will receive 1 gold for every green building you have build.";
+}
 
 void Merchant::PerformCharacteristic()
 {

@@ -7,6 +7,7 @@ public:
 	Builder();
 	~Builder();
 
+	std::string GetCharacteristicDescription();
 	void PerformCharacteristic();
 	PlayerCardType GetType();
 };

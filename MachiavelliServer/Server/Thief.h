@@ -7,6 +7,7 @@ public:
 	Thief();
 	~Thief();
 
+	std::string GetCharacteristicDescription();
 	void PerformCharacteristic();
 	PlayerCardType GetType();
 };

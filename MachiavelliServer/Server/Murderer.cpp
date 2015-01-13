@@ -10,6 +10,10 @@ Murderer::~Murderer()
 {
 }
 
+std::string Murderer::GetCharacteristicDescription()
+{
+	return "";
+}
 
 void Murderer::PerformCharacteristic()
 {

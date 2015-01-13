@@ -108,7 +108,7 @@ void NetworkServices::HandleClient(Socket *socket)
             // Read line if the client isn't being prompted
             if (!player->GetSocket()->IsClientPrompted())
             {
-                cmd = player->GetSocket()->readline();
+                cmd = Utils::ToLowerCase(player->GetSocket()->readline());
                 std::cerr << "client (" << player->GetSocket()->get() << ") said: " << cmd << '\n';
             }
             
@@ -122,25 +122,21 @@ void NetworkServices::HandleClient(Socket *socket)
             }
             else if (cmd == "start")
             {
-                /*if (gameManager->GetPlayerAmount() > 1)
-                {*/
+                if (gameManager->GetPlayerAmount() > 1)
+                {
 					gameManager->Start(player);
-                
-                    // Show that the game has started
-                    command = ClientCommand{ "The game has started!", player->GetSocket() };
+                }
+                else
+                {
+                    std::string output = "There need to be atleast 2 players to start the game.\n";
+                    output.append("Players in lobby: ");
+                    output.append(std::to_string(gameManager->GetPlayerAmount()));
+					output.append("\n");
+                    
+                    // Show the error message
+                    command = ClientCommand{ output, player->GetSocket() };
                     queue.put(command);
-     //           }
-     //           else
-     //           {
-     //               std::string output = "There need to be atleast 2 players to start the game.\n";
-     //               output.append("Players in lobby: ");
-     //               output.append(std::to_string(gameManager->GetPlayerAmount()));
-					//output.append("\n");
-     //               
-     //               // Show the error message
-     //               command = ClientCommand{ output, player->GetSocket() };
-     //               queue.put(command);
-     //           }
+                }
             }
         }
         catch (const std::exception& ex) {

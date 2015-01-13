@@ -10,6 +10,10 @@ Builder::~Builder()
 {
 }
 
+std::string Builder::GetCharacteristicDescription()
+{
+	return "As a builder you can take 2 buildcards and you are allowed to build 3 buildings";
+}
 
 void Builder::PerformCharacteristic()
 {

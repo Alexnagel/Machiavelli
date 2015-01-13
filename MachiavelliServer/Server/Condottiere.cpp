@@ -10,6 +10,16 @@ Condottiere::~Condottiere()
 {
 }
 
+std::string Condottiere::GetCharacteristicDescription()
+{
+	std::string output;
+	
+	output.append("As a Condottiere you are allowed to destroy 1 building from a other player. \n");
+	output.append("Buildings worth 1 gold you can destroy for free, other buildings you pay 1 gold less then the price. \n");
+	output.append("You will also earn 1 gold for every red building you have build.");
+	
+	return output;
+}
 
 void Condottiere::PerformCharacteristic()
 {

@@ -15,6 +15,11 @@ std::string PlayerCard::GetName()
 	return name;
 }
 
+std::string PlayerCard::GetCharacteristicDescription()
+{
+	return "";
+}
+
 void PlayerCard::PerformCharacteristic()
 {
 

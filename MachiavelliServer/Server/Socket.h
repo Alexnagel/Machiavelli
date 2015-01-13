@@ -42,7 +42,7 @@ protected:
 
 public:
 	Socket() : sock(0), is_client_prompted(false) {}
-	Socket(SOCKET sock, const struct sockaddr& address) : sock(sock), addr(address) {}
+	Socket(SOCKET sock, const struct sockaddr& address) : sock(sock), addr(address), is_client_prompted(false) {}
 	virtual ~Socket();
 
 	SOCKET get() const { return sock; }

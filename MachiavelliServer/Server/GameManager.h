@@ -18,7 +18,7 @@ class GameManager
 {
 private:
 	// Variables
-    std::unique_ptr<NetworkServices> networkServices;
+    std::shared_ptr<NetworkServices> networkServices;
 	std::vector<std::shared_ptr<Player>> players;
 	Deck<std::shared_ptr<PlayerCard>> player_card_deck;
 	Deck<std::shared_ptr<BuildCard>> building_card_deck;
@@ -28,7 +28,17 @@ private:
 	int number_of_player_cards;
     int current_round;
     
-    
+	std::vector<std::string> player_card_names = {
+		"Builder",
+		"Condottiere",
+		"King",
+		"Magician",
+		"Merchant",
+		"Murderer",
+		"Preacher",
+		"Thief"
+	};
+
 	// Functions
 	void GetPlayerCard();
 	void StartRound();
@@ -37,9 +47,6 @@ private:
     
     // Turn functions
     void ShowPlayerOptions(std::shared_ptr<Player> player);
-
-	bool CheckCard(std::string card_name, std::shared_ptr<Player> player = nullptr);
-	void AddOrRemoveCard(PlayerCardType type, std::shared_ptr<Player> player = nullptr);
 	void AddCard(PlayerCardType type, std::shared_ptr<Player> player);
 	void RemoveCard(PlayerCardType type);
 	void PrintPlayerCardDeck(std::shared_ptr<Socket> socket);
@@ -54,8 +61,13 @@ public:
 	// Getters
 	std::shared_ptr<Player> GetPlayer(int i) const;
     int GetPlayerAmount() const;
-    
+	std::shared_ptr<NetworkServices> GetNetworkServices() const;
+	std::vector<std::string> GetPlayerCardNames() const;
+	PlayerCardType CheckCardType(std::string card_name) const;
+
 	// Setters
     std::shared_ptr<Player> AddPlayer(std::string name, std::shared_ptr<Socket> socket);
+	void SetKilledPlayer(PlayerCardType type);
+	void SetRobbedPlayer(PlayerCardType type);
 };
 

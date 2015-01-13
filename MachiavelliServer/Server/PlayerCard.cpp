@@ -20,7 +20,7 @@ std::string PlayerCard::GetCharacteristicDescription()
 	return "";
 }
 
-void PlayerCard::PerformCharacteristic()
+void PlayerCard::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
 {
 
 }

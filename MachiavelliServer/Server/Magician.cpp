@@ -22,7 +22,7 @@ std::string Magician::GetCharacteristicDescription()
 }
 
 
-void Magician::PerformCharacteristic()
+void Magician::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
 {
 	/*
 	Hij mag of:

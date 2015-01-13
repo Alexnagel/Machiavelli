@@ -1,6 +1,10 @@
 #pragma once
 
+#include <memory>
+
 #include "Card.h"
+#include "GameManager.h"
+#include "Player.h"
 #include "PlayerCardType.h"
 
 class PlayerCard : public Card
@@ -11,7 +15,7 @@ public:
 
 	virtual std::string GetName();
 	virtual std::string GetCharacteristicDescription();
-	virtual void PerformCharacteristic();
+	virtual void PerformCharacteristic(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player);
 	virtual PlayerCardType GetType();
 };
 

@@ -24,34 +24,128 @@ std::string Condottiere::GetCharacteristicDescription()
 
 void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
 {
-	/*
-	Hij mag een gebouw bij een andere speler weghalen. Gebouwen die maar 1 goudstuk waard zijn mag hij
-	kosteloos verwijderen. Voor andere gebouwen moet hij 1 goudstuk minder betalen dan ze hun eigenaar gekost
-	hebben. Het goud wordt aan de bank betaald. Het verwijderde gebouw gaat op de aflegstapel. De condotierre
-	mag ook gebouwen van vermoorde karakters verwijderen. Hij mag echter geen gebouwen verwijderen uit
-	steden die al uit 8 of meer gebouwen bestaan. De condotierre ontvangt 1 goudstuk voor elk rood gebouw dat
-	hij voor zich heeft liggen.
-	*/
+	//std::string output = "";
+	//std::shared_ptr<Player> chosen_player;
+	//std::shared_ptr<Socket> socket = player->GetSocket();
+	//std::shared_ptr<NetworkServices> networkServices = manager->GetNetworkServices();
 
-	// Destroy building from player
+	//// Print all the players
+	//networkServices->WriteToClient("Players: \n", socket, true);
+	//std::vector<std::shared_ptr<Player>> players = manager->GetPlayers();
+	//for (int i = 0; i < players.size(); i++)
+	//{
+	//	std::vector<std::shared_ptr<BuildCard>> build_cards = player->GetBuildedBuildings();
+	//	if (players.at(i) != player && build_cards.size() > 0 && build_cards.size() < 8)
+	//	{
+	//		output.append = std::to_string(i) + ": " + players.at(i)->GetName() + "\n";
+	//		output.append("Buildings: \n");
+	//		for (int x = 0; x < build_cards.size(); x++)
+	//		{
+	//			output.append("- " + build_cards.at(x)->GetName() + ", " + std::to_string(build_cards.at(x)->GetCost() - 1) + "\n");
+	//		}
+	//	}
+	//}
+	//output.append("\n");
+	//output.append("Choose the number of the player you want to destroy a building from: \n");
+	//networkServices->WriteToClient(output, socket, true);
 
-	// Receive gold for every build red building
-	std::shared_ptr<Socket> socket = player->GetSocket();
-	std::vector<std::shared_ptr<BuildCard>> builded_cards_list = player->GetBuildedBuildings();
+	//// Choose a player
+	//output.clear();
+	//bool player_chosen = false;
+	//while (!player_chosen)
+	//{
+	//	std::string input = networkServices->PromptClient(socket);
 
-	int counter = 0;
-	for (int i = 0; i < builded_cards_list.size(); i++)
-	{
-		std::shared_ptr<BuildCard> build_card = builded_cards_list.at(i);
-		if (build_card->GetColor() == CardColor::RED)
-		{
-			player->AddGold(1);
-			counter++;
-		}
-	}
+	//	try {
+	//		int number = std::atoi(input.c_str());
 
-	std::shared_ptr<NetworkServices> networkServices = manager->GetNetworkServices();
-	networkServices->WriteToClient("You received " + std::to_string(counter) + " gold.", socket, true);
+	//		// Check if this number exists
+	//		if (number < players.size())
+	//		{
+	//			chosen_player = players.at(number);
+	//			output = "You chose player: " + chosen_player->GetName();
+	//			player_chosen = true;
+	//		}
+	//		else
+	//			output = "This is not a valid choice.\n";
+	//	}
+	//	catch (...)
+	//	{
+	//		output = "This is not a valid choice.\n";
+	//	}
+	//}
+	//output.append("\n");
+	//networkServices->WriteToClient(output, socket, true);
+	//
+	//// Show all the buildings with the cost to destroy
+	//output.clear();
+	//output.append("Buildings: \n");
+	//std::vector<std::shared_ptr<BuildCard>> build_cards = player->GetBuildedBuildings();
+	//for (int i = 0; i < build_cards.size(); i++)
+	//{
+	//	output.append = std::to_string(i) + ": " + build_cards.at(i)->GetName() + ", cost: " + std::to_string(build_cards.at(i)->GetCost() - 1) + "\n";
+	//}
+	//output.append("\n");
+	//output.append("Choose the number of the building you want to destroy: \n");
+	//networkServices->WriteToClient(output, socket, true);
+
+	//// Destroy a building from the player
+	//output.clear();
+	//std::string name_destroyed_building = "";
+	//bool building_destroyed = false;
+	//while (!building_destroyed)
+	//{
+	//	std::string input = networkServices->PromptClient(socket);
+
+	//	try {
+	//		int number = std::atoi(input.c_str());
+
+	//		// Check if this number exists
+	//		if (number < build_cards.size())
+	//		{
+	//			if (player->GetGold >= (build_cards.at(number)->GetCost() - 1))
+	//			{
+	//				name_destroyed_building = build_cards.at(number)->GetName();
+	//				player->RemoveGold(build_cards.at(number)->GetCost() - 1);
+	//				output = "You have destroyed building: " + name_destroyed_building + ", it cost you "
+	//					+ std::to_string(build_cards.at(number)->GetCost() - 1)
+	//					+ ", You got " + std::to_string(player->GetGold()) + " gold left.\n";
+	//				building_destroyed = true;
+	//			}
+	//			else
+	//				output = "You can't remove this building, you only got " + std::to_string(player->GetGold()) + " gold.\n";
+	//		}
+	//		else
+	//			output = "This is not a valid choice.\n";
+	//	}
+	//	catch (...)
+	//	{
+	//		output = "This is not a valid choice.\n";
+	//	}
+	//}
+	//output.append("\n");
+	//networkServices->WriteToClient(output, socket, true);
+
+	//// Receive gold for every build red building
+	//std::vector<std::shared_ptr<BuildCard>> builded_cards_list = player->GetBuildedBuildings();
+
+	//int counter = 0;
+	//for (int i = 0; i < builded_cards_list.size(); i++)
+	//{
+	//	std::shared_ptr<BuildCard> build_card = builded_cards_list.at(i);
+	//	if (build_card->GetColor() == CardColor::RED)
+	//	{
+	//		player->AddGold(1);
+	//		counter++;
+	//	}
+	//}
+
+	//networkServices->WriteToClient("You received " + std::to_string(counter) + " gold.", socket, true);
+
+	//// Let the other players know what happend
+	//output.clear();
+	//output.append(player->GetName() + " destroyed: " + name_destroyed_building + " from " + chosen_player->GetName() + " and " + player->GetName() + " received + " + std::to_string(counter) + " Gold.\n");
+	//networkServices->WriteToAllClients(output);
 }
 
 PlayerCardType Condottiere::GetType()

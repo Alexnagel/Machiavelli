@@ -42,6 +42,7 @@ public:
 	void AddBuildCard(std::shared_ptr<BuildCard> build_card);
 	void AddBuildCards(std::vector<std::shared_ptr<BuildCard>> build_cards);
 	void AddGold(int gold);
+	void RemoveGold(int gold);
 	void AddPoints(int points);
 	void DestroyBuilding(std::shared_ptr<BuildCard> build_card);
 	void SetSocket(std::shared_ptr<Socket> socket);

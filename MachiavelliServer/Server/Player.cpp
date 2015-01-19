@@ -90,6 +90,11 @@ void Player::AddGold(int gold)
 	this->gold += gold;
 }
 
+void Player::RemoveGold(int gold)
+{
+	this->gold -= gold;
+}
+
 void Player::AddPoints(int points)
 {
 	this->points += points;

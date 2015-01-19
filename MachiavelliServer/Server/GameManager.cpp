@@ -75,7 +75,7 @@ void GameManager::GetPlayerCard()
                 std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
                 
                 // Check if this card exists
-                card_set = CheckCard(card_name, player);
+                card_set = CheckCard( card_name, player);
                 if (!card_set)
                     networkServices->WriteToClient("This is not a valid card \n", socket);
                 else
@@ -143,10 +143,20 @@ void GameManager::StartRound()
 
 void GameManager::Turn(std::shared_ptr<Player> player)
 {
+    // Set used characteristic to false
+    player->SetUsedCharacteristic(false);
+    
     std::shared_ptr<Socket> socket = player->GetSocket();
     networkServices->WriteToClient("<line>", socket);
     
+    // Show the options of taking gold or building card
     ShowPlayerOptions(player);
+    
+    networkServices->WriteToClient("You can now construct a building \n", socket);
+    // Show the options for constructing building
+    ShowBuildingOptions(player);
+    
+    // Character specific options
 }
 
 void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
@@ -159,7 +169,11 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
         std::string player_options;
         player_options.append("It's your turn, you have the following options to choose from: \n");
         player_options.append("\t 1: Receive two gold \n");
-        player_options.append("\t 2: Take building cards \n");
+        player_options.append("\t 2: Take building card \n");
+        
+        if (!player->HasUsedCharacteristic())
+             player_options.append("\t 3: Use characteristic \n");
+        
         player_options.append("Please choose one of the given options \n");
         networkServices->WriteToClient(player_options, socket, true);
         
@@ -174,11 +188,120 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
         }
         else if (chosen_option == "2")
         {
+            std::vector<std::shared_ptr<BuildCard>> buildCards =
+            {
+                building_card_deck.Pop(),
+                building_card_deck.Pop()
+            };
+            std::string choice_str = "\n";
+            choice_str.append("\t 1: " + buildCards[0]->GetName() + "\n");
+            choice_str.append("\t 2: " + buildCards[1]->GetName() + "\n");
+            choice_str.append("Pick one of the two given cards to add to your building cards\n");
+            
+            bool building_chosen = false;
+            while (!building_chosen)
+            {
+                networkServices->WriteToClient(choice_str, socket, true);
+                
+                std::string chosen_card = networkServices->PromptClient(socket);
+                
+                if (chosen_card == "1")
+                {
+                    player->AddBuildCard(buildCards[0]);
+                    
+                    chosen_card = buildCards[0]->GetName();
+                    networkServices->WriteToClient("You have chosen: " + chosen_card + "\n", socket);
+                    building_chosen = true;
+                }
+                else if (chosen_card == "2")
+                {
+                    player->AddBuildCard(buildCards[1]);
+                    
+                    chosen_card = buildCards[1]->GetName();
+                    networkServices->WriteToClient("You have chosen: " + chosen_card + "\n", socket);
+                    building_chosen = true;
+                }
+                else
+                    networkServices->WriteToClient("This is not a valid option\n", socket);
+            }
             option_chosen = true;
+        }
+        else if (chosen_option == "3")
+        {
+            // player characteristic
         }
         else
             networkServices->WriteToClient("\n This isn't a valid option, please try again \n", socket);
     }
+}
+
+void GameManager::ShowBuildingOptions(std::shared_ptr<Player> player)
+{
+    std::shared_ptr<Socket> socket = player->GetSocket();
+    
+    // Create the string with all the cards
+    std::vector<std::shared_ptr<BuildCard>> build_cards = player->GetAllBuildCards();
+    std::string player_build_cards = "Available cards: \n";
+    for (int i = 0; i < build_cards.size(); i++)
+    {
+        player_build_cards.append("\t" + std::to_string(i+1) + ": " + build_cards[i]->GetName() + "\n");
+    }
+    
+    if (!player->HasUsedCharacteristic())
+        player_build_cards.append("\t 0: Use characteristic \n");
+    
+    player_build_cards.append("Pick one of the given cards \n");
+    
+    bool card_chosen = false;
+    while (!card_chosen)
+    {
+        networkServices->WriteToClient(player_build_cards, socket, true);
+        
+        std::string choice = networkServices->PromptClient(socket);
+        std::string trim_choice = Utils::trim(choice);
+        
+        int iChoice = -1;
+        try
+        {
+            iChoice = std::stoi(choice);
+        }
+        catch (std::invalid_argument &e)
+        {
+            // invalid parse
+            networkServices->WriteToClient("This is not a valid option\n", socket);
+            continue;
+        }
+        catch (std::out_of_range &e)
+        {
+            // overflow
+            networkServices->WriteToClient("This is not a valid option\n", socket);
+            continue;
+        }
+        
+        if (iChoice == 0)
+        {
+            // user characteristics
+        }
+        
+        if (iChoice < build_cards.size())
+        {
+            std::shared_ptr<BuildCard> card = build_cards[iChoice - 1];
+            bool build_success = player->ConstructBuilding(card);
+            if (build_success)
+            {
+                networkServices->WriteToClient("You have built a '" + card->GetName() + "'\n", socket);
+                networkServices->WriteToAllExceptCurrent(player->GetName() + " has built " + card->GetName() + "\n", player);
+                card_chosen = true;
+            }
+            else
+            {
+                networkServices->WriteToClient("Unable to build " + card->GetName() + ", you have insufficient funds.", socket);
+            }
+        }
+        else
+            networkServices->WriteToClient("This is not a valid option\n", socket);
+    }
+    
 }
 
 void GameManager::EndGame()
@@ -215,6 +338,20 @@ bool GameManager::CheckCard(std::string card_name, std::shared_ptr<Player> playe
 	} else {
 		return false;
 	}
+}
+
+bool GameManager::CheckBuildingCard(std::string card_name, std::shared_ptr<Player> player)
+{
+    std::vector<std::shared_ptr<BuildCard>> building_cards = player->GetAllBuildCards();
+    for (int i = 0; i < building_cards.size(); i++)
+    {
+        if (card_name == building_card_deck.Get(i)->GetName())
+        {
+            // add or remove building card
+            return true;
+        }
+    }
+    return false;
 }
 
 void GameManager::AddOrRemoveCard(PlayerCardType type, std::shared_ptr<Player> player)
@@ -285,6 +422,17 @@ void GameManager::PrintPlayerCardDeck(std::shared_ptr<Socket> socket)
 	}
 	availableCards.append("\n");
 	networkServices->WriteToClient(availableCards, socket);
+}
+
+void GameManager::PrintBuildingCardDeck(std::shared_ptr<Socket> socket)
+{
+    std::string availableCards = "Available Cards: \n\n";
+    for (int i = 0; i < building_card_deck.Size(); i++)
+    {
+        availableCards.append(building_card_deck.Get(i)->GetName() + "\n");
+    }
+    availableCards.append("\n");
+    networkServices->WriteToClient(availableCards, socket);
 }
 
 GameManager::~GameManager()

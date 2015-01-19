@@ -37,12 +37,15 @@ private:
     
     // Turn functions
     void ShowPlayerOptions(std::shared_ptr<Player> player);
-
+    void ShowBuildingOptions(std::shared_ptr<Player> player);
+    
 	bool CheckCard(std::string card_name, std::shared_ptr<Player> player = nullptr);
+    bool CheckBuildingCard(std::string card_name, std::shared_ptr<Player> = nullptr);
 	void AddOrRemoveCard(PlayerCardType type, std::shared_ptr<Player> player = nullptr);
 	void AddCard(PlayerCardType type, std::shared_ptr<Player> player);
 	void RemoveCard(PlayerCardType type);
 	void PrintPlayerCardDeck(std::shared_ptr<Socket> socket);
+    void PrintBuildingCardDeck(std::shared_ptr<Socket> socket);
 
 public:
 	GameManager();

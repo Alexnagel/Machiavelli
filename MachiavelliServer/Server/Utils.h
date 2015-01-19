@@ -17,5 +17,8 @@ public:
 
 	static std::default_random_engine GetRandomEngine();
 	static std::string ToLowerCase(std::string string);
+    static std::string &ltrim(std::string &s);
+    static std::string &rtrim(std::string &s);
+    static std::string &trim(std::string &s);
 };
 

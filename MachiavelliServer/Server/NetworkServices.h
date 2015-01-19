@@ -25,6 +25,8 @@ public:
     void WriteToClient(std::string command, std::shared_ptr<Socket> socket);
     void WriteToClient(std::string command, std::shared_ptr<Socket> socket, bool prompt);
     void WriteToAllClients(std::string command);
+    void WriteToAllExceptCurrent(std::string command, std::shared_ptr<Player> player);
+    
     std::string PromptClient(std::shared_ptr<Socket> socket);
 private:
     static const int PORT;

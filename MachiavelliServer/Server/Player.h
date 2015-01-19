@@ -20,6 +20,7 @@ private:
 	std::shared_ptr<PlayerCard> current_player_card;
 	int gold;
 	int points;
+    bool used_characteristic;
 
 public:
 	Player(std::string name);
@@ -35,6 +36,7 @@ public:
 	std::vector<std::shared_ptr<PlayerCard>> GetPlayerCards();
 	int GetPoints();
 	int GetGold();
+    bool HasUsedCharacteristic();
 
 	// Setters
 	void SetCurrentPlayerCard(std::shared_ptr<PlayerCard> player_card);
@@ -45,9 +47,11 @@ public:
 	void AddPoints(int points);
 	void DestroyBuilding(std::shared_ptr<BuildCard> build_card);
 	void SetSocket(std::shared_ptr<Socket> socket);
+    void SetUsedCharacteristic(bool used);
 
 	// Functions
 	void Turn(TurnEnum turn, std::shared_ptr<BuildCard> build_card = nullptr);
 	bool ContainsPlayerCard(PlayerCardType type);
+    bool ConstructBuilding(std::shared_ptr<BuildCard> build_card);
 };
 

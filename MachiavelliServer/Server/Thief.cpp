@@ -1,5 +1,5 @@
 #include "Thief.h"
-
+#include "NetworkServices.h"
 
 Thief::Thief() : PlayerCard("Thief")
 {
@@ -10,16 +10,52 @@ Thief::~Thief()
 {
 }
 
-
-void Thief::PerformCharacteristic()
+std::string Thief::GetCharacteristicDescription()
 {
-	/*
-	Hij kiest een karakter, die hij deze ronde wil bestelen. Hij mag de moordenaar of diens slachtoffer niet
-	aanwijzen. Als een karakter door de dief is gekozen, dan geeft deze zich pas bloot als hij aan de beurt is. Het
-	bestolen karakter geeft zich niet in de beurt van de dief bloot! Hij geeft al het goud dat hij bezit pas aan het
-	begin van zijn eigen beurt aan de dief. Het goud dat het bestolen karakter tijdens zijn beurt ontvangt mag hij
-	houden.
-	*/
+	std::string output;
+
+	output.append("As a Thief you will choose a character to steal all his gold.");
+	output.append("You will receive the gold when it is this character his turn.");
+
+	return output;
+}
+
+void Thief::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
+{
+	std::string card_name;
+	std::shared_ptr<Socket> socket = player->GetSocket();
+	std::vector<std::string> player_card_names = manager->GetPlayerCardNames();
+
+	std::string player_options;
+	player_options.append("Options: \n\n");
+	
+	for (int i = 0; i < player_card_names.size(); i++)
+	{
+		player_options.append(player_card_names.at(i) + "\n");
+	}
+
+	player_options.append("Choose the person you want to steal from: \n");
+
+	std::shared_ptr<NetworkServices> networkServices = manager->GetNetworkServices();
+	networkServices->WriteToClient(player_options, socket, true);
+
+	bool player_robbed = false;
+	while (!player_robbed)
+	{
+		card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
+		
+		PlayerCardType card_type = manager->CheckCardType(card_name);
+		if (card_type != PlayerCardType::NONE)
+		{
+			manager->SetRobbedPlayer(card_type);
+			player_robbed = true;
+		}
+		else
+			networkServices->WriteToClient("This card doesn't exist.", socket, true);
+	}
+
+	// Let all other players know which player is robbed
+	networkServices->WriteToAllClients("The " + card_name + " is robbed.");
 }
 
 PlayerCardType Thief::GetType()

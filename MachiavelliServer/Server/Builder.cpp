@@ -10,13 +10,14 @@ Builder::~Builder()
 {
 }
 
-
-void Builder::PerformCharacteristic()
+std::string Builder::GetCharacteristicDescription()
 {
-	/*
-	Hij trekt 2 gebouwenkaarten. De bouwmeester mag in zijn beurt tot 3 gebouwenkaarten uitleggen. De
-	bouwmeester kan derhalve aan het einde van het spel als enige meer dan 8 gebouwen bezitten.
-	*/
+	return "As a builder you can take 2 buildcards and you are allowed to build 3 buildings";
+}
+
+void Builder::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
+{
+	
 }
 
 PlayerCardType Builder::GetType()

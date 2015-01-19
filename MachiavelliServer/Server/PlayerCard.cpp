@@ -1,5 +1,6 @@
 #include "PlayerCard.h"
-
+#include "GameManager.h"
+#include "Player.h"
 
 PlayerCard::PlayerCard(std::string name) : Card(name)
 {
@@ -15,7 +16,12 @@ std::string PlayerCard::GetName()
 	return name;
 }
 
-void PlayerCard::PerformCharacteristic()
+std::string PlayerCard::GetCharacteristicDescription()
+{
+	return "";
+}
+
+void PlayerCard::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
 {
 
 }

@@ -1,6 +1,5 @@
 #include "Player.h"
 
-
 Player::Player(std::string name) : name(name), gold(2), points(0)
 {
 }

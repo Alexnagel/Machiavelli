@@ -3,7 +3,8 @@
 
 GameManager::GameManager() : index_king(0)
 {
-    networkServices = std::unique_ptr<NetworkServices>(new NetworkServices(std::unique_ptr<GameManager>(this)));
+	networkServices = std::make_shared<NetworkServices>(std::unique_ptr<GameManager>(this));
+		//std::unique_ptr<NetworkServices>(new NetworkServices(std::unique_ptr<GameManager>(this)));
     if (networkServices->StartServer())
     {
         // Starting server was success, now listen for clients
@@ -30,7 +31,8 @@ void GameManager::Start(std::shared_ptr<Player> player_called_start)
 	building_card_deck.Shuffle();
 		
     // Send message of starting game
-    networkServices->WriteToAllClients("\nStarting the game!\n");
+	networkServices->WriteToAllClients("\n");
+    networkServices->WriteToAllClients("Starting the game!\n");
     
 	// Let the player choose a card
 	GetPlayerCard();
@@ -71,15 +73,19 @@ void GameManager::GetPlayerCard()
                 
                 // Let the user pick a card
                 networkServices->WriteToClient("Choose your card\n", socket, true);
-                
                 std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
                 
                 // Check if this card exists
-                card_set = CheckCard( card_name, player);
-                if (!card_set)
-                    networkServices->WriteToClient("This is not a valid card \n", socket);
-                else
-                    networkServices->WriteToClient("You have chosen: " + card_name + "\n", socket);
+
+				PlayerCardType card_type = CheckCardType(card_name);
+				if (card_type != PlayerCardType::NONE)
+				{
+					AddCard(card_type, player);
+					card_set = true;
+					networkServices->WriteToClient("You have chosen: " + card_name + "\n", socket);
+				}
+				else
+					networkServices->WriteToClient("This is not a valid card \n", socket);
             }
             
             // Let the player remove a card from the deck
@@ -96,8 +102,13 @@ void GameManager::GetPlayerCard()
                     std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
                     
                     // Check if this card exists
-                    card_removed = CheckCard(card_name);
-                    if (!card_removed)
+					PlayerCardType card_type = CheckCardType(card_name);
+					if (card_type != PlayerCardType::NONE)
+					{
+						RemoveCard(card_type);
+						card_removed = true;
+					}
+					else
                         networkServices->WriteToClient("This is not a valid card \n", socket);
                 }
             }
@@ -226,10 +237,10 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
             }
             option_chosen = true;
         }
-        else if (chosen_option == "3")
-        {
-            // player characteristic
-        }
+		else if (chosen_option == "3")
+		{
+			option_chosen = true;
+		}
         else
             networkServices->WriteToClient("\n This isn't a valid option, please try again \n", socket);
     }
@@ -309,37 +320,6 @@ void GameManager::EndGame()
 
 }
 
-bool GameManager::CheckCard(std::string card_name, std::shared_ptr<Player> player)
-{
-	if (card_name == "builder") {
-		AddOrRemoveCard(PlayerCardType::BUILDER, player);
-		return true;
-	} else if (card_name == "condottiere") {
-		AddOrRemoveCard(PlayerCardType::CONDOTTIERE, player);
-		return true;
-	} else if (card_name == "king") {
-		AddOrRemoveCard(PlayerCardType::KING, player);
-		return true;
-	} else if (card_name == "magician") {
-		AddOrRemoveCard(PlayerCardType::MAGICIAN, player);
-		return true;
-	} else if (card_name == "merchant") {
-		AddOrRemoveCard(PlayerCardType::MERCHANT, player);
-		return true;
-	} else if (card_name == "murderer") {
-		AddOrRemoveCard(PlayerCardType::MURDERER, player);
-		return true;
-	} else if (card_name == "preacher") {
-		AddOrRemoveCard(PlayerCardType::PREACHER, player);
-		return true;
-	} else if (card_name == "thief") {
-		AddOrRemoveCard(PlayerCardType::THIEF, player);
-		return true;
-	} else {
-		return false;
-	}
-}
-
 bool GameManager::CheckBuildingCard(std::string card_name, std::shared_ptr<Player> player)
 {
     std::vector<std::shared_ptr<BuildCard>> building_cards = player->GetAllBuildCards();
@@ -354,12 +334,26 @@ bool GameManager::CheckBuildingCard(std::string card_name, std::shared_ptr<Playe
     return false;
 }
 
-void GameManager::AddOrRemoveCard(PlayerCardType type, std::shared_ptr<Player> player)
+PlayerCardType GameManager::CheckCardType(std::string card_name) const
 {
-	if (player != nullptr)
-		AddCard(type, player);
+	if (card_name == "builder")
+		return PlayerCardType::BUILDER;
+	else if (card_name == "condottiere")
+		return PlayerCardType::CONDOTTIERE;
+	else if (card_name == "king")
+		return PlayerCardType::KING;
+	else if (card_name == "magician")
+		return PlayerCardType::MAGICIAN;
+	else if (card_name == "merchant")
+		return PlayerCardType::MERCHANT;
+	else if (card_name == "murderer")
+		return PlayerCardType::MURDERER;
+	else if (card_name == "preacher")
+		return PlayerCardType::PREACHER;
+	else if (card_name == "thief")
+		return PlayerCardType::THIEF;
 	else
-		RemoveCard(type);
+		return PlayerCardType::NONE;
 }
 
 void GameManager::AddCard(PlayerCardType type, std::shared_ptr<Player> player)
@@ -400,6 +394,16 @@ int GameManager::GetPlayerAmount() const
     return (int)players.size();
 }
 
+std::shared_ptr<NetworkServices> GameManager::GetNetworkServices() const
+{
+	return networkServices;
+}
+
+std::vector<std::string> GameManager::GetPlayerCardNames() const
+{
+	return player_card_names;
+}
+
 std::shared_ptr<Player> GameManager::AddPlayer(std::string name, std::shared_ptr<Socket> socket)
 {
 	if (name.empty())
@@ -433,6 +437,16 @@ void GameManager::PrintBuildingCardDeck(std::shared_ptr<Socket> socket)
     }
     availableCards.append("\n");
     networkServices->WriteToClient(availableCards, socket);
+}
+
+void GameManager::SetKilledPlayer(PlayerCardType type)
+{
+	killed_player = type;
+}
+
+void GameManager::SetRobbedPlayer(PlayerCardType type)
+{
+	robbed_player = type;
 }
 
 GameManager::~GameManager()

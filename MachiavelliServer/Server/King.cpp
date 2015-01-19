@@ -1,5 +1,6 @@
 #include "King.h"
-
+#include "CardColor.h"
+#include "NetworkServices.h"
 
 King::King() : PlayerCard("King")
 {
@@ -10,23 +11,29 @@ King::~King()
 {
 }
 
-
-void King::PerformCharacteristic()
+std::string King::GetCharacteristicDescription()
 {
-	/*
-	Hij krijgt de koningskaart en wordt de volgende ronde startspeler. Na zijn beurt roept hij de overige karakters
-	op. De Koning ontvangt 1 goudstuk voor elk geel gebouw dat hij voor zich heeft liggen. Als er geen nieuwe
-	Koning is (omdat dit karakter is afgelegd of vermoord), dan blijft de huidige Koning in ambt en verricht hij ook
-	deze beurt de genoemde handelingen.
+	return "As the king you will earn 1 gold for every yellow building you have build.";
+}
 
-	Bijzondere gevallen :
+void King::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
+{
+	std::shared_ptr<Socket> socket = player->GetSocket();
+	std::vector<std::shared_ptr<BuildCard>> builded_cards_list = player->GetBuildedBuildings();
 
-	- Als de Koning vermoord wordt blijft deze tot het einde van de ronde de bij zijn ambt horende
-	  handelingen verrichten. Aan het begin van de volgende ronde krijgt de in de vorige ronde vermoorde
-	  Koning de koningskaart.
+	int counter = 0;
+	for (int i = 0; i < builded_cards_list.size(); i++)
+	{
+		std::shared_ptr<BuildCard> build_card = builded_cards_list.at(i);
+		if (build_card->GetColor() == CardColor::YELLOW)
+		{
+			player->AddGold(1);
+			counter++;
+		}
+	}
 
-	- Als de koningskaart is afgelegd, blijft de zittende Koning ook de volgende ronde in ambt.
-	*/
+	std::shared_ptr<NetworkServices> networkServices = manager->GetNetworkServices();
+	networkServices->WriteToClient("You received " + std::to_string(counter) + " gold.", socket, true);
 }
 
 PlayerCardType King::GetType()

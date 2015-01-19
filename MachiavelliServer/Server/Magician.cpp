@@ -10,8 +10,19 @@ Magician::~Magician()
 {
 }
 
+std::string Magician::GetCharacteristicDescription()
+{
+	std::string output;
 
-void Magician::PerformCharacteristic()
+	output.append("As a Magician you have two choices:\n");
+	output.append("- You can change your building cards with another player (even if you have 0 cards).\n");
+	output.append("- You can change you building cards with cards from the deck.");
+
+	return output;
+}
+
+
+void Magician::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
 {
 	/*
 	Hij mag of:

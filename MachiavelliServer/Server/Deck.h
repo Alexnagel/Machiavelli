@@ -61,7 +61,7 @@ public:
 	T Pop()
 	{
 		T temp = list.at(list.size() - 1);
-		list.erase(list.size() - 1);
+		list.erase(list.end() - 1);
 		return temp;
 	}
 

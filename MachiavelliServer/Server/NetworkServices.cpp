@@ -171,6 +171,18 @@ void NetworkServices::WriteToAllClients(std::string command)
     }
 }
 
+void NetworkServices::WriteToAllExceptCurrent(std::string command, std::shared_ptr<Player> player)
+{
+    for (int i = 0; i < gameManager->GetPlayerAmount(); i++)
+    {
+        if (gameManager->GetPlayer(i) != player)
+        {
+            ClientCommand clientCommand = ClientCommand { command, gameManager->GetPlayer(i)->GetSocket() };
+            queue.put(clientCommand);
+        }
+    }
+}
+
 std::string NetworkServices::PromptClient(std::shared_ptr<Socket> socket)
 {
     // Set to true so the readline of handleclient doesn't interfere

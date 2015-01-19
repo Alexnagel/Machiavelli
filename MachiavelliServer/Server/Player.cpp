@@ -1,6 +1,5 @@
 #include "Player.h"
 
-
 Player::Player(std::string name) : name(name), gold(2), points(0)
 {
 }
@@ -60,6 +59,11 @@ int Player::GetGold()
 	return gold;
 }
 
+bool Player::HasUsedCharacteristic()
+{
+    return used_characteristic;
+}
+
 
 // Setters
 void Player::SetCurrentPlayerCard(std::shared_ptr<PlayerCard> player_card)
@@ -105,6 +109,11 @@ void Player::SetSocket(std::shared_ptr<Socket> socket)
 	this->socket = socket;
 }
 
+void Player::SetUsedCharacteristic(bool used)
+{
+    used_characteristic = used;
+}
+
 // Functions
 void Player::Turn(TurnEnum turn, std::shared_ptr<BuildCard> build_card)
 {
@@ -135,3 +144,34 @@ bool Player::ContainsPlayerCard(PlayerCardType type)
 	}
     return false;
 }
+
+bool Player::ConstructBuilding(std::shared_ptr<BuildCard> build_card)
+{
+    if (gold >= build_card->GetCost())
+    {
+        gold -= build_card->GetCost();
+        
+        // Find the card to remove from available build cards
+        auto itr = std::find(build_card_collection.begin(), build_card_collection.end(), build_card);
+        build_card_collection.erase(itr);
+        
+        // Add to the constructed buildings
+        builded_buildings.push_back(build_card);
+        
+        return true;
+    }
+    else
+        return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+

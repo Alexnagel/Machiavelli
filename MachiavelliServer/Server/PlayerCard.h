@@ -3,10 +3,10 @@
 #include <memory>
 
 #include "Card.h"
-#include "GameManager.h"
-#include "Player.h"
 #include "PlayerCardType.h"
 
+class GameManager;
+class Player;
 class PlayerCard : public Card
 {
 public:

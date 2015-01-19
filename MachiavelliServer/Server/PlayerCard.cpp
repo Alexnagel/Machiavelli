@@ -1,5 +1,6 @@
 #include "PlayerCard.h"
-
+#include "GameManager.h"
+#include "Player.h"
 
 PlayerCard::PlayerCard(std::string name) : Card(name)
 {

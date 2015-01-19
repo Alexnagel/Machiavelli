@@ -66,14 +66,18 @@ public:
     
 	// Getters
 	std::shared_ptr<Player> GetPlayer(int i) const;
+	std::vector<std::shared_ptr<Player>> GetPlayers() const;
     int GetPlayerAmount() const;
 	std::shared_ptr<NetworkServices> GetNetworkServices() const;
 	std::vector<std::string> GetPlayerCardNames() const;
 	PlayerCardType CheckCardType(std::string card_name) const;
+	std::shared_ptr<BuildCard> TakeCard();
+	std::vector<std::shared_ptr<BuildCard>> TakeCards(int amount);
 
 	// Setters
     std::shared_ptr<Player> AddPlayer(std::string name, std::shared_ptr<Socket> socket);
 	void SetKilledPlayer(PlayerCardType type);
 	void SetRobbedPlayer(PlayerCardType type);
+	void AddBuildCard(std::shared_ptr<BuildCard> build_card);
 };
 

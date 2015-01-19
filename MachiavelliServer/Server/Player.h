@@ -49,6 +49,7 @@ public:
 	void DestroyBuilding(std::shared_ptr<BuildCard> build_card);
 	void SetSocket(std::shared_ptr<Socket> socket);
     void SetUsedCharacteristic(bool used);
+	void SetBuildCards(std::vector<std::shared_ptr<BuildCard>> build_cards);
 
 	// Functions
 	void Turn(TurnEnum turn, std::shared_ptr<BuildCard> build_card = nullptr);

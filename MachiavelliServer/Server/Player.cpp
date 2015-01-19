@@ -114,6 +114,11 @@ void Player::SetUsedCharacteristic(bool used)
     used_characteristic = used;
 }
 
+void Player::SetBuildCards(std::vector<std::shared_ptr<BuildCard>> build_cards)
+{
+	this->build_card_collection = build_cards;
+}
+
 // Functions
 void Player::Turn(TurnEnum turn, std::shared_ptr<BuildCard> build_card)
 {
@@ -163,15 +168,3 @@ bool Player::ConstructBuilding(std::shared_ptr<BuildCard> build_card)
     else
         return false;
 }
-
-
-
-
-
-
-
-
-
-
-
-

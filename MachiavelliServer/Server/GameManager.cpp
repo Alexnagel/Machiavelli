@@ -356,6 +356,23 @@ PlayerCardType GameManager::CheckCardType(std::string card_name) const
 		return PlayerCardType::NONE;
 }
 
+std::shared_ptr<BuildCard> GameManager::TakeCard()
+{
+	return building_card_deck.Pop();
+}
+
+std::vector<std::shared_ptr<BuildCard>> GameManager::TakeCards(int amount)
+{
+	std::vector<std::shared_ptr<BuildCard>> cards;
+
+	for (int i = 0; i < amount; i++)
+	{
+		cards.push_back(building_card_deck.Pop());
+	}
+
+	return cards;
+}
+
 void GameManager::AddCard(PlayerCardType type, std::shared_ptr<Player> player)
 {
 	for (int i = 0; i < player_card_deck.Size(); i++)
@@ -387,6 +404,11 @@ std::shared_ptr<Player> GameManager::GetPlayer(int i) const
 		return players.at(i);
 	else
 		return nullptr;
+}
+
+std::vector<std::shared_ptr<Player>> GameManager::GetPlayers() const
+{
+	return players;
 }
 
 int GameManager::GetPlayerAmount() const
@@ -447,6 +469,12 @@ void GameManager::SetKilledPlayer(PlayerCardType type)
 void GameManager::SetRobbedPlayer(PlayerCardType type)
 {
 	robbed_player = type;
+}
+
+void GameManager::AddBuildCard(std::shared_ptr<BuildCard> build_card)
+{
+	building_card_deck.Add(build_card);
+	building_card_deck.Shuffle();
 }
 
 GameManager::~GameManager()

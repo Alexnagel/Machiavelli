@@ -16,6 +16,7 @@ public:
 	virtual std::string GetName();
 	virtual std::string GetCharacteristicDescription();
 	virtual void PerformCharacteristic(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player);
+	virtual void ShowBuildCards(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player, std::vector<std::shared_ptr<BuildCard>> cards);
 	virtual PlayerCardType GetType();
 };
 

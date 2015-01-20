@@ -112,11 +112,14 @@ void Magician::TradeCards(std::shared_ptr<GameManager> manager, std::shared_ptr<
 	output.append("\n");
 	networkServices->WriteToClient(output, socket, true);
 	
-	
 	// Change cards
 	std::vector<std::shared_ptr<BuildCard>> temp = chosen_player->GetAllBuildCards();
 	chosen_player->SetBuildCards(player->GetAllBuildCards());
 	player->SetBuildCards(temp);
+
+	// Show the cards
+	ShowBuildCards(manager, player, player->GetAllBuildCards());
+	ShowBuildCards(manager, chosen_player, chosen_player->GetAllBuildCards());
 
 	// Let all the other players know what happend
 	output.clear();
@@ -179,13 +182,17 @@ void Magician::ReplaceCards(std::shared_ptr<GameManager> manager, std::shared_pt
 	}
 
 	// Take new cards and add them to the players deck
-	player->AddBuildCards(manager->TakeCards(chosen_cards.size()));
+	std::vector<std::shared_ptr<BuildCard>> received_cards = manager->TakeCards(chosen_cards.size());
+	player->AddBuildCards(received_cards);
 
 	// Add removed cards to the deck
 	for (int i = 0; i < chosen_cards.size(); i++)
 	{
 		manager->AddBuildCard(chosen_cards.at(i));
 	}
+
+	// Show the cards
+	ShowBuildCards(manager, player, received_cards);
 
 	// Let all the other players know what happend
 	output.clear();

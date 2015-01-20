@@ -459,7 +459,9 @@ void GameManager::PrintBuildingCardDeck(std::shared_ptr<Socket> socket)
     std::string availableCards = "Available Cards: \n\n";
     for (int i = 0; i < building_card_deck.Size(); i++)
     {
-        availableCards.append(building_card_deck.Get(i)->GetName() + "\n");
+        std::shared_ptr<BuildCard> card = building_card_deck.Get(i);
+        availableCards.append(card->GetName() + " (" + std::to_string(card->GetCost())
+                              + " " + card->GetColorString() + ")" + "\n");
     }
     availableCards.append("\n");
     networkServices->WriteToClient(availableCards, socket);

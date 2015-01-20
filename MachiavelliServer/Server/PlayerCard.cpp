@@ -2,6 +2,7 @@
 #include "GameManager.h"
 #include "Player.h"
 #include "NetworkServices.h"
+#include "BuildCard.h"
 
 PlayerCard::PlayerCard(std::string name) : Card(name)
 {

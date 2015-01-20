@@ -28,16 +28,7 @@ private:
 	int number_of_player_cards;
     int current_round;
     
-	std::vector<std::string> player_card_names = {
-		"Builder",
-		"Condottiere",
-		"King",
-		"Magician",
-		"Merchant",
-		"Murderer",
-		"Preacher",
-		"Thief"
-	};
+	std::vector<std::string> player_card_names;
 
 	// Functions
 	void GetPlayerCard();

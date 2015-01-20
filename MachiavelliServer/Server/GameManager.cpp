@@ -3,6 +3,16 @@
 
 GameManager::GameManager() : index_king(0)
 {
+	// Init card names
+	player_card_names.push_back("Builder");
+	player_card_names.push_back("Condottiere");
+	player_card_names.push_back("King");
+	player_card_names.push_back("Magician");
+	player_card_names.push_back("Merchant");
+	player_card_names.push_back("Murderer");
+	player_card_names.push_back("Preacher");
+	player_card_names.push_back("Thief");
+
 	networkServices = std::make_shared<NetworkServices>(std::unique_ptr<GameManager>(this));
 
     if (networkServices->StartServer())
@@ -296,9 +306,10 @@ void GameManager::ShowBuildingOptions(std::shared_ptr<Player> player)
         if (iChoice == 0)
         {
             // user characteristics
+			player->GetCurrentPlayerCard()->PerformCharacteristic(player);
         }
         
-        if (iChoice < build_cards.size())
+        if (iChoice > 0 && iChoice < build_cards.size())
         {
             std::shared_ptr<BuildCard> card = build_cards[iChoice - 1];
             bool build_success = player->ConstructBuilding(card);

@@ -1,11 +1,13 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include "Card.h"
 #include "PlayerCardType.h"
 
 class GameManager;
+class BuildCard;
 class Player;
 class PlayerCard : public Card
 {

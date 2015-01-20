@@ -5,7 +5,6 @@ BuildCard::BuildCard(std::string name, int cost, CardColor color, std::string de
 {
 }
 
-
 BuildCard::~BuildCard()
 {
 }
@@ -26,4 +25,28 @@ int BuildCard::GetCost()
 CardColor BuildCard::GetColor()
 {
 	return color;
+}
+
+std::string BuildCard::GetColorString()
+{
+    switch (color) {
+        case CardColor::BLUE :
+            return "Blue";
+            break;
+        case CardColor::GREEN:
+            return "Green";
+            break;
+        case CardColor::PURPLE:
+            return "Purple";
+            break;
+        case CardColor::RED:
+            return "Red";
+            break;
+        case CardColor::YELLOW:
+            return "Yellow";
+            break;
+        default:
+            return "blue";
+            break;
+    }
 }

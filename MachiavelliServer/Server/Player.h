@@ -37,6 +37,7 @@ public:
 	int GetPoints();
 	int GetGold();
     bool HasUsedCharacteristic();
+    std::string GetPlayerInfo();
 
 	// Setters
 	void SetCurrentPlayerCard(std::shared_ptr<PlayerCard> player_card);

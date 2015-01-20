@@ -119,6 +119,44 @@ void Player::SetBuildCards(std::vector<std::shared_ptr<BuildCard>> build_cards)
 	this->build_card_collection = build_cards;
 }
 
+std::string Player::GetPlayerInfo()
+{
+    std::string player_info;
+    
+    player_info.append("Gold: " + std::to_string(gold) + "\n\n");
+    player_info.append("Buildings:\n");
+
+    if (builded_buildings.size() > 0)
+    {
+        // Show constructed buildings
+        for (std::shared_ptr<BuildCard> buildCard : builded_buildings)
+        {
+            
+            player_info.append("  " + buildCard->GetName() + " (" + buildCard->GetColorString() + " " + std::to_string(buildCard->GetCost()) + ") \n");
+        }
+    }
+    else
+        player_info.append("You have no constructed buildings\n");
+    
+    player_info.append("\n");
+    player_info.append("Cards in hand:\n");
+    
+    // Show player cards
+    if (build_card_collection.size() > 0)
+    {
+        for (std::shared_ptr<BuildCard> buildCard : build_card_collection)
+        {
+            player_info.append("  " + buildCard->GetName() + " (" + buildCard->GetColorString() + " " + std::to_string(buildCard->GetCost()) + ") \n");
+        }
+    }
+    else
+        player_info.append("  You have no cards in your hand \n");
+    
+    player_info.append("\n");
+    
+    return player_info;
+}
+
 // Functions
 void Player::Turn(TurnEnum turn, std::shared_ptr<BuildCard> build_card)
 {
@@ -167,4 +205,11 @@ bool Player::ConstructBuilding(std::shared_ptr<BuildCard> build_card)
     }
     else
         return false;
+}
+
+void Player::DestroyBuilding(std::shared_ptr<BuildCard> build_card)
+{
+    auto itr = std::find(builded_buildings.begin(), builded_buildings.end(), build_card);
+    if (itr != builded_buildings.end())
+        builded_buildings.erase(itr);
 }

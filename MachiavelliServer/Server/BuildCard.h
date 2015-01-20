@@ -18,4 +18,5 @@ public:
 	std::string GetName();
 	int GetCost();
 	CardColor GetColor();
+    std::string GetColorString();
 };

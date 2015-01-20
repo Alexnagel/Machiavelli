@@ -58,6 +58,14 @@ void NetworkServices::ConsumeServerCommands()
                 WriteCommand("<stoplistening>\n");
                 continue;
             }
+            if (cmd == "<line>")
+            {
+                cmd = "";
+                for (int i = 0; i < 80; i++)
+                {
+                    cmd.append("-");
+                }
+            }
 
 			std::cerr << cmd << newlineString;
 		}

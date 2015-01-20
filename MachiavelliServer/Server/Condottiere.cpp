@@ -37,7 +37,7 @@ void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, st
 		std::vector<std::shared_ptr<BuildCard>> build_cards = player->GetBuildedBuildings();
 		if (players.at(i) != player && build_cards.size() > 0 && build_cards.size() < 8)
 		{
-			output.append = std::to_string(i) + ": " + players.at(i)->GetName() + "\n";
+			output.append(std::to_string(i) + ": " + players.at(i)->GetName() + "\n");
 			output.append("Buildings: \n");
 			for (int x = 0; x < build_cards.size(); x++)
 			{
@@ -88,7 +88,7 @@ void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, st
 	std::vector<std::shared_ptr<BuildCard>> build_cards = player->GetBuildedBuildings();
 	for (int i = 0; i < build_cards.size(); i++)
 	{
-		output.append = std::to_string(i) + ": " + build_cards.at(i)->GetName() + ", cost: " + std::to_string(build_cards.at(i)->GetCost() - 1) + "\n";
+		output.append(std::to_string(i) + ": " + build_cards.at(i)->GetName() + ", cost: " + std::to_string(build_cards.at(i)->GetCost() - 1) + "\n");
 	}
 	output.append("\n");
 	output.append("Choose the number of the building you want to destroy: \n");
@@ -110,7 +110,7 @@ void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, st
 			// Check if this number exists
 			if (number < build_cards.size())
 			{
-				if (player->GetGold >= (build_cards.at(number)->GetCost() - 1))
+				if (player->GetGold() >= (build_cards.at(number)->GetCost() - 1))
 				{				
 					// Remove the building
 					std::shared_ptr<BuildCard> build_card = std::make_shared<BuildCard>(*build_cards.at(number).get());

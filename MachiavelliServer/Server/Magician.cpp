@@ -75,7 +75,7 @@ void Magician::TradeCards(std::shared_ptr<GameManager> manager, std::shared_ptr<
 		std::vector<std::shared_ptr<BuildCard>> build_cards = player->GetBuildedBuildings();
 		if (players.at(i) != player)
 		{
-			output.append = std::to_string(i) + ": " + players.at(i)->GetName() + ", Cards: " + std::to_string(players.at(i)->GetAllBuildCards().size()) + "\n";
+			output.append(std::to_string(i) + ": " + players.at(i)->GetName() + ", Cards: " + std::to_string(players.at(i)->GetAllBuildCards().size()) + "\n");
 		}
 	}
 	output.append("\n");

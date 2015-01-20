@@ -4,7 +4,7 @@
 GameManager::GameManager() : index_king(0)
 {
 	networkServices = std::make_shared<NetworkServices>(std::unique_ptr<GameManager>(this));
-		//std::unique_ptr<NetworkServices>(new NetworkServices(std::unique_ptr<GameManager>(this)));
+
     if (networkServices->StartServer())
     {
         // Starting server was success, now listen for clients
@@ -159,6 +159,10 @@ void GameManager::Turn(std::shared_ptr<Player> player)
     
     std::shared_ptr<Socket> socket = player->GetSocket();
     networkServices->WriteToClient("<line>", socket);
+    
+    // Show player info
+    networkServices->WriteToClient("You are now playing as: " + player->GetCurrentPlayerCard()->GetName() + "\n", socket);
+    networkServices->WriteToClient(player->GetPlayerInfo(), socket);
     
     // Show the options of taking gold or building card
     ShowPlayerOptions(player);

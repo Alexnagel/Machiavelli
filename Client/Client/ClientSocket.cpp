@@ -13,16 +13,9 @@
 
 #if defined(__APPLE__) || defined(__linux__)
 
-#include <sys/socket.h>
-#include <sys/ioctl.h>
-#include <net/route.h>
-#include <net/if.h>
+
 #include <arpa/inet.h>
-#include <netinet/in.h>
-#include <sys/types.h>
 #include <netdb.h>
-#include <ifaddrs.h>
-#include <unistd.h>
 
 #else // Windows
 

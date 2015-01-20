@@ -49,6 +49,9 @@ void Murderer::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::
 			networkServices->WriteToClient("This card doesn't exist.", socket, true);
 	}
 
+	// Set used characteristic on true
+	player->SetUsedCharacteristic(true);
+
 	// Let all other players know which player is killed
 	networkServices->WriteToAllClients("The " + card_name + " is killed.");
 }

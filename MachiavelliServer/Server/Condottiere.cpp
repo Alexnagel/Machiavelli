@@ -159,6 +159,9 @@ void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, st
 
 	networkServices->WriteToClient("You received " + std::to_string(counter) + " gold.", socket, true);
 
+	// Set used characteristic on true
+	player->SetUsedCharacteristic(true);
+
 	// Let the other players know what happend
 	output.clear();
 	output.append(player->GetName() + " destroyed: " + name_destroyed_building + " from " + chosen_player->GetName() + " and " + player->GetName() + " received + " + std::to_string(counter) + " Gold.\n");

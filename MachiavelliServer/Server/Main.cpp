@@ -11,7 +11,8 @@
 int main(int argc, const char * argv[])
 {
 	// Create the manager
-	GameManager manager;
+	std::shared_ptr<GameManager> manager = std::make_shared<GameManager>();
+	manager->RunServer();
 
 	return 0;
 }

@@ -12,19 +12,21 @@ GameManager::GameManager() : index_king(0)
 	player_card_names.push_back("Murderer");
 	player_card_names.push_back("Preacher");
 	player_card_names.push_back("Thief");
+}
 
+void GameManager::RunServer()
+{
 	networkServices = std::make_shared<NetworkServices>(std::unique_ptr<GameManager>(this));
 
-    if (networkServices->StartServer())
-    {
-        // Starting server was success, now listen for clients
-        networkServices->ListenForClients();
-    }
-    else
-    {
-        std::cerr << "Error starting the Machiavelli server";
-    }
-    
+	if (networkServices->StartServer())
+	{
+		// Starting server was success, now listen for clients
+		networkServices->ListenForClients();
+	}
+	else
+	{
+		std::cerr << "Error starting the Machiavelli server";
+	}
 }
 
 void GameManager::Start(std::shared_ptr<Player> player_called_start)
@@ -306,26 +308,30 @@ void GameManager::ShowBuildingOptions(std::shared_ptr<Player> player)
         if (iChoice == 0)
         {
             // user characteristics
-			player->GetCurrentPlayerCard()->PerformCharacteristic(player);
+			std::shared_ptr<PlayerCard> card = player->GetCurrentPlayerCard();
+			card->PerformCharacteristic(shared_from_this(), player);//std::shared_ptr<GameManager>(this), player);
         }
         
-        if (iChoice > 0 && iChoice < build_cards.size())
+        if (iChoice > 0)
         {
-            std::shared_ptr<BuildCard> card = build_cards[iChoice - 1];
-            bool build_success = player->ConstructBuilding(card);
-            if (build_success)
-            {
-                networkServices->WriteToClient("You have built a '" + card->GetName() + "'\n", socket);
-                networkServices->WriteToAllExceptCurrent(player->GetName() + " has built " + card->GetName() + "\n", player);
-                card_chosen = true;
-            }
-            else
-            {
-                networkServices->WriteToClient("Unable to build " + card->GetName() + ", you have insufficient funds.", socket);
-            }
+			if (iChoice < build_cards.size())
+			{
+				std::shared_ptr<BuildCard> card = build_cards[iChoice - 1];
+				bool build_success = player->ConstructBuilding(card);
+				if (build_success)
+				{
+					networkServices->WriteToClient("You have built a '" + card->GetName() + "'\n", socket);
+					networkServices->WriteToAllExceptCurrent(player->GetName() + " has built " + card->GetName() + "\n", player);
+					card_chosen = true;
+				}
+				else
+				{
+					networkServices->WriteToClient("Unable to build " + card->GetName() + ", you have insufficient funds.", socket);
+				}
+			}
+			else
+				networkServices->WriteToClient("This is not a valid option\n", socket);            
         }
-        else
-            networkServices->WriteToClient("This is not a valid option\n", socket);
     }
     
 }

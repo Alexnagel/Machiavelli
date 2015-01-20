@@ -30,6 +30,9 @@ void Builder::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::s
 	// Show the cards
 	ShowBuildCards(manager, player, received_cards);
 
+	// Set used characteristic on true
+	player->SetUsedCharacteristic(true);
+
 	// Let all the other players know what happend
 	output.clear();
 	output.append(player->GetName() + " received 2 new cards.\n");

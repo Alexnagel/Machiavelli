@@ -59,6 +59,9 @@ void Magician::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::
 			action_chosen = false;
 		}
 	}
+
+	// Set used characteristic on true
+	player->SetUsedCharacteristic(true);
 }
 
 void Magician::TradeCards(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)

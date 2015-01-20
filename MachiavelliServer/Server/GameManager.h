@@ -14,7 +14,7 @@
 #include "PlayerCardType.h"
 
 class NetworkServices;
-class GameManager
+class GameManager : public std::enable_shared_from_this<GameManager>
 {
 private:
 	// Variables
@@ -53,8 +53,9 @@ public:
 	~GameManager();
 
     // Functions
-    void Start(std::shared_ptr<Player> player_called_start);
-    
+	void RunServer();
+	void Start(std::shared_ptr<Player> player_called_start);
+   
 	// Getters
 	std::shared_ptr<Player> GetPlayer(int i) const;
 	std::vector<std::shared_ptr<Player>> GetPlayers() const;

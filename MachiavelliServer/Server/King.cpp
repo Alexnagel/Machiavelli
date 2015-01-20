@@ -34,6 +34,12 @@ void King::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::shar
 
 	std::shared_ptr<NetworkServices> networkServices = manager->GetNetworkServices();
 	networkServices->WriteToClient("You received " + std::to_string(counter) + " gold.", socket, true);
+
+	// Set used characteristic on true
+	player->SetUsedCharacteristic(true);
+
+	// Let the other players know what happend
+	networkServices->WriteToAllClients(player->GetName() + " received " + std::to_string(counter) + " gold.");
 }
 
 PlayerCardType King::GetType()

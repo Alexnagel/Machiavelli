@@ -1,4 +1,6 @@
 #include "Utils.h"
+#include <functional>
+#include <cctype>
 
 int Utils::seed = std::random_device()();
 std::mt19937 Utils::rng = std::mt19937(Utils::seed);

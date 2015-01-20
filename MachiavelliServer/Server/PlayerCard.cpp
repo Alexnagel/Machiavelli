@@ -1,6 +1,7 @@
 #include "PlayerCard.h"
 #include "GameManager.h"
 #include "Player.h"
+#include "NetworkServices.h"
 
 PlayerCard::PlayerCard(std::string name) : Card(name)
 {
@@ -24,6 +25,21 @@ std::string PlayerCard::GetCharacteristicDescription()
 void PlayerCard::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
 {
 
+}
+
+void PlayerCard::ShowBuildCards(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player, std::vector<std::shared_ptr<BuildCard>> cards)
+{
+	std::string output = "";
+	std::shared_ptr<Socket> socket = player->GetSocket();
+	std::shared_ptr<NetworkServices> networkServices = manager->GetNetworkServices();
+
+	output.append("Received cards:\n");
+	for (int i = 0; i < cards.size(); i++)
+	{
+		output.append("- Name = " + cards.at(i)->GetName() + ", Cost = " + std::to_string(cards.at(i)->GetCost()) + ", Color = " + "\n");//+ cards.at(i)->GetColor());
+	}
+
+	networkServices->WriteToClient(output, socket, true);
 }
 
 PlayerCardType PlayerCard::GetType()

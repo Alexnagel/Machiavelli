@@ -1,4 +1,5 @@
 #include "Builder.h"
+#include "NetworkServices.h"
 
 
 Builder::Builder() : PlayerCard("Builder")
@@ -17,7 +18,22 @@ std::string Builder::GetCharacteristicDescription()
 
 void Builder::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
 {
-	
+	std::string output = "";
+	std::shared_ptr<Player> chosen_player;
+	std::shared_ptr<Socket> socket = player->GetSocket();
+	std::shared_ptr<NetworkServices> networkServices = manager->GetNetworkServices();
+
+	// Get 2 new cards
+	std::vector<std::shared_ptr<BuildCard>> received_cards = manager->TakeCards(2);
+	player->AddBuildCards(received_cards);
+
+	// Show the cards
+	ShowBuildCards(manager, player, received_cards);
+
+	// Let all the other players know what happend
+	output.clear();
+	output.append(player->GetName() + " received 2 new cards.\n");
+	networkServices->WriteToAllClients(output);
 }
 
 PlayerCardType Builder::GetType()

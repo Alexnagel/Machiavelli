@@ -169,6 +169,10 @@ void GameManager::StartRound()
 
 void GameManager::Turn(std::shared_ptr<Player> player)
 {
+	// Check if the player is robbed
+	if (player->GetCurrentPlayerCard()->GetType() == robbed_player)
+		RobPlayer(player);
+
     // Set used characteristic to false
     player->SetUsedCharacteristic(false);
     
@@ -494,6 +498,25 @@ void GameManager::PrintBuildingCardDeck(std::shared_ptr<Socket> socket)
     }
     availableCards.append("\n");
     networkServices->WriteToClient(availableCards, socket);
+}
+
+void GameManager::RobPlayer(std::shared_ptr<Player> player)
+{
+	/*for (int x = 0; x < number_of_player_cards; x++)
+	{
+		if (PlayerCardType(x) != killed_player)
+		{
+			for (int y = 0; y < players.size(); y++)
+			{
+				std::shared_ptr<Player> player = players.at(y);
+				if (player->ContainsPlayerCard(PlayerCardType(x)))
+				{
+					networkServices->WriteToAllClients("It's " + player->GetName() + "'s turn \n");
+					Turn(player);
+				}
+			}
+		}
+	}*/
 }
 
 void GameManager::SetKilledPlayer(PlayerCardType type)

@@ -47,6 +47,7 @@ private:
 	void RemoveCard(PlayerCardType type);
 	void PrintPlayerCardDeck(std::shared_ptr<Socket> socket);
     void PrintBuildingCardDeck(std::shared_ptr<Socket> socket);
+	void RobPlayer(std::shared_ptr<Player> player);
 
 public:
 	GameManager();

@@ -13,6 +13,14 @@
 
 #include "ServerSocket.h"
 
+enum KeywordReturn {
+    QUIT,
+    STARTGAME,
+    INFO,
+    NONE
+};
+
+
 class NetworkServices
 {
 public:
@@ -27,7 +35,7 @@ public:
     void WriteToAllClients(std::string command);
     void WriteToAllExceptCurrent(std::string command, std::shared_ptr<Player> player);
     
-    std::string PromptClient(std::shared_ptr<Socket> socket);
+    std::string PromptClient(std::shared_ptr<Player> player);
 private:
     static const int PORT;
     std::unique_ptr<GameManager> gameManager;
@@ -36,5 +44,7 @@ private:
     
     void ConsumeCommand();
     void HandleClient(Socket* socket);
+    KeywordReturn CheckForKeywords(std::string cmd, std::shared_ptr<Player> player);
 };
+
 

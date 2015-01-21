@@ -55,7 +55,7 @@ void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, st
 	while (!player_chosen)
 	{
 		output.clear();
-		std::string input = Utils::ToLowerCase(networkServices->PromptClient(socket));
+		std::string input = Utils::ToLowerCase(networkServices->PromptClient(player));
 
 		try 
 		{
@@ -101,7 +101,7 @@ void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, st
 	while (!building_destroyed)
 	{
 		output.clear();
-		std::string input = Utils::ToLowerCase(networkServices->PromptClient(socket));
+		std::string input = Utils::ToLowerCase(networkServices->PromptClient(player));
 
 		try 
 		{

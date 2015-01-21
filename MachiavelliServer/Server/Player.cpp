@@ -123,7 +123,8 @@ std::string Player::GetPlayerInfo()
 {
     std::string player_info;
     
-    player_info.append("Gold: " + std::to_string(gold) + "\n\n");
+    player_info.append("You are now playing as: " + current_player_card->GetName() + "\n");
+    player_info.append("Gold:                   " + std::to_string(gold) + "\n\n");
     player_info.append("Buildings:\n");
 
     if (builded_buildings.size() > 0)

@@ -42,7 +42,7 @@ void Thief::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::sha
 	bool player_robbed = false;
 	while (!player_robbed)
 	{
-		card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
+		card_name = Utils::ToLowerCase(networkServices->PromptClient(player));
 		
 		PlayerCardType card_type = manager->CheckCardType(card_name);
 		if (card_type != PlayerCardType::NONE)

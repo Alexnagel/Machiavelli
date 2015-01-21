@@ -58,7 +58,7 @@ void NetworkServices::ConsumeServerCommands()
                 WriteCommand("<stoplistening>\n");
                 continue;
             }
-            if (cmd == "<line>")
+            if (cmd == "<line>\n")
             {
                 cmd = "";
                 for (int i = 0; i < 80; i++)

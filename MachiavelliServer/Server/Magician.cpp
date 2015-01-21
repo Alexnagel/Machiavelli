@@ -40,7 +40,7 @@ void Magician::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::
 	bool action_chosen = false;
 	while (!action_chosen)
 	{
-		std::string input = Utils::ToLowerCase(networkServices->PromptClient(socket));
+		std::string input = Utils::ToLowerCase(networkServices->PromptClient(player));
 
 		if (input == "1")
 		{
@@ -91,7 +91,7 @@ void Magician::TradeCards(std::shared_ptr<GameManager> manager, std::shared_ptr<
 	while (!player_chosen)
 	{
 		output.clear();
-		std::string input = Utils::ToLowerCase(networkServices->PromptClient(socket));
+		std::string input = Utils::ToLowerCase(networkServices->PromptClient(player));
 
 		try
 		{
@@ -155,7 +155,7 @@ void Magician::ReplaceCards(std::shared_ptr<GameManager> manager, std::shared_pt
 
 		// Choose a card
 		output.clear();
-		std::string input = Utils::ToLowerCase(networkServices->PromptClient(socket));
+		std::string input = Utils::ToLowerCase(networkServices->PromptClient(player));
 		if (input == "end" && chosen_cards.size() > 0)
 		{
 			cards_chosen = true;

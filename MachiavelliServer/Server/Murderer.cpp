@@ -37,7 +37,7 @@ void Murderer::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::
 	bool player_killed = false;
 	while (!player_killed)
 	{
-		card_name = networkServices->PromptClient(socket);
+		card_name = networkServices->PromptClient(player);
 
 		PlayerCardType card_type = manager->CheckCardType(card_name);
 		if (card_type != PlayerCardType::NONE)

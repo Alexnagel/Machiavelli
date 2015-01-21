@@ -112,32 +112,8 @@ void NetworkServices::HandleClient(Socket *socket)
                 std::cerr << "client (" << player->GetSocket()->get() << ") said: " << cmd << '\n';
             }
             
-            ClientCommand command{ cmd, player->GetSocket() };
-            
-            if (cmd == "quit")
-            {
-                player->GetSocket()->write("Bye!\n");
-                player->GetSocket()->close();
-                break; // out of connection loop, will end this thread and close connection
-            }
-            else if (cmd == "start")
-            {
-                if (gameManager->GetPlayerAmount() > 1)
-                {
-					gameManager->Start(player);
-                }
-                else
-                {
-                    std::string output = "There need to be atleast 2 players to start the game.\n";
-                    output.append("Players in lobby: ");
-                    output.append(std::to_string(gameManager->GetPlayerAmount()));
-					output.append("\n");
-                    
-                    // Show the error message
-                    command = ClientCommand{ output, player->GetSocket() };
-                    queue.put(command);
-                }
-            }
+            if (CheckForKeywords(cmd, player) == KeywordReturn::QUIT)
+                break;
         }
         catch (const std::exception& ex) {
             player->GetSocket()->write("ERROR: ");
@@ -148,6 +124,47 @@ void NetworkServices::HandleClient(Socket *socket)
             player->GetSocket()->write("ERROR: something went wrong during handling of your request. Sorry!\n");
         }
     }
+}
+
+KeywordReturn NetworkServices::CheckForKeywords(std::string cmd, std::shared_ptr<Player> player)
+{
+    ClientCommand command{ cmd, player->GetSocket() };
+    
+    if (cmd == "quit")
+    {
+        player->GetSocket()->write("Bye!\n");
+        player->GetSocket()->close();
+        return KeywordReturn::QUIT;
+    }
+    else if (cmd == "start")
+    {
+        if (gameManager->GetPlayerAmount() > 1)
+        {
+            gameManager->Start(player);
+        }
+        else
+        {
+            std::string output = "There need to be atleast 2 players to start the game.\n";
+            output.append("Players in lobby: ");
+            output.append(std::to_string(gameManager->GetPlayerAmount()));
+            output.append("\n");
+            
+            // Show the error message
+            command = ClientCommand{ output, player->GetSocket() };
+            queue.put(command);
+        }
+        return KeywordReturn::STARTGAME;
+    }
+    else if (cmd == "info")
+    {
+        // Show the player info
+        command = ClientCommand{ player->GetPlayerInfo(), player->GetSocket() };
+        queue.put(command);
+        
+        return KeywordReturn::INFO;
+    }
+    
+    return KeywordReturn::NONE;
 }
 
 void NetworkServices::WriteToClient(std::string command, std::shared_ptr<Socket> socket, bool prompt)
@@ -183,10 +200,10 @@ void NetworkServices::WriteToAllExceptCurrent(std::string command, std::shared_p
     }
 }
 
-std::string NetworkServices::PromptClient(std::shared_ptr<Socket> socket)
+std::string NetworkServices::PromptClient(std::shared_ptr<Player> player)
 {
     // Set to true so the readline of handleclient doesn't interfere
-    socket->SetClientPrompted(true);
+    player->GetSocket()->SetClientPrompted(true);
     
     std::string answer;
     
@@ -194,7 +211,17 @@ std::string NetworkServices::PromptClient(std::shared_ptr<Socket> socket)
     {
         try
         {
-            answer = socket->readline();
+            answer = player->GetSocket()->readline();
+            
+            if (!answer.empty())
+            {
+                KeywordReturn returnVal = CheckForKeywords(answer, player);
+                if (returnVal == KeywordReturn::QUIT)
+                    break;
+                
+                if (returnVal != KeywordReturn::NONE)
+                    answer = "";
+            }
         }
         catch (...)
         {
@@ -202,7 +229,7 @@ std::string NetworkServices::PromptClient(std::shared_ptr<Socket> socket)
         }
     }
     
-    socket->SetClientPrompted(false);
+    player->GetSocket()->SetClientPrompted(false);
     return answer;
 }
 

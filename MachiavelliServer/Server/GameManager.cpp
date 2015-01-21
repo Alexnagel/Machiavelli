@@ -85,7 +85,7 @@ void GameManager::GetPlayerCard()
                 
                 // Let the user pick a card
                 networkServices->WriteToClient("Choose your card\n", socket, true);
-                std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
+                std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(player));
                 
                 // Check if this card exists
 
@@ -111,7 +111,7 @@ void GameManager::GetPlayerCard()
                     
                     // Let the user pick a card
                     networkServices->WriteToClient("Choose the card you want to remove from the deck\n", socket, true);
-                    std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(socket));
+                    std::string card_name = Utils::ToLowerCase(networkServices->PromptClient(player));
                     
                     // Check if this card exists
 					PlayerCardType card_type = CheckCardType(card_name);
@@ -177,10 +177,9 @@ void GameManager::Turn(std::shared_ptr<Player> player)
     player->SetUsedCharacteristic(false);
     
     std::shared_ptr<Socket> socket = player->GetSocket();
-    networkServices->WriteToClient("<line>", socket);
+    networkServices->WriteToClient("<line>\n", socket);
     
     // Show player info
-    networkServices->WriteToClient("You are now playing as: " + player->GetCurrentPlayerCard()->GetName() + "\n", socket);
     networkServices->WriteToClient(player->GetPlayerInfo(), socket);
     
     // Show the options of taking gold or building card
@@ -211,7 +210,7 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
         player_options.append("Please choose one of the given options \n");
         networkServices->WriteToClient(player_options, socket, true);
         
-        std::string chosen_option = networkServices->PromptClient(socket);
+        std::string chosen_option = networkServices->PromptClient(player);
         if (chosen_option == "1")
         {
             // Add the two gold
@@ -237,7 +236,7 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
             {
                 networkServices->WriteToClient(choice_str, socket, true);
                 
-                std::string chosen_card = networkServices->PromptClient(socket);
+                std::string chosen_card = networkServices->PromptClient(player);
                 
                 if (chosen_card == "1")
                 {
@@ -296,7 +295,7 @@ void GameManager::ShowBuildingOptions(std::shared_ptr<Player> player)
 		networkServices->WriteToClient(player_build_cards, socket, true);
 
 		// Let the player make a choice
-		std::string choice = Utils::ToLowerCase(networkServices->PromptClient(socket));
+		std::string choice = Utils::ToLowerCase(networkServices->PromptClient(player));
 		if (choice == "stop")
 			return;
 		else

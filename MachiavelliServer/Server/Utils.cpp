@@ -31,6 +31,8 @@ std::string Utils::ToLowerCase(std::string string)
 	return string;
 }
 
+
+
 // trim from start
 std::string &Utils::ltrim(std::string &s) {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
@@ -46,4 +48,10 @@ std::string &Utils::rtrim(std::string &s) {
 // trim from both ends
 std::string &Utils::trim(std::string &s) {
     return ltrim(rtrim(s));
+}
+
+std::string Utils::ToLowerAndTrim(std::string string)
+{
+    std::string lower = ToLowerCase(string);
+    return trim(lower);
 }

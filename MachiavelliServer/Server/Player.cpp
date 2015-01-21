@@ -158,6 +158,12 @@ std::string Player::GetPlayerInfo()
     return player_info;
 }
 
+void Player::RemoveBuildCard(int index)
+{
+	if (index < build_card_collection.size())
+		build_card_collection.erase(build_card_collection.begin() + index);
+}
+
 // Functions
 void Player::Turn(TurnEnum turn, std::shared_ptr<BuildCard> build_card)
 {
@@ -176,13 +182,14 @@ void Player::Turn(TurnEnum turn, std::shared_ptr<BuildCard> build_card)
 	}
 }
 
-bool Player::ContainsPlayerCard(PlayerCardType type)
+bool Player::ContainsPlayerCard(PlayerCardType type, bool set_card)
 {
 	for (int i = 0; i < player_card_collection.size(); i++)
 	{
 		if (player_card_collection.at(i)->GetType() == type)
 		{
-			SetCurrentPlayerCard(player_card_collection.at(i));
+			if (set_card)
+				SetCurrentPlayerCard(player_card_collection.at(i));
 			return true;
 		}
 	}

@@ -33,26 +33,40 @@ void GameManager::Start(std::shared_ptr<Player> player_called_start)
 {
 	// Init decks
 	building_card_deck = Parser::LoadBuildingFile();
-	player_card_deck = Parser::LoadCharacterFile();
-
-	// Set the number of player cards
-	number_of_player_cards = player_card_deck.Size();
 
 	// Shuffle the decks
-	player_card_deck.Shuffle();
 	building_card_deck.Shuffle();
 		
     // Send message of starting game
 	networkServices->WriteToAllClients("\n");
     networkServices->WriteToAllClients("Starting the game!\n");
-    
-	// Let the player choose a card
-	GetPlayerCard();
 
     // Set the round
     current_round = 1;
+
 	// Start the game rounds
-	StartRound();
+	while (!IsGameFinished())
+	{
+		// Load the player deck
+		player_card_deck = Parser::LoadCharacterFile();
+
+		// Set the number of player cards
+		number_of_player_cards = player_card_deck.Size();
+
+		// Shuffle player cards
+		player_card_deck.Shuffle();
+
+		// Let the player choose a card
+		for (int i = 0; i < players.size(); i++)
+		{
+			// Clear the cards of the player
+			players.at(i)->ClearPlayerCards();
+		}
+		GetPlayerCard();
+
+		// Start round
+		StartRound();
+	}
 }
 
 void GameManager::GetPlayerCard()
@@ -63,8 +77,8 @@ void GameManager::GetPlayerCard()
     for (int t = 0; t < 2; t++)
     {
         int counter = index_king;
-        for (int i = 0; i < players.size(); i++)
-        {
+		for (int i = 0; i < players.size(); i++)
+		{
             std::shared_ptr<Player> player;
             
             // Set Player
@@ -72,7 +86,7 @@ void GameManager::GetPlayerCard()
                 player = players.at(i);
             else
                 player = players.at(counter - i);
-            
+
             // Get the socket
             std::shared_ptr<Socket> socket = player->GetSocket();
             
@@ -157,6 +171,9 @@ void GameManager::StartRound()
 				std::shared_ptr<Player> player = players.at(y);
 				if (player->ContainsPlayerCard(PlayerCardType(x), true))
 				{
+					if (PlayerCardType(x) == PlayerCardType::KING)
+						index_king = y;
+
 					networkServices->WriteToAllClients("It's " + player->GetName() + "'s turn \n");
 					Turn(player);
 				}
@@ -523,6 +540,24 @@ void GameManager::RobPlayer(std::shared_ptr<Player> player)
 
 	// Let the players know
 	networkServices->WriteToAllClients(thief->GetName() + " robbed " + player->GetName() + " from his gold (" + std::to_string(gold) + " gold).\n");
+}
+
+void GameManager::GameFinished()
+{
+
+}
+
+bool GameManager::IsGameFinished()
+{
+	for (int i = 0; i < players.size(); i++)
+	{
+		std::vector<std::shared_ptr<BuildCard>> build_cards = players.at(i)->GetBuildedBuildings();
+		if (build_cards.size() >= 8)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 void GameManager::SetKilledPlayer(PlayerCardType type)

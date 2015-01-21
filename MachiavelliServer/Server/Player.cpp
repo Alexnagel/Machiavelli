@@ -164,6 +164,11 @@ void Player::RemoveBuildCard(int index)
 		build_card_collection.erase(build_card_collection.begin() + index);
 }
 
+void Player::ClearPlayerCards()
+{
+	player_card_collection.clear();
+}
+
 // Functions
 void Player::Turn(TurnEnum turn, std::shared_ptr<BuildCard> build_card)
 {

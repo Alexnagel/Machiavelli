@@ -48,6 +48,8 @@ private:
 	void PrintPlayerCardDeck(std::shared_ptr<Socket> socket);
     void PrintBuildingCardDeck(std::shared_ptr<Socket> socket);
 	void RobPlayer(std::shared_ptr<Player> player);
+	void GameFinished();
+	bool IsGameFinished();
 
 public:
 	GameManager();

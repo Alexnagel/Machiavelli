@@ -52,6 +52,7 @@ public:
     void SetUsedCharacteristic(bool used);
 	void SetBuildCards(std::vector<std::shared_ptr<BuildCard>> build_cards);
 	void RemoveBuildCard(int index);
+	void ClearPlayerCards();
 
 	// Functions
 	void Turn(TurnEnum turn, std::shared_ptr<BuildCard> build_card = nullptr);

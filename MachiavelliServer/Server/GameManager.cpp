@@ -44,6 +44,28 @@ void GameManager::Start(std::shared_ptr<Player> player_called_start)
     // Set the round
     current_round = 1;
 
+
+	//// --------- TEST CODE -----------
+	//for (int i = 0; i < players.size(); i++)
+	//{
+	//	if (i == 0)
+	//	{
+	//		players.at(i)->AddGold(99999);
+	//	
+	//		for (int x = 0; x < 10; x++)
+	//		{
+	//			players.at(i)->AddBuildCard(building_card_deck.Pop());
+	//		}
+	//		
+	//		for (int y = 0; y < 10; y++)
+	//		{
+	//			players.at(i)->ConstructBuilding(players.at(i)->GetBuildCard(0));
+	//		}
+	//	}
+	//}
+	//winner = players.at(0);
+	//// -------- END TEST CODE --------
+
 	// Start the game rounds
 	while (!IsGameFinished())
 	{
@@ -67,6 +89,9 @@ void GameManager::Start(std::shared_ptr<Player> player_called_start)
 		// Start round
 		StartRound();
 	}
+
+	// Finish the game
+	GameFinished();
 }
 
 void GameManager::GetPlayerCard()
@@ -544,7 +569,60 @@ void GameManager::RobPlayer(std::shared_ptr<Player> player)
 
 void GameManager::GameFinished()
 {
+	std::vector<std::pair<std::string, int>> result_list;
 
+	// Calculate score for each player
+	for (int i = 0; i < players.size(); i++)
+	{
+		std::string name = players.at(i)->GetName();
+		int score = 0;
+
+		// Count building score and check the building colors
+		bool yellow = false, green = false, blue = false, red = false, purple = false;
+		std::vector<std::shared_ptr<BuildCard>> build_cards = players.at(i)->GetBuildedBuildings();
+		for (int x = 0; x < build_cards.size(); x++)
+		{
+			score += build_cards.at(x)->GetCost();
+
+			switch (build_cards.at(x)->GetColor())
+			{
+			case CardColor::YELLOW: yellow = true; break;
+			case CardColor::GREEN: green = true; break;
+			case CardColor::BLUE: blue = true; break;
+			case CardColor::RED: red = true; break;
+			case CardColor::PURPLE: purple = true; break;
+			}
+		}
+
+		// Check if the user build a building of every color
+		if (yellow && green && blue && red && purple)
+			score += 3;
+
+		// Check if the user has built 8 buildings
+		if (winner == players.at(i))
+			score += 4;
+
+		// Check if the player built 8 buildings and is not the winner
+		else if (build_cards.size() >= 8)
+			score += 2;
+	
+		// Insert result
+		result_list.push_back(std::pair<std::string, int>(name, score));
+	}
+
+	// Sort result
+	std::sort(result_list.begin(), result_list.end(), [](std::pair<std::string, int>& first, std::pair<std::string, int>& second)
+	{
+		return first.second > second.second;
+	});
+
+	// Print result
+	std::string output = "Final result:\n";
+	for (int i = 0; i < result_list.size(); i++)
+	{
+		output.append(std::to_string(i + 1) + ": " + result_list.at(i).first + ", Score: " + std::to_string(result_list.at(i).second) + ".\n");
+	}
+	networkServices->WriteToAllClients(output);
 }
 
 bool GameManager::IsGameFinished()

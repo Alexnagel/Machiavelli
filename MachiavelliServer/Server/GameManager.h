@@ -24,6 +24,7 @@ private:
 	Deck<std::shared_ptr<BuildCard>> building_card_deck;
 	PlayerCardType killed_player;
 	PlayerCardType robbed_player;
+	std::shared_ptr<Player> winner;
 	int index_king;
 	int number_of_player_cards;
     int current_round;

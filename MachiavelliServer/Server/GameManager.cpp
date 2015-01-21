@@ -150,13 +150,16 @@ void GameManager::StartRound()
     networkServices->WriteToAllClients("\n\nStarting round " + std::to_string(current_round) + "\n");
 	for (int x = 0; x < number_of_player_cards; x++)
 	{
-		for (int y = 0; y < players.size(); y++)
+		if (PlayerCardType(x) != killed_player)
 		{
-			std::shared_ptr<Player> player = players.at(y);
-			if (player->ContainsPlayerCard(PlayerCardType(x)))
+			for (int y = 0; y < players.size(); y++)
 			{
-                networkServices->WriteToAllClients("It's " + player->GetName() + "'s turn \n");
-                Turn(player);
+				std::shared_ptr<Player> player = players.at(y);
+				if (player->ContainsPlayerCard(PlayerCardType(x)))
+				{
+					networkServices->WriteToAllClients("It's " + player->GetName() + "'s turn \n");
+					Turn(player);
+				}
 			}
 		}
 	}
@@ -256,6 +259,8 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
 		else if (chosen_option == "3")
 		{
 			option_chosen = true;
+			std::shared_ptr<PlayerCard> card = player->GetCurrentPlayerCard();
+			card->PerformCharacteristic(shared_from_this(), player);
 		}
         else
             networkServices->WriteToClient("\n This isn't a valid option, please try again \n", socket);
@@ -265,75 +270,82 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
 void GameManager::ShowBuildingOptions(std::shared_ptr<Player> player)
 {
     std::shared_ptr<Socket> socket = player->GetSocket();
-    
-    // Create the string with all the cards
-    std::vector<std::shared_ptr<BuildCard>> build_cards = player->GetAllBuildCards();
-    std::string player_build_cards = "Available cards: \n";
-    for (int i = 0; i < build_cards.size(); i++)
-    {
-        player_build_cards.append("\t" + std::to_string(i+1) + ": " + build_cards[i]->GetName() + "\n");
-    }
-    
-    if (!player->HasUsedCharacteristic())
-        player_build_cards.append("\t 0: Use characteristic \n");
-    
-    player_build_cards.append("Pick one of the given cards \n");
-    
+	
     bool card_chosen = false;
-    while (!card_chosen)
-    {
-        networkServices->WriteToClient(player_build_cards, socket, true);
-        
-        std::string choice = networkServices->PromptClient(socket);
-        std::string trim_choice = Utils::trim(choice);
-        
-        int iChoice = -1;
-        try
-        {
-            iChoice = std::stoi(choice);
-        }
-        catch (std::invalid_argument &e)
-        {
-            // invalid parse
-            networkServices->WriteToClient("This is not a valid option\n", socket);
-            continue;
-        }
-        catch (std::out_of_range &e)
-        {
-            // overflow
-            networkServices->WriteToClient("This is not a valid option\n", socket);
-            continue;
-        }
-        
-        if (iChoice == 0)
-        {
-            // user characteristics
-			std::shared_ptr<PlayerCard> card = player->GetCurrentPlayerCard();
-			card->PerformCharacteristic(shared_from_this(), player);//std::shared_ptr<GameManager>(this), player);
-        }
-        
-        if (iChoice > 0)
-        {
-			if (iChoice < build_cards.size())
+	while (!card_chosen || !player->HasUsedCharacteristic())
+	{
+		// Create the string with all the cards
+		std::vector<std::shared_ptr<BuildCard>> build_cards = player->GetAllBuildCards();
+		std::string player_build_cards = "Available cards: \n\n";
+		for (int i = 0; i < build_cards.size(); i++)
+		{
+			player_build_cards.append("\t" + std::to_string(i + 1) + ": " + build_cards[i]->GetName() + "\n");
+		}
+
+		if (!player->HasUsedCharacteristic())
+			player_build_cards.append("\t0: Use characteristic \n");
+
+		player_build_cards.append("\tStop: Stop your turn.\n");
+		player_build_cards.append("Pick one of the given cards \n");
+
+		// Let the player know his choices
+		networkServices->WriteToClient(player_build_cards, socket, true);
+
+		// Let the player make a choice
+		std::string choice = Utils::ToLowerCase(networkServices->PromptClient(socket));
+		if (choice == "stop")
+			return;
+		else
+		{
+			std::string trim_choice = Utils::trim(choice);
+
+			int iChoice = -1;
+			try
 			{
-				std::shared_ptr<BuildCard> card = build_cards[iChoice - 1];
-				bool build_success = player->ConstructBuilding(card);
-				if (build_success)
+				iChoice = std::stoi(choice);
+			}
+			catch (std::invalid_argument &e)
+			{
+				// invalid parse
+				networkServices->WriteToClient("This is not a valid option\n", socket);
+				continue;
+			}
+			catch (std::out_of_range &e)
+			{
+				// overflow
+				networkServices->WriteToClient("This is not a valid option\n", socket);
+				continue;
+			}
+
+			if (iChoice == 0)
+			{
+				// user characteristics
+				std::shared_ptr<PlayerCard> card = player->GetCurrentPlayerCard();
+				card->PerformCharacteristic(shared_from_this(), player);
+			}
+
+			if (iChoice > 0)
+			{
+				if (iChoice <= build_cards.size())
 				{
-					networkServices->WriteToClient("You have built a '" + card->GetName() + "'\n", socket);
-					networkServices->WriteToAllExceptCurrent(player->GetName() + " has built " + card->GetName() + "\n", player);
-					card_chosen = true;
+					std::shared_ptr<BuildCard> card = build_cards[iChoice - 1];
+					bool build_success = player->ConstructBuilding(card);
+					if (build_success)
+					{
+						networkServices->WriteToClient("You have built a '" + card->GetName() + "'\n", socket);
+						networkServices->WriteToAllExceptCurrent(player->GetName() + " has built " + card->GetName() + "\n", player);
+						card_chosen = true;
+					}
+					else
+					{
+						networkServices->WriteToClient("Unable to build " + card->GetName() + ", you have insufficient funds.\n", socket);
+					}
 				}
 				else
-				{
-					networkServices->WriteToClient("Unable to build " + card->GetName() + ", you have insufficient funds.", socket);
-				}
+					networkServices->WriteToClient("This is not a valid option\n", socket);
 			}
-			else
-				networkServices->WriteToClient("This is not a valid option\n", socket);            
-        }
-    }
-    
+		}
+	}    
 }
 
 void GameManager::EndGame()

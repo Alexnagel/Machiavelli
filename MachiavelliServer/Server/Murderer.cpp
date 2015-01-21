@@ -29,7 +29,7 @@ void Murderer::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::
 		player_options.append(player_card_names.at(i) + "\n");
 	}
 
-	player_options.append("Choose the person you want to kill: \n");
+	player_options.append("\nChoose the person you want to kill: \n");
 
 	std::shared_ptr<NetworkServices> networkServices = manager->GetNetworkServices();
 	networkServices->WriteToClient(player_options, socket, true);
@@ -46,14 +46,14 @@ void Murderer::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::
 			player_killed = true;
 		}
 		else
-			networkServices->WriteToClient("This card doesn't exist.", socket, true);
+			networkServices->WriteToClient("This card doesn't exist.\n", socket, true);
 	}
 
 	// Set used characteristic on true
 	player->SetUsedCharacteristic(true);
 
 	// Let all other players know which player is killed
-	networkServices->WriteToAllClients("The " + card_name + " is killed.");
+	networkServices->WriteToAllClients("\nThe " + card_name + " is killed.\n\n");
 }
 
 PlayerCardType Murderer::GetType()

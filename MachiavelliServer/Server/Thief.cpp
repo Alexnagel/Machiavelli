@@ -34,7 +34,7 @@ void Thief::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::sha
 		player_options.append(player_card_names.at(i) + "\n");
 	}
 
-	player_options.append("Choose the person you want to steal from: \n");
+	player_options.append("\nChoose the person you want to steal from: \n");
 
 	std::shared_ptr<NetworkServices> networkServices = manager->GetNetworkServices();
 	networkServices->WriteToClient(player_options, socket, true);
@@ -51,14 +51,14 @@ void Thief::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::sha
 			player_robbed = true;
 		}
 		else
-			networkServices->WriteToClient("This card doesn't exist.", socket, true);
+			networkServices->WriteToClient("This card doesn't exist.\n", socket, true);
 	}
 
 	// Set used characteristic on true
 	player->SetUsedCharacteristic(true);
 
 	// Let all other players know which player is robbed
-	networkServices->WriteToAllClients("The " + card_name + " is robbed.");
+	networkServices->WriteToAllClients("\nThe " + card_name + " is robbed.\n\n");
 }
 
 PlayerCardType Thief::GetType()

@@ -155,7 +155,7 @@ void GameManager::StartRound()
 			for (int y = 0; y < players.size(); y++)
 			{
 				std::shared_ptr<Player> player = players.at(y);
-				if (player->ContainsPlayerCard(PlayerCardType(x)))
+				if (player->ContainsPlayerCard(PlayerCardType(x), true))
 				{
 					networkServices->WriteToAllClients("It's " + player->GetName() + "'s turn \n");
 					Turn(player);
@@ -260,9 +260,8 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
             }
             option_chosen = true;
         }
-		else if (chosen_option == "3")
+		else if (chosen_option == "3" && !player->HasUsedCharacteristic())
 		{
-			option_chosen = true;
 			std::shared_ptr<PlayerCard> card = player->GetCurrentPlayerCard();
 			card->PerformCharacteristic(shared_from_this(), player);
 		}

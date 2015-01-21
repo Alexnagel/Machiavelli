@@ -51,10 +51,11 @@ public:
 	void SetSocket(std::shared_ptr<Socket> socket);
     void SetUsedCharacteristic(bool used);
 	void SetBuildCards(std::vector<std::shared_ptr<BuildCard>> build_cards);
+	void RemoveBuildCard(int index);
 
 	// Functions
 	void Turn(TurnEnum turn, std::shared_ptr<BuildCard> build_card = nullptr);
-	bool ContainsPlayerCard(PlayerCardType type);
+	bool ContainsPlayerCard(PlayerCardType type, bool set_card);
     bool ConstructBuilding(std::shared_ptr<BuildCard> build_card);
 };
 

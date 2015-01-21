@@ -139,12 +139,12 @@ void Magician::ReplaceCards(std::shared_ptr<GameManager> manager, std::shared_pt
 	// Choose cards you want to replace
 	bool cards_chosen = false;
 	std::vector<std::shared_ptr<BuildCard>> chosen_cards;
-	std::vector<std::shared_ptr<BuildCard>> cards = player->GetAllBuildCards();
 	while (!cards_chosen)
 	{
-		output.clear();
+		std::vector<std::shared_ptr<BuildCard>> cards = player->GetAllBuildCards();
 
 		// Show the options
+		output.clear();
 		output.append("Choose the number of the card you want to remove from your deck: \n");
 		for (int i = 0; i < cards.size(); i++)
 		{
@@ -170,7 +170,7 @@ void Magician::ReplaceCards(std::shared_ptr<GameManager> manager, std::shared_pt
 				if (number < cards.size())
 				{
 					chosen_cards.push_back(std::make_shared<BuildCard>(*cards.at(number)));
-					cards.erase(cards.begin() + number);
+					player->RemoveBuildCard(number);
 				}
 				else
 					output = "This is not a valid choice.\n";

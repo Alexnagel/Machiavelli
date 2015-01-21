@@ -502,21 +502,29 @@ void GameManager::PrintBuildingCardDeck(std::shared_ptr<Socket> socket)
 
 void GameManager::RobPlayer(std::shared_ptr<Player> player)
 {
-	/*for (int x = 0; x < number_of_player_cards; x++)
+	std::shared_ptr<Player> thief;
+
+	// Find the thief
+	for (int x = 0; x < players.size(); x++)
 	{
-		if (PlayerCardType(x) != killed_player)
+		std::vector<std::shared_ptr<PlayerCard>> player_cards = players.at(x)->GetPlayerCards();
+		for (int y = 0; y < player_cards.size(); y++)
 		{
-			for (int y = 0; y < players.size(); y++)
+			if (player_cards.at(y)->GetType() == PlayerCardType::THIEF)
 			{
-				std::shared_ptr<Player> player = players.at(y);
-				if (player->ContainsPlayerCard(PlayerCardType(x)))
-				{
-					networkServices->WriteToAllClients("It's " + player->GetName() + "'s turn \n");
-					Turn(player);
-				}
+				thief = players.at(x);
+				break;
 			}
 		}
-	}*/
+	}
+
+	// Rob the robbed player
+	int gold = player->GetGold();
+	player->RemoveGold(gold);
+	thief->AddGold(gold);
+
+	// Let the players know
+	networkServices->WriteToAllClients(thief->GetName() + " robbed " + player->GetName() + " from his gold (" + std::to_string(gold) + " gold).\n");
 }
 
 void GameManager::SetKilledPlayer(PlayerCardType type)

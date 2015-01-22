@@ -28,8 +28,9 @@ Deck<std::shared_ptr<BuildCard>> Parser::LoadBuildingFile()
 
     std::string curPath = CurrentPath();
     //std::ifstream file("/Users/Alex/School/Machiavelli/Build/Products/Debug/bouwkaarten.csv");
-    std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//Bouwkaarten.csv");
+    //std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//Bouwkaarten.csv");
 	//std::ifstream file("C://Users//Sjoerd//Dropbox//C++//Machiavelli//Bouwkaarten.csv");
+    std::ifstream file("/root/Machiavelli/bouwkaarten.csv");
 	while (std::getline(file, line))
 	{
 		try
@@ -91,8 +92,9 @@ Deck<std::shared_ptr<PlayerCard>> Parser::LoadCharacterFile()
 
     std::string curPath = CurrentPath();
 	//std::ifstream file("/Users/Alex/School/Machiavelli/Build/Products/Debug/karakterkaarten.csv");
-	std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//karakterkaarten.csv");
+	//std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//karakterkaarten.csv");
 	//std::ifstream file("C://Users//Sjoerd//Dropbox//C++//Machiavelli//karakterkaarten.csv");
+    std::ifstream file("/root/Machiavelli/karakterkaarten.csv");
 	while (std::getline(file, line))
 	{
 		try 

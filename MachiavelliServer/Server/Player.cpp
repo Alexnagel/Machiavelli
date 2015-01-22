@@ -138,7 +138,10 @@ std::string Player::GetPlayerInfo()
 {
     std::string player_info;
     
-    player_info.append("You are now playing as: " + current_player_card->GetName() + "\n");
+	if (current_player_card != nullptr)
+		player_info.append("You are now playing as: " + current_player_card->GetName() + "\n");
+	else
+		player_info.append("You have no active player card.\n");
     player_info.append("Gold:                   " + std::to_string(gold) + "\n\n");
     player_info.append("Buildings:\n");
 
@@ -147,7 +150,6 @@ std::string Player::GetPlayerInfo()
         // Show constructed buildings
         for (std::shared_ptr<BuildCard> buildCard : builded_buildings)
         {
-            
             player_info.append("  " + buildCard->GetName() + " (" + buildCard->GetColorString() + " " + std::to_string(buildCard->GetCost()) + ") \n");
         }
     }

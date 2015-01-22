@@ -292,9 +292,9 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
             // Set the choice string
             std::string choice_str = "\n";
             
-            for (int i = 1; i < buildCards.size(); i++)
+            for (int i = 0; i < buildCards.size(); i++)
             {
-                choice_str.append("\t [" + std::to_string(i) + "] "+ buildCards[i]->GetCardString() + "\n");
+                choice_str.append("\t [" + std::to_string(i + 1) + "] "+ buildCards[i]->GetCardString() + "\n");
             }
             
             if (has_library && has_observatory)

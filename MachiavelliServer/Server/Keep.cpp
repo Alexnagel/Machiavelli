@@ -10,7 +10,7 @@
 #include "GameManager.h"
 #include "NetworkServices.h"
 
-Keep::Keep() : BuildCard("Keep", 3, CardColor::PURPLE, "The Keep cannot be destroyed by the Condottiere", false, false)
+Keep::Keep() : BuildCard("Keep", 3, CardColor::PURPLE, "The Keep cannot be destroyed by the Condottiere")
 {
 }
 
@@ -22,7 +22,6 @@ BuildingEnum Keep::GetBuildingType()
 {
     return BuildingEnum::KEEP;
 }
-
 
 Keep::~Keep()
 {

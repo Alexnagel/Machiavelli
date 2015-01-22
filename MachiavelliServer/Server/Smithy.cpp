@@ -10,7 +10,7 @@
 #include "GameManager.h"
 #include "NetworkServices.h"
 
-Smithy::Smithy() : BuildCard("Smithy", 5, CardColor::PURPLE, "Once during your turn, you may pay two gold to draw 3 building cards.", true, false)
+Smithy::Smithy() : BuildCard("Smithy", 5, CardColor::PURPLE, "Once during your turn, you may pay two gold to draw 3 building cards.")
 {
 }
 
@@ -65,5 +65,4 @@ BuildingEnum Smithy::GetBuildingType()
 
 Smithy::~Smithy()
 {
-    
 }

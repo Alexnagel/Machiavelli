@@ -94,7 +94,8 @@ void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, st
 		std::vector<std::shared_ptr<BuildCard>> build_cards = chosen_player->GetBuildedBuildings();
 		for (int i = 0; i < build_cards.size(); i++)
 		{
-			output.append(std::to_string(i) + ": " + build_cards.at(i)->GetName() + ", cost: " + std::to_string(build_cards.at(i)->GetCost() - 1) + "\n");
+			if (build_cards.at(i)->GetBuildingType() != BuildingEnum::KEEP)
+				output.append(std::to_string(i) + ": " + build_cards.at(i)->GetName() + ", cost: " + std::to_string(build_cards.at(i)->GetCost() - 1) + "\n");
 		}
 		output.append("\n");
 		output.append("Choose the number of the building you want to destroy: \n");
@@ -115,24 +116,29 @@ void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, st
 				// Check if this number exists
 				if (number < build_cards.size())
 				{
-					if (player->GetGold() >= (build_cards.at(number)->GetCost() - 1))
+					if (build_cards.at(number)->GetBuildingType() != BuildingEnum::KEEP)
 					{
-						// Remove the building
-						std::shared_ptr<BuildCard> build_card = std::make_shared<BuildCard>(*build_cards.at(number).get());
-						chosen_player->DestroyBuilding(build_card);
-						manager->AddBuildCard(build_card);
-						building_destroyed = true;
+						if (player->GetGold() >= (build_cards.at(number)->GetCost() - 1))
+						{
+							// Remove the building
+							std::shared_ptr<BuildCard> build_card = std::make_shared<BuildCard>(*build_cards.at(number).get());
+							chosen_player->DestroyBuilding(build_card);
+							manager->AddBuildCard(build_card);
+							building_destroyed = true;
 
-						name_destroyed_building = build_card->GetName();
-						player->RemoveGold(build_card->GetCost() - 1);
+							name_destroyed_building = build_card->GetName();
+							player->RemoveGold(build_card->GetCost() - 1);
 
-						// Set the output
-						output.append("You have destroyed building: " + name_destroyed_building + ", ");
-						output.append("it cost you " + std::to_string(build_card->GetCost() - 1) + ", ");
-						output.append("You got " + std::to_string(player->GetGold()) + " gold left.\n");
+							// Set the output
+							output.append("You have destroyed building: " + name_destroyed_building + ", ");
+							output.append("it cost you " + std::to_string(build_card->GetCost() - 1) + ", ");
+							output.append("You got " + std::to_string(player->GetGold()) + " gold left.\n");
+						}
+						else
+							output = "You can't remove this building, you only got " + std::to_string(player->GetGold()) + " gold.\n";
 					}
 					else
-						output = "You can't remove this building, you only got " + std::to_string(player->GetGold()) + " gold.\n";
+						output = "You can't remove this building, because it's a keep.\n";
 				}
 				else
 					output = "This is not a valid choice.\n";
@@ -144,6 +150,11 @@ void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, st
 
 			networkServices->WriteToClient(output, socket, true);
 		}
+
+		// Check if the build cards contains a graveyard
+		if (chosen_player->ContainsBuildingCard(BuildingEnum::GRAVEYARD))
+			chosen_player->GetBuildedBuildingCard(BuildingEnum::GRAVEYARD)->UseCardSpecial(manager, chosen_player);
+
 		output.clear();
 		output.append("\n");
 		networkServices->WriteToClient(output, socket, true);
@@ -152,6 +163,8 @@ void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, st
 	{
 		output = "There are no other players available from who you can destroy a building.\n";
 	}	
+
+	
 
 	// Receive gold for every build red building
 	std::vector<std::shared_ptr<BuildCard>> builded_cards_list = player->GetBuildedBuildings();

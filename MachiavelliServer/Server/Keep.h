@@ -10,7 +10,6 @@
 #define __Machiavelli__Keep__
 
 #include "BuildCard.h"
-#include <vector>
 
 class Keep : public BuildCard
 {

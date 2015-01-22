@@ -10,7 +10,6 @@
 #define __Machiavelli__DragonGate__
 
 #include "BuildCard.h"
-#include <vector>
 
 class DragonGate : public BuildCard
 {

@@ -22,5 +22,4 @@ public:
     BuildingEnum GetBuildingType();
 };
 
-
 #endif /* defined(__Machiavelli__Smithy__) */

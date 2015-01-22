@@ -10,7 +10,7 @@
 #include "GameManager.h"
 #include "NetworkServices.h"
 
-HauntedCity::HauntedCity() : BuildCard("Haunted City", 2, CardColor::PURPLE, "For the purposes of victory points, the Haunted City is conisdered to be of the color of your choice", false, true)
+HauntedCity::HauntedCity() : BuildCard("Haunted City", 2, CardColor::PURPLE, "For the purposes of victory points, the Haunted City is conisdered to be of the color of your choice")
 {
 }
 
@@ -23,7 +23,7 @@ void HauntedCity::UseCardSpecial(std::shared_ptr<GameManager> manager, std::shar
     while (!color_chosen)
     {
         networkServices->WriteToClient("This card can be changed to the color of your choice. \n", socket);
-        networkServices->WriteToClient("Please enter a color", socket, true);
+        networkServices->WriteToClient("Please enter a color:\n", socket, true);
         std::string chosen_color = Utils::ToLowerAndTrim(networkServices->PromptClient(player));
         
         if (chosen_color == "yellow")
@@ -54,14 +54,12 @@ void HauntedCity::UseCardSpecial(std::shared_ptr<GameManager> manager, std::shar
         else
             networkServices->WriteToClient("This is not a valid option\n", socket);
     }
-    card_used = true;
 }
 
 BuildingEnum HauntedCity::GetBuildingType()
 {
     return BuildingEnum::HAUNTEDCITY;
 }
-
 
 HauntedCity::~HauntedCity()
 {

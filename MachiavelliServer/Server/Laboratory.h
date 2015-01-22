@@ -23,5 +23,4 @@ public:
     BuildingEnum GetBuildingType();
 };
 
-
 #endif /* defined(__Machiavelli__Laboratory__) */

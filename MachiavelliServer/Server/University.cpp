@@ -9,7 +9,7 @@
 
 #include "University.h"
 
-University::University() : BuildCard("University", 6, CardColor::PURPLE, "This card is worth 8 points at the end of the game", false, true)
+University::University() : BuildCard("University", 6, CardColor::PURPLE, "This card is worth 8 points at the end of the game")
 {
     
 }
@@ -27,5 +27,4 @@ BuildingEnum University::GetBuildingType()
 
 University::~University()
 {
-    
 }

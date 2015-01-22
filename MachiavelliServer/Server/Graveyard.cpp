@@ -10,7 +10,7 @@
 #include "GameManager.h"
 #include "NetworkServices.h"
 
-GraveYard::GraveYard() : BuildCard("Graveyard", 5, CardColor::PURPLE, "When the Condottiere destroys a building, you may pay one gold to take the destroyed building into your hand.  You may not do this if you are the Warlord", false, false)
+GraveYard::GraveYard() : BuildCard("Graveyard", 5, CardColor::PURPLE, "When the Condottiere destroys a building, you may pay one gold to take the destroyed building into your hand.  You may not do this if you are the Warlord")
 {
     
 }
@@ -54,5 +54,4 @@ BuildingEnum GraveYard::GetBuildingType()
 
 GraveYard::~GraveYard()
 {
-    
 }

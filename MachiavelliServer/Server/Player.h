@@ -31,6 +31,7 @@ public:
 	std::shared_ptr<Socket> GetSocket();
 	std::shared_ptr<PlayerCard> GetCurrentPlayerCard();
 	std::shared_ptr<BuildCard> GetBuildCard(int index);
+	std::shared_ptr<BuildCard> GetBuildedBuildingCard(BuildingEnum type);
 	std::vector<std::shared_ptr<BuildCard>> GetAllBuildCards();
 	std::vector<std::shared_ptr<BuildCard>> GetBuildedBuildings();
 	std::vector<std::shared_ptr<PlayerCard>> GetPlayerCards();
@@ -58,6 +59,7 @@ public:
 	// Functions
 	void Turn(TurnEnum turn, std::shared_ptr<BuildCard> build_card = nullptr);
 	bool ContainsPlayerCard(PlayerCardType type, bool set_card);
+	bool ContainsBuildingCard(BuildingEnum type);
     bool ConstructBuilding(std::shared_ptr<BuildCard> build_card);
 };
 

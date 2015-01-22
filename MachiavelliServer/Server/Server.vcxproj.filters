@@ -43,18 +43,30 @@
     <Filter Include="Source Files\Controller">
       <UniqueIdentifier>{25cf3161-d403-4d90-81a6-90f9dd1476af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Cards">
+      <UniqueIdentifier>{9f62b1e7-8241-4539-a366-5e1ecad46056}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Cards\BuildCards">
+      <UniqueIdentifier>{dce007fc-c65d-4a14-aae5-672f7ccbf197}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Cards\PlayerCards">
+      <UniqueIdentifier>{87094c14-3c43-42ae-ac31-f80ee612565b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Cards">
+      <UniqueIdentifier>{232837dd-164b-4dc6-93b5-f34ed82e8c3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Cards\PlayerCards">
+      <UniqueIdentifier>{c34d324e-474c-401d-9655-2c40b5dda9d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Cards\BuildCards">
+      <UniqueIdentifier>{37c08e51-8a6f-4039-8334-9c1e9b6bcb36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BuildCard.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
     <ClCompile Include="Card.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerCard.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
@@ -65,30 +77,6 @@
     </ClCompile>
     <ClCompile Include="Throw.cpp">
       <Filter>Source Files\Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="Thief.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Builder.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Condottiere.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="King.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Magician.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Merchant.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Murderer.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Preacher.cpp">
-      <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Parser.cpp">
@@ -103,18 +91,75 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files\Services</Filter>
     </ClCompile>
+    <ClCompile Include="ConnectionException.cpp">
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildCard.cpp">
+      <Filter>Source Files\Cards\BuildCards</Filter>
+    </ClCompile>
+    <ClCompile Include="Builder.cpp">
+      <Filter>Source Files\Cards\PlayerCards</Filter>
+    </ClCompile>
+    <ClCompile Include="Condottiere.cpp">
+      <Filter>Source Files\Cards\PlayerCards</Filter>
+    </ClCompile>
+    <ClCompile Include="King.cpp">
+      <Filter>Source Files\Cards\PlayerCards</Filter>
+    </ClCompile>
+    <ClCompile Include="Magician.cpp">
+      <Filter>Source Files\Cards\PlayerCards</Filter>
+    </ClCompile>
+    <ClCompile Include="Merchant.cpp">
+      <Filter>Source Files\Cards\PlayerCards</Filter>
+    </ClCompile>
+    <ClCompile Include="Murderer.cpp">
+      <Filter>Source Files\Cards\PlayerCards</Filter>
+    </ClCompile>
+    <ClCompile Include="Preacher.cpp">
+      <Filter>Source Files\Cards\PlayerCards</Filter>
+    </ClCompile>
+    <ClCompile Include="Thief.cpp">
+      <Filter>Source Files\Cards\PlayerCards</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCard.cpp">
+      <Filter>Source Files\Cards\PlayerCards</Filter>
+    </ClCompile>
+    <ClCompile Include="DragonGate.cpp">
+      <Filter>Source Files\Cards\BuildCards</Filter>
+    </ClCompile>
+    <ClCompile Include="Graveyard.cpp">
+      <Filter>Source Files\Cards\BuildCards</Filter>
+    </ClCompile>
+    <ClCompile Include="HauntedCity.cpp">
+      <Filter>Source Files\Cards\BuildCards</Filter>
+    </ClCompile>
+    <ClCompile Include="Keep.cpp">
+      <Filter>Source Files\Cards\BuildCards</Filter>
+    </ClCompile>
+    <ClCompile Include="Laboratory.cpp">
+      <Filter>Source Files\Cards\BuildCards</Filter>
+    </ClCompile>
+    <ClCompile Include="Library.cpp">
+      <Filter>Source Files\Cards\BuildCards</Filter>
+    </ClCompile>
+    <ClCompile Include="Observatory.cpp">
+      <Filter>Source Files\Cards\BuildCards</Filter>
+    </ClCompile>
+    <ClCompile Include="SchoolOfMagic.cpp">
+      <Filter>Source Files\Cards\BuildCards</Filter>
+    </ClCompile>
+    <ClCompile Include="Smithy.cpp">
+      <Filter>Source Files\Cards\BuildCards</Filter>
+    </ClCompile>
+    <ClCompile Include="University.cpp">
+      <Filter>Source Files\Cards\BuildCards</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BuildCard.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
     <ClInclude Include="Card.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerCard.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="GameManager.h">
@@ -131,33 +176,6 @@
     </ClInclude>
     <ClInclude Include="Sync_queue.h">
       <Filter>Header Files\Services</Filter>
-    </ClInclude>
-    <ClInclude Include="Thief.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Condottiere.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Builder.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="King.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Magician.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Merchant.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Murderer.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Preacher.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="CardColor.h">
-      <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="Parser.h">
       <Filter>Header Files\Services</Filter>
@@ -177,8 +195,77 @@
     <ClInclude Include="TurnEnum.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
+    <ClInclude Include="ConnectionException.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="DragonGate.h">
+      <Filter>Header Files\Cards\BuildCards</Filter>
+    </ClInclude>
+    <ClInclude Include="Graveyard.h">
+      <Filter>Header Files\Cards\BuildCards</Filter>
+    </ClInclude>
+    <ClInclude Include="HauntedCity.h">
+      <Filter>Header Files\Cards\BuildCards</Filter>
+    </ClInclude>
+    <ClInclude Include="Keep.h">
+      <Filter>Header Files\Cards\BuildCards</Filter>
+    </ClInclude>
+    <ClInclude Include="Laboratory.h">
+      <Filter>Header Files\Cards\BuildCards</Filter>
+    </ClInclude>
+    <ClInclude Include="Library.h">
+      <Filter>Header Files\Cards\BuildCards</Filter>
+    </ClInclude>
+    <ClInclude Include="Observatory.h">
+      <Filter>Header Files\Cards\BuildCards</Filter>
+    </ClInclude>
+    <ClInclude Include="SchoolOfMagic.h">
+      <Filter>Header Files\Cards\BuildCards</Filter>
+    </ClInclude>
+    <ClInclude Include="Smithy.h">
+      <Filter>Header Files\Cards\BuildCards</Filter>
+    </ClInclude>
+    <ClInclude Include="University.h">
+      <Filter>Header Files\Cards\BuildCards</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildCard.h">
+      <Filter>Header Files\Cards\BuildCards</Filter>
+    </ClInclude>
+    <ClInclude Include="CardColor.h">
+      <Filter>Header Files\Cards\BuildCards</Filter>
+    </ClInclude>
+    <ClInclude Include="Builder.h">
+      <Filter>Header Files\Cards\PlayerCards</Filter>
+    </ClInclude>
+    <ClInclude Include="Condottiere.h">
+      <Filter>Header Files\Cards\PlayerCards</Filter>
+    </ClInclude>
+    <ClInclude Include="King.h">
+      <Filter>Header Files\Cards\PlayerCards</Filter>
+    </ClInclude>
+    <ClInclude Include="Magician.h">
+      <Filter>Header Files\Cards\PlayerCards</Filter>
+    </ClInclude>
+    <ClInclude Include="Merchant.h">
+      <Filter>Header Files\Cards\PlayerCards</Filter>
+    </ClInclude>
+    <ClInclude Include="Murderer.h">
+      <Filter>Header Files\Cards\PlayerCards</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCard.h">
+      <Filter>Header Files\Cards\PlayerCards</Filter>
+    </ClInclude>
     <ClInclude Include="PlayerCardType.h">
-      <Filter>Header Files\Model</Filter>
+      <Filter>Header Files\Cards\PlayerCards</Filter>
+    </ClInclude>
+    <ClInclude Include="Preacher.h">
+      <Filter>Header Files\Cards\PlayerCards</Filter>
+    </ClInclude>
+    <ClInclude Include="Thief.h">
+      <Filter>Header Files\Cards\PlayerCards</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingEnum.h">
+      <Filter>Header Files\Cards\BuildCards</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

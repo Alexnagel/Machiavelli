@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "NetworkServices.h"
+#include "BuildingEnum.h"
 
 GameManager::GameManager() : index_king(0)
 {
@@ -43,28 +44,6 @@ void GameManager::Start(std::shared_ptr<Player> player_called_start)
 
     // Set the round
     current_round = 1;
-
-
-	//// --------- TEST CODE -----------
-	//for (int i = 0; i < players.size(); i++)
-	//{
-	//	if (i == 0)
-	//	{
-	//		players.at(i)->AddGold(99999);
-	//	
-	//		for (int x = 0; x < 10; x++)
-	//		{
-	//			players.at(i)->AddBuildCard(building_card_deck.Pop());
-	//		}
-	//		
-	//		for (int y = 0; y < 10; y++)
-	//		{
-	//			players.at(i)->ConstructBuilding(players.at(i)->GetBuildCard(0));
-	//		}
-	//	}
-	//}
-	//winner = players.at(0);
-	//// -------- END TEST CODE --------
 
 	// Start the game rounds
 	while (!IsGameFinished())
@@ -379,6 +358,7 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
 
 void GameManager::ShowBuildingOptions(std::shared_ptr<Player> player)
 {
+	int counter = 0;
     std::shared_ptr<Socket> socket = player->GetSocket();
 	
     bool card_chosen = false;
@@ -461,7 +441,13 @@ void GameManager::ShowBuildingOptions(std::shared_ptr<Player> player)
 					{
 						networkServices->WriteToClient("You have built a '" + card->GetName() + "'\n", socket);
 						networkServices->WriteToAllExceptCurrent(player->GetName() + " has built " + card->GetName() + "\n", player);
-						card_chosen = true;
+
+						if (player->GetCurrentPlayerCard()->GetType() == PlayerCardType::BUILDER && counter < 2)
+							counter++;
+						else if (player->GetCurrentPlayerCard()->GetType() == PlayerCardType::BUILDER && counter >= 2)
+							card_chosen = true;
+						else
+							card_chosen = true;
 					}
 					else
 					{
@@ -674,7 +660,7 @@ void GameManager::GameFinished()
             
             // Check for Haunted City
             if (build_cards.at(x)->GetBuildingType() == BuildingEnum::HAUNTEDCITY)
-                build_cards.at(x)->UseCardSpecial(std::shared_ptr<GameManager>(this), players.at(i));
+                build_cards.at(x)->UseCardSpecial(shared_from_this(), players.at(i));
 
 			switch (build_cards.at(x)->GetColor())
 			{
@@ -697,7 +683,7 @@ void GameManager::GameFinished()
 		// Check if the player built 8 buildings and is not the winner
 		else if (build_cards.size() >= 8)
 			score += 2;
-	
+
 		// Insert result
 		result_list.push_back(std::pair<std::string, int>(name, score));
 	}

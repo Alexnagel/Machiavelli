@@ -10,7 +10,6 @@
 #define __Machiavelli__University__
 
 #include "BuildCard.h"
-#include <vector>
 
 class University : public BuildCard
 {

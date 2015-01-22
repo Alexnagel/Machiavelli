@@ -8,7 +8,7 @@
 
 #include "Library.h"
 
-Library::Library() : BuildCard("Library", 6, CardColor::PURPLE, "If you choose to draw cards you you take an action, you keep both of the cards you have drawn.", true, false)
+Library::Library() : BuildCard("Library", 6, CardColor::PURPLE, "If you choose to draw cards you you take an action, you keep both of the cards you have drawn.")
 {
     
 }
@@ -26,5 +26,4 @@ BuildingEnum Library::GetBuildingType()
 
 Library::~Library()
 {
-    
 }

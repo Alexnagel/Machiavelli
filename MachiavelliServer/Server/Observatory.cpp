@@ -11,7 +11,7 @@
 #include "GameManager.h"
 #include "NetworkServices.h"
 
-Observatory::Observatory() : BuildCard("Observatory", 5, CardColor::PURPLE, "If you choose to draw cards when you take an action, you draw 3 cards, keep one of your choice, and put the other 2 on the bottom of the deck", true, false)
+Observatory::Observatory() : BuildCard("Observatory", 5, CardColor::PURPLE, "If you choose to draw cards when you take an action, you draw 3 cards, keep one of your choice, and put the other 2 on the bottom of the deck")
 {
 }
 
@@ -28,5 +28,4 @@ BuildingEnum Observatory::GetBuildingType()
 
 Observatory::~Observatory()
 {
-    
 }

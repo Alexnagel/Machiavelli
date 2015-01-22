@@ -10,7 +10,7 @@
 #include "GameManager.h"
 #include "NetworkServices.h"
 
-SchoolOfMagic::SchoolOfMagic() : BuildCard("School of Magic", 6, CardColor::PURPLE, "During the payout fase this card will be the color of your choice. If you are King, Condottiere, Preacher or Merchant you will receive one gold", true, false)
+SchoolOfMagic::SchoolOfMagic() : BuildCard("School of Magic", 6, CardColor::PURPLE, "During the payout fase this card will be the color of your choice. If you are King, Condottiere, Preacher or Merchant you will receive one gold")
 {
     
 }
@@ -73,5 +73,4 @@ BuildingEnum SchoolOfMagic::GetBuildingType()
 
 SchoolOfMagic::~SchoolOfMagic()
 {
-    
 }

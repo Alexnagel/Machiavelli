@@ -10,7 +10,6 @@
 #define __Machiavelli__SchoolOfMagic__
 
 #include "BuildCard.h"
-#include <vector>
 
 class SchoolOfMagic : public BuildCard
 {

@@ -8,7 +8,7 @@
 
 #include "DragonGate.h"
 
-DragonGate::DragonGate() : BuildCard("Dragon Gate", 6, CardColor::PURPLE, "This card is worth 8 points at the end of the game", false, true)
+DragonGate::DragonGate() : BuildCard("Dragon Gate", 6, CardColor::PURPLE, "This card is worth 8 points at the end of the game")
 {
     
 }
@@ -26,5 +26,4 @@ BuildingEnum DragonGate::GetBuildingType()
 
 DragonGate::~DragonGate()
 {
-    
 }

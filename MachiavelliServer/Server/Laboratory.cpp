@@ -10,7 +10,7 @@
 #include "GameManager.h"
 #include "NetworkServices.h"
 
-Laboratory::Laboratory() : BuildCard("Laboratory", 5, CardColor::PURPLE, "Once during your turn, you may discard a building card from your hand and receive one gold from the bank", true, false)
+Laboratory::Laboratory() : BuildCard("Laboratory", 5, CardColor::PURPLE, "Once during your turn, you may discard a building card from your hand and receive one gold from the bank")
 {
 }
 
@@ -73,6 +73,5 @@ BuildingEnum Laboratory::GetBuildingType()
 
 Laboratory::~Laboratory()
 {
-    
 }
 

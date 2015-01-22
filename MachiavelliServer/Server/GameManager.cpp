@@ -89,18 +89,25 @@ void GameManager::GetPlayerCard()
 	// Remove the first character card of the deck
 	player_card_deck.RemoveLast();
 
+	int counter = index_king;
     for (int t = 0; t < 2; t++)
     {
-        int counter = index_king;
 		for (int i = 0; i < players.size(); i++)
 		{
             std::shared_ptr<Player> player;
             
             // Set Player
-            if (counter - i <= 0)
-                player = players.at(i);
-            else
-                player = players.at(counter - i);
+			int index;
+			if (counter - i >= 0)
+			{
+				player = players.at(counter - i);
+				index = counter - i;
+			}
+			else
+			{
+				player = players.at(i);
+				index = 1;
+			}
 
             // Get the socket
             std::shared_ptr<Socket> socket = player->GetSocket();
@@ -130,7 +137,7 @@ void GameManager::GetPlayerCard()
             }
             
             // Let the player remove a card from the deck
-            if ((i != index_king || (i == index_king && t != 0)) && i < 3)
+			if (!(index == index_king && t == 0) && index < 3)
             {
                 bool card_removed = false;
                 while (!card_removed)
@@ -334,7 +341,7 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
                 {
                     player->AddBuildCard(buildCards[iChoice - 1]);
                     
-                    chosen_card = buildCards[iChoice]->GetName();
+                    chosen_card = buildCards[iChoice - 1]->GetName();
                     buildCards.erase(buildCards.begin() + (iChoice - 1));
                     
                     networkServices->WriteToClient("You have chosen: " + chosen_card + "\n", socket);

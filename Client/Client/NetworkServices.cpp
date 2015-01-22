@@ -73,7 +73,10 @@ void NetworkServices::ConsumeServerCommands()
                 }
             }
             if (cmd == "<connectionclosed>")
+            {
+                std::cerr << "The connection to the server has been lost \n";
                 break;
+            }
 
 			std::cerr << cmd << newlineString;
 		}

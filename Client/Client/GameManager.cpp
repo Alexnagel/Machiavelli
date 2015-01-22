@@ -11,11 +11,9 @@ GameManager::GameManager()
         // Wait for the handler threads to finish
         networkServices->WaitForThreads();
     }
-    else
-    {
-        std::cerr << "Press 'enter' to close the program";
-        std::cin.ignore();
-    }
+    
+    std::cerr << "Press 'enter' to close the program";
+    std::cin.ignore();
 }
 
 GameManager::~GameManager()

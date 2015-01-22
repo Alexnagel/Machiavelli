@@ -85,11 +85,16 @@ std::string Socket::readline()
 	// read a line: ignore '\r', stop at '\n'
 	std::string line;
 	char c;
-	while (ssize_t n = ::recv(sock, &c, 1, 0)) {
+    ssize_t n;
+	while ((n = ::recv(sock, &c, 1, 0))) {
 		throw_if_min1((int)n);
 		if (c == '\n') break;
 		if (c != '\r') line += c;
 	}
+    
+    if (n == 0)
+        line = "<connectionlost>";
+    
 	return line;
 }
 

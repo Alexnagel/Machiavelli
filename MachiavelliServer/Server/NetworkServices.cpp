@@ -127,6 +127,10 @@ void NetworkServices::HandleClient(Socket *socket)
             if (!player->GetSocket()->IsClientPrompted())
             {
                 cmd = Utils::ToLowerCase(player->GetSocket()->readline());
+                
+                if (cmd == "<connectionclosed>")
+                    break;
+                
                 std::cerr << "client (" << player->GetSocket()->get() << ") said: " << cmd << '\n';
             }
             
@@ -142,6 +146,7 @@ void NetworkServices::HandleClient(Socket *socket)
             player->GetSocket()->write("ERROR: something went wrong during handling of your request. Sorry!\n");
         }
     }
+    player->GetSocket()->close();
 }
 
 KeywordReturn NetworkServices::CheckForKeywords(std::string cmd, std::shared_ptr<Player> player)

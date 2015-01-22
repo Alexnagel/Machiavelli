@@ -23,7 +23,7 @@ void HauntedCity::UseCardSpecial(std::shared_ptr<GameManager> manager, std::shar
     while (!color_chosen)
     {
         networkServices->WriteToClient("This card can be changed to the color of your choice. \n", socket);
-        networkServices->WriteToClient("Please enter a color", socket, true);
+        networkServices->WriteToClient("Please enter a color:\n", socket, true);
         std::string chosen_color = Utils::ToLowerAndTrim(networkServices->PromptClient(player));
         
         if (chosen_color == "yellow")
@@ -55,6 +55,11 @@ void HauntedCity::UseCardSpecial(std::shared_ptr<GameManager> manager, std::shar
             networkServices->WriteToClient("This is not a valid option\n", socket);
     }
     card_used = true;
+}
+
+BuildingEnum HauntedCity::GetType()
+{
+	return BuildingEnum::HAUNTEDCITY;
 }
 
 HauntedCity::~HauntedCity()

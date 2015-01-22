@@ -7,3 +7,22 @@
 //
 
 #include "Smithy.h"
+
+Smithy::Smithy() : BuildCard("", 2, CardColor::PURPLE, "", false, true)
+{
+}
+
+Smithy::~Smithy()
+{
+
+}
+
+void Smithy::UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
+{
+
+}
+
+BuildingEnum Smithy::GetType()
+{
+	return BuildingEnum::SMITHY;
+}

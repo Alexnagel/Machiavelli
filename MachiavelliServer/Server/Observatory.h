@@ -9,6 +9,18 @@
 #ifndef __Machiavelli__Observatory__
 #define __Machiavelli__Observatory__
 
-#include <stdio.h>
+#include "BuildCard.h"
+#include "BuildingEnum.h"
+#include <vector>
+
+class Observatory : public BuildCard
+{
+public:
+	Observatory();
+	~Observatory();
+
+	void UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player);
+	BuildingEnum GetType();
+};
 
 #endif /* defined(__Machiavelli__Observatory__) */

@@ -7,3 +7,22 @@
 //
 
 #include "Graveyard.h"
+
+Graveyard::Graveyard() : BuildCard("y", 2, CardColor::PURPLE, "", false, true)
+{
+}
+
+Graveyard::~Graveyard()
+{
+
+}
+
+void Graveyard::UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
+{
+
+}
+
+BuildingEnum Graveyard::GetType()
+{
+	return BuildingEnum::GRAVEYARD;
+}

@@ -10,15 +10,17 @@
 #define __Machiavelli__Graveyard__
 
 #include "BuildCard.h"
+#include "BuildingEnum.h"
 #include <vector>
 
-class Keep : public BuildCard
+class Graveyard : public BuildCard
 {
 public:
-    Keep();
-    ~Keep();
+	Graveyard();
+	~Graveyard();
     
     void UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player);
+	BuildingEnum GetType();
 };
 
 #endif /* defined(__Machiavelli__Graveyard__) */

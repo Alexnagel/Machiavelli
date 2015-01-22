@@ -7,3 +7,22 @@
 //
 
 #include "SchoolOfMagic.h"
+
+SchoolOfMagic::SchoolOfMagic() : BuildCard("", 2, CardColor::PURPLE, "", false, true)
+{
+}
+
+SchoolOfMagic::~SchoolOfMagic()
+{
+
+}
+
+void SchoolOfMagic::UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
+{
+
+}
+
+BuildingEnum SchoolOfMagic::GetType()
+{
+	return BuildingEnum::MAGICSCHOOL;
+}

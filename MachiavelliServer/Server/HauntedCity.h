@@ -10,6 +10,7 @@
 #define __Machiavelli__HauntedCity__
 
 #include "BuildCard.h"
+#include "BuildingEnum.h"
 
 class HauntedCity : public BuildCard
 {
@@ -18,6 +19,7 @@ public:
     virtual ~HauntedCity();
     
     void UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player);
+	BuildingEnum GetType();
 };
 
 #endif /* defined(__Machiavelli__HauntedCity__) */

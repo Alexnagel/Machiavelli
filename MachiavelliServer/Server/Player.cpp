@@ -34,6 +34,16 @@ std::shared_ptr<BuildCard> Player::GetBuildCard(int index)
 		return nullptr;
 }
 
+std::shared_ptr<BuildCard> Player::GetBuildedBuildingCard(BuildingEnum type)
+{
+	for (int i = 0; i < builded_buildings.size(); i++)
+	{
+		if (builded_buildings.at(i)->GetType() == type)
+			return builded_buildings.at(i);
+	}
+	return nullptr;
+}
+
 std::vector<std::shared_ptr<BuildCard>> Player::GetAllBuildCards()
 {
 	return build_card_collection;
@@ -199,6 +209,16 @@ bool Player::ContainsPlayerCard(PlayerCardType type, bool set_card)
 		}
 	}
     return false;
+}
+
+bool Player::ContainsBuildingCard(BuildingEnum type)
+{
+	for (int i = 0; i < builded_buildings.size(); i++)
+	{
+		if (builded_buildings.at(i)->GetType() == type)
+			return true;
+	}
+	return false;
 }
 
 bool Player::ConstructBuilding(std::shared_ptr<BuildCard> build_card)

@@ -25,7 +25,7 @@ void Preacher::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::
 	for (int i = 0; i < builded_cards_list.size(); i++)
 	{
 		std::shared_ptr<BuildCard> build_card = builded_cards_list.at(i);
-		if (build_card->GetColor() == CardColor::BLUE)
+		if (build_card->GetColor() == CardColor::BLUE || build_card->GetType() == BuildingEnum::MAGICSCHOOL)
 		{
 			player->AddGold(1);
 			counter++;

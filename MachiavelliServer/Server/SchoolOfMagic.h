@@ -9,6 +9,18 @@
 #ifndef __Machiavelli__SchoolOfMagic__
 #define __Machiavelli__SchoolOfMagic__
 
-#include <stdio.h>
+#include "BuildCard.h"
+#include "BuildingEnum.h"
+#include <vector>
+
+class SchoolOfMagic : public BuildCard
+{
+public:
+	SchoolOfMagic();
+	~SchoolOfMagic();
+
+	void UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player);
+	BuildingEnum GetType();
+};
 
 #endif /* defined(__Machiavelli__SchoolOfMagic__) */

@@ -7,3 +7,22 @@
 //
 
 #include "Library.h"
+
+Library::Library() : BuildCard("", 2, CardColor::PURPLE, "", false, true)
+{
+}
+
+Library::~Library()
+{
+
+}
+
+void Library::UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
+{
+
+}
+
+BuildingEnum Library::GetType()
+{
+	return BuildingEnum::LIBRARY;
+}

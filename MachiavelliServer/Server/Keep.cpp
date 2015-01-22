@@ -65,6 +65,11 @@ void Keep::UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<
     }
 }
 
+BuildingEnum Keep::GetType()
+{
+	return BuildingEnum::KEEP;
+}
+
 Keep::~Keep()
 {
     

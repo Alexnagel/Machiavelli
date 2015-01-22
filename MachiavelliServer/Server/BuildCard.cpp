@@ -80,3 +80,8 @@ bool BuildCard::IsCardUsed()
 {
     return card_used;
 }
+
+BuildingEnum BuildCard::GetType()
+{
+	return BuildingEnum::NONE;
+}

@@ -25,7 +25,7 @@ void King::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::shar
 	for (int i = 0; i < builded_cards_list.size(); i++)
 	{
 		std::shared_ptr<BuildCard> build_card = builded_cards_list.at(i);
-		if (build_card->GetColor() == CardColor::YELLOW)
+		if (build_card->GetColor() == CardColor::YELLOW || build_card->GetType() == BuildingEnum::MAGICSCHOOL)
 		{
 			player->AddGold(1);
 			counter++;

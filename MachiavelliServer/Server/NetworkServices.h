@@ -39,13 +39,13 @@ public:
 private:
     static const int PORT;
     std::unique_ptr<GameManager> gameManager;
-    bool game_started;
     
     std::unique_ptr<ServerSocket> serverSocket;
     
     void ConsumeCommand();
     void HandleClient(Socket* socket);
     KeywordReturn CheckForKeywords(std::string cmd, std::shared_ptr<Player> player);
+    void DisconnectClient(std::shared_ptr<Player> player);
 };
 
 

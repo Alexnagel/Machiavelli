@@ -5,6 +5,7 @@
 #include <memory>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #include "Deck.h"
 #include "Parser.h"
@@ -50,7 +51,6 @@ private:
     void PrintBuildingCardDeck(std::shared_ptr<Socket> socket);
 	void RobPlayer(std::shared_ptr<Player> player);
 	void GameFinished();
-	bool IsGameFinished();
 
 public:
 	GameManager();
@@ -58,7 +58,9 @@ public:
 
     // Functions
 	void RunServer();
-	void Start(std::shared_ptr<Player> player_called_start);
+    void Start(std::shared_ptr<Player> player_called_start);
+    void ConnectionLost();
+    bool IsGameFinished();
    
 	// Getters
 	std::shared_ptr<Player> GetPlayer(int i) const;
@@ -72,6 +74,7 @@ public:
 
 	// Setters
     std::shared_ptr<Player> AddPlayer(std::string name, int age, std::shared_ptr<Socket> socket);
+    void RemovePlayer(std::shared_ptr<Player> player);
 	void SetKilledPlayer(PlayerCardType type);
 	void SetRobbedPlayer(PlayerCardType type);
 	void AddBuildCard(std::shared_ptr<BuildCard> build_card);

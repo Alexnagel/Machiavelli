@@ -23,7 +23,8 @@ private:
 	int gold;
 	int points;
     bool used_characteristic;
-
+    
+    bool isConnected;
 public:
 	Player(std::string name, int age);
 	~Player();
@@ -43,7 +44,8 @@ public:
     bool HasUsedCharacteristic();
     std::string GetPlayerInfo();
     int GetSpecialIndex(BuildingEnum buildingType);
-
+    bool IsConnected();
+    
 	// Setters
 	void SetCurrentPlayerCard(std::shared_ptr<PlayerCard> player_card);
 	void AddPlayerCard(std::shared_ptr<PlayerCard> player_card);
@@ -58,6 +60,7 @@ public:
 	void SetBuildCards(std::vector<std::shared_ptr<BuildCard>> build_cards);
 	void RemoveBuildCard(int index);
 	void ClearPlayerCards();
+    void PlayerDisconnected();
 
 	// Functions
 	void Turn(TurnEnum turn, std::shared_ptr<BuildCard> build_card = nullptr);

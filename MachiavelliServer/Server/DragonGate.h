@@ -9,6 +9,17 @@
 #ifndef __Machiavelli__DragonGate__
 #define __Machiavelli__DragonGate__
 
-#include <stdio.h>
+#include "BuildCard.h"
+#include <vector>
+
+class DragonGate : public BuildCard
+{
+public:
+    DragonGate();
+    ~DragonGate();
+    
+    void UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player);
+    BuildingEnum GetBuildingType();
+};
 
 #endif /* defined(__Machiavelli__DragonGate__) */

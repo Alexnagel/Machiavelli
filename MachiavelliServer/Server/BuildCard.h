@@ -3,6 +3,7 @@
 #include <memory>
 #include "Card.h"
 #include "CardColor.h"
+#include "BuildingEnum.h"
 
 class Player;
 class GameManager;
@@ -31,6 +32,8 @@ public:
     bool IsCardUsed();
     bool IsCardTurnBased();
     bool IsCardEndGame();
+    virtual BuildingEnum GetBuildingType();
+    
     
     virtual void UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player);
 };

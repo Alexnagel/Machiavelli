@@ -158,6 +158,16 @@ std::string Player::GetPlayerInfo()
     return player_info;
 }
 
+int Player::GetSpecialIndex(BuildingEnum buildingType)
+{
+    for (int i = 0; i < build_card_collection.size(); i++)
+    {
+        if (build_card_collection[i]->GetBuildingType() == buildingType)
+            return i;
+    }
+    return -1;
+}
+
 void Player::RemoveBuildCard(int index)
 {
 	if (index < build_card_collection.size())

@@ -19,6 +19,7 @@ public:
     ~Keep();
     
     void UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player);
+    BuildingEnum GetBuildingType();
 };
 
 

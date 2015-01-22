@@ -12,13 +12,14 @@
 #include "BuildCard.h"
 #include <vector>
 
-class Keep : public BuildCard
+class GraveYard : public BuildCard
 {
 public:
-    Keep();
-    ~Keep();
+    GraveYard();
+    ~GraveYard();
     
     void UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player);
+    BuildingEnum GetBuildingType();
 };
 
 #endif /* defined(__Machiavelli__Graveyard__) */

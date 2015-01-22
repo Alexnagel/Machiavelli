@@ -10,6 +10,18 @@
 #ifndef __Machiavelli__Laboratory__
 #define __Machiavelli__Laboratory__
 
-#include <stdio.h>
+#include "BuildCard.h"
+#include <vector>
+
+class Laboratory : public BuildCard
+{
+public:
+    Laboratory();
+    ~Laboratory();
+    
+    void UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player);
+    BuildingEnum GetBuildingType();
+};
+
 
 #endif /* defined(__Machiavelli__Laboratory__) */

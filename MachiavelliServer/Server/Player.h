@@ -38,6 +38,7 @@ public:
 	int GetGold();
     bool HasUsedCharacteristic();
     std::string GetPlayerInfo();
+    int GetSpecialIndex(BuildingEnum buildingType);
 
 	// Setters
 	void SetCurrentPlayerCard(std::shared_ptr<PlayerCard> player_card);

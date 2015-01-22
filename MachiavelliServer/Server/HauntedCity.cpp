@@ -57,6 +57,12 @@ void HauntedCity::UseCardSpecial(std::shared_ptr<GameManager> manager, std::shar
     card_used = true;
 }
 
+BuildingEnum HauntedCity::GetBuildingType()
+{
+    return BuildingEnum::HAUNTEDCITY;
+}
+
+
 HauntedCity::~HauntedCity()
 {
     

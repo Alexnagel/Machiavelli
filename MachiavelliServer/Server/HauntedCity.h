@@ -18,6 +18,7 @@ public:
     virtual ~HauntedCity();
     
     void UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player);
+    BuildingEnum GetBuildingType();
 };
 
 #endif /* defined(__Machiavelli__HauntedCity__) */

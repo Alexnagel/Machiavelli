@@ -7,3 +7,24 @@
 //
 
 #include "Library.h"
+
+Library::Library() : BuildCard("Library", 6, CardColor::PURPLE, "If you choose to draw cards you you take an action, you keep both of the cards you have drawn.", true, false)
+{
+    
+}
+
+void Library::UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
+{
+    
+}
+
+BuildingEnum Library::GetBuildingType()
+{
+    return BuildingEnum::LIBRARY;
+}
+
+
+Library::~Library()
+{
+    
+}

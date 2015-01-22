@@ -9,6 +9,17 @@
 #ifndef __Machiavelli__University__
 #define __Machiavelli__University__
 
-#include <stdio.h>
+#include "BuildCard.h"
+#include <vector>
+
+class University : public BuildCard
+{
+public:
+    University();
+    ~University();
+    
+    void UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player);
+    BuildingEnum GetBuildingType();
+};
 
 #endif /* defined(__Machiavelli__University__) */

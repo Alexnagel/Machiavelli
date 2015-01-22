@@ -9,6 +9,18 @@
 #ifndef __Machiavelli__Smithy__
 #define __Machiavelli__Smithy__
 
-#include <stdio.h>
+#include "BuildCard.h"
+#include <vector>
+
+class Smithy : public BuildCard
+{
+public:
+    Smithy();
+    ~Smithy();
+    
+    void UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player);
+    BuildingEnum GetBuildingType();
+};
+
 
 #endif /* defined(__Machiavelli__Smithy__) */

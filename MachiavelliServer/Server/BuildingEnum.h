@@ -19,6 +19,7 @@ enum BuildingEnum {
     LIBRARY,
     MAGICSCHOOL,
     DRAGONGATE,
-    UNIVERSITY
+    UNIVERSITY,
+    NORMAL
 };
 #endif

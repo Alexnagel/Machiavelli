@@ -7,3 +7,24 @@
 //
 
 #include "DragonGate.h"
+
+DragonGate::DragonGate() : BuildCard("Dragon Gate", 6, CardColor::PURPLE, "This card is worth 8 points at the end of the game", false, true)
+{
+    
+}
+
+void DragonGate::UseCardSpecial(std::shared_ptr<GameManager> manager, std::shared_ptr<Player> player)
+{
+    
+}
+
+BuildingEnum DragonGate::GetBuildingType()
+{
+    return BuildingEnum::DRAGONGATE;
+}
+
+
+DragonGate::~DragonGate()
+{
+    
+}

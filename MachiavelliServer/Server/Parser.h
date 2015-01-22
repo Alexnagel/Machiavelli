@@ -10,6 +10,18 @@
 #include "Deck.h"
 #include "BuildCard.h"
 #include "PlayerCard.h"
+
+#include "HauntedCity.h"
+#include "Keep.h"
+#include "Graveyard.h"
+#include "Laboratory.h"
+#include "Smithy.h"
+#include "Observatory.h"
+#include "Library.h"
+#include "SchoolOfMagic.h"
+#include "DragonGate.h"
+#include "University.h"
+
 #include "Builder.h"
 #include "Condottiere.h"
 #include "King.h"
@@ -35,6 +47,7 @@ private:
 	static std::shared_ptr<PlayerCard> GetPlayerCard(std::string player);
     
     static std::string CurrentPath();
+    static std::shared_ptr<BuildCard> GetSpecialCard(std::string name);
 
 public:
 	Parser();

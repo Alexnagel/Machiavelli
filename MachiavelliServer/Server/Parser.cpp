@@ -58,13 +58,37 @@ Deck<std::shared_ptr<BuildCard>> Parser::LoadBuildingFile()
 			if (description.empty())
 				build_cards.Add(std::make_shared<BuildCard>(name, price, GetColor(color)));
 			else
-				build_cards.Add(std::make_shared<BuildCard>(name, price, GetColor(color), description));
+				build_cards.Add(GetSpecialCard(name));
 		}
 		catch (...){}
 	}
 
 	// Return the cards
 	return build_cards;
+}
+
+std::shared_ptr<BuildCard> Parser::GetSpecialCard(std::string name)
+{
+    if (name == "Haunted City")
+        return std::make_shared<HauntedCity>();
+    if (name == "Keep")
+        return std::make_shared<Keep>();
+    if (name == "Graveyard")
+        return std::make_shared<GraveYard>();
+    if (name == "Laboratory")
+        return std::make_shared<Laboratory>();
+    if (name == "Smithy")
+        return std::make_shared<Smithy>();
+    if (name == "Observatory")
+        return std::make_shared<Smithy>();
+    if (name == "School Of Magic")
+        return std::make_shared<SchoolOfMagic>();
+    if (name == "Dragon Gate")
+        return std::make_shared<DragonGate>();
+    if (name == "University")
+        return std::make_shared<University>();
+    
+    return std::make_shared<Keep>();
 }
 
 CardColor Parser::GetColor(std::string color)

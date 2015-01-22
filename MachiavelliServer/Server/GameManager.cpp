@@ -423,7 +423,7 @@ void GameManager::ShowBuildingOptions(std::shared_ptr<Player> player)
         
         if (build_cards.size() > 0)
         {
-            std::string player_build_cards = "Available cards: \n\n";
+            player_build_cards = "Available cards: \n\n";
             int loop_index;
             for (loop_index = 0; loop_index < build_cards.size(); loop_index++)
             {

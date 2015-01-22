@@ -28,9 +28,9 @@ Deck<std::shared_ptr<BuildCard>> Parser::LoadBuildingFile()
 
     std::string curPath = CurrentPath();
     //std::ifstream file("/Users/Alex/School/Machiavelli/Build/Products/Debug/bouwkaarten.csv");
-    //std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//Bouwkaarten.csv");
+    std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//Bouwkaarten.csv");
 	//std::ifstream file("C://Users//Sjoerd//Dropbox//C++//Machiavelli//Bouwkaarten.csv");
-    std::ifstream file("/root/Machiavelli/bouwkaarten.csv");
+    //std::ifstream file("/root/Machiavelli/bouwkaarten.csv");
 	while (std::getline(file, line))
 	{
 		try
@@ -69,25 +69,27 @@ Deck<std::shared_ptr<BuildCard>> Parser::LoadBuildingFile()
 
 std::shared_ptr<BuildCard> Parser::GetSpecialCard(std::string name)
 {
-    if (name == "Haunted City")
+    if (name == "Hof der Wonderen")
         return std::make_shared<HauntedCity>();
-    if (name == "Keep")
+    if (name == "Kerker")
         return std::make_shared<Keep>();
-    if (name == "Graveyard")
+    if (name == "Kerkhof")
         return std::make_shared<GraveYard>();
-    if (name == "Laboratory")
+    if (name == "Laboratorium")
         return std::make_shared<Laboratory>();
-    if (name == "Smithy")
+    if (name == "Werkplaats")
         return std::make_shared<Smithy>();
-    if (name == "Observatory")
+    if (name == "Observatorium")
         return std::make_shared<Smithy>();
-    if (name == "School Of Magic")
+    if (name == "School voor magiers")
         return std::make_shared<SchoolOfMagic>();
-    if (name == "Dragon Gate")
+    if (name == "Drakenpoort")
         return std::make_shared<DragonGate>();
-    if (name == "University")
+    if (name == "Universiteit")
         return std::make_shared<University>();
-    
+	if (name == "Bibliotheek")
+		return std::make_shared<Library>();
+
     return std::make_shared<Keep>();
 }
 
@@ -116,9 +118,9 @@ Deck<std::shared_ptr<PlayerCard>> Parser::LoadCharacterFile()
 
     std::string curPath = CurrentPath();
 	//std::ifstream file("/Users/Alex/School/Machiavelli/Build/Products/Debug/karakterkaarten.csv");
-	//std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//karakterkaarten.csv");
+	std::ifstream file("C://Users//Sjoerd Nijhof//Dropbox//C++//Machiavelli//karakterkaarten.csv");
 	//std::ifstream file("C://Users//Sjoerd//Dropbox//C++//Machiavelli//karakterkaarten.csv");
-    std::ifstream file("/root/Machiavelli/karakterkaarten.csv");
+    //std::ifstream file("/root/Machiavelli/karakterkaarten.csv");
 	while (std::getline(file, line))
 	{
 		try 

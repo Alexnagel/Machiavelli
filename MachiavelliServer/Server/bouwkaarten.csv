@@ -1,1 +1,65 @@
-Manor;3;geel;Manor;3;geel;Manor;3;geel;Manor;3;geel;Manor;3;geel;Castle;4;geel;Castle;4;geel;Castle;4;geel;Castle;4;geel;Palace;5;geel;Palace;5;geel;Palace;5;geel;Tavern;1;groen;Tavern;1;groen;Tavern;1;groen;Tavern;1;groen;Tavern;1;groen;Market;2;groen;Market;2;groen;Market;2;groen;Market;2;groen;Shop;2;groen;Shop;2;groen;Shop;2;groen;Trading Post;3;groen;Trading Post;3;groen;Trading Post;3;groen;Harbor;4;groen;Harbor;4;groen;Harbor;4;groen;Town Hall;5;groen;Town Hall;5;groen;Temple;1;blauw;Temple;1;blauw;Temple;1;blauw;Church;2;blauw;Church;2;blauw;Church;2;blauw;Monastry;3;blauw;Monastry;3;blauw;Monastry;3;blauw;Cathedral;5;blauw;Cathedral;5;blauw;Watchtower;1;rood;Watchtower;1;rood;Watchtower;1;rood;Prison;2;rood;Prison;2;rood;Prison;2;rood;Battlefield;3;rood;Battlefield;3;rood;Battlefield;3;rood;Fortress;5;rood;Fortress;5;rood;Haunted City;2;lila;Bij het tellen van overwinningspunten mag je het Hof de Wonderen als een bouwwerk met een kleur naar keuze benoemen.Keep;3;lila;De kerker kan niet door de Condottiere verwoest worden.Keep;3;lila;De kerker kan niet door de Condottiere verwoest worden.Graveyard;5;lila;Als de Conottiere een gebouw verwoest, dan mag je een goudstuk betalen om die bouwkaart in de hand te nemen. Je mag dit echter niet doen als je zelf de Condottiere bent.Laboratory;5;lila;Gedurende je beurt mag je ŽŽnmaal een bouwkaart afleggen. Je krijgt daarvoor een goudstuk terug.Smithy;5;lila;Je mag tijdens je beurt ŽŽnmaal drie goudstukken betalen om twee bouwkaarten te trekken.Observatory;5;lila;Als je aan het begin van je beurt voor een bouwkaart kiest, dan mag je er drie trekken, er vervolgens ŽŽn uitkiezen en beide andere onder de trekstapel leggen.Library;6;lila;Als je aan het begin van je beurt kaarten trekt, mag je ze beide houden.School Of Magic;6;lila;Tijdens de inkomensfasen neemt de School voor magi‘rs een kleur naar keuze aan. Je krijgt derhalve een goudstuk als je de Koning, de Prediker, de Koopman of de Condottiere bent.Dragon Gate;6;lila;Dit prestigieuze gebouw kost 6 goudstukken en levert aan het einde van het spel 8 punten op.University;6;lila;Dit prestigieuze gebouw kost 6 goudstukken en levert aan het einde van het spel 8 punten op.
+Landgoed;3;geel;,,
+Landgoed;3;geel;,,
+Landgoed;3;geel;,,
+Landgoed;3;geel;,,
+Landgoed;3;geel;,,
+Kasteel;4;geel;,,
+Kasteel;4;geel;,,
+Kasteel;4;geel;,,
+Kasteel;4;geel;,,
+Paleis;5;geel;,,
+Paleis;5;geel;,,
+Paleis;5;geel;,,
+Taveerne;1;groen;,,
+Taveerne;1;groen;,,
+Taveerne;1;groen;,,
+Taveerne;1;groen;,,
+Taveerne;1;groen;,,
+Markt;2;groen;,,
+Markt;2;groen;,,
+Markt;2;groen;,,
+Markt;2;groen;,,
+Winkels;2;groen;,,
+Winkels;2;groen;,,
+Winkels;2;groen;,,
+Handelshuis;3;groen;,,
+Handelshuis;3;groen;,,
+Handelshuis;3;groen;,,
+Haven;4;groen;,,
+Haven;4;groen;,,
+Haven;4;groen;,,
+Raadhuis;5;groen;,,
+Raadhuis;5;groen;,,
+Tempel;1;blauw;,,
+Tempel;1;blauw;,,
+Tempel;1;blauw;,,
+Kerk;2;blauw;,,
+Kerk;2;blauw;,,
+Kerk;2;blauw;,,
+Klooster;3;blauw;,,
+Klooster;3;blauw;,,
+Klooster;3;blauw;,,
+Kathedraal;5;blauw;,,
+Kathedraal;5;blauw;,,
+Wachttoren;1;rood;,,
+Wachttoren;1;rood;,,
+Wachttoren;1;rood;,,
+Gevangenis;2;rood;,,
+Gevangenis;2;rood;,,
+Gevangenis;2;rood;,,
+Toernooiveld;3;rood;,,
+Toernooiveld;3;rood;,,
+Toernooiveld;3;rood;,,
+Burcht;5;rood;,,
+Burcht;5;rood;,,
+Hof der Wonderen;2;lila;Bij het tellen van overwinningspunten mag je het Hof de Wonderen als een bouwwerk met een kleur naar keuze benoemen.,,
+Kerker;3;lila;De kerker kan niet door de Condottiere verwoest worden.,,
+Kerker;3;lila;De kerker kan niet door de Condottiere verwoest worden.,,
+Kerkhof;5;lila;Als de Conottiere een gebouw verwoest, dan mag je een goudstuk betalen om die bouwkaart in de hand te nemen. Je mag dit echter niet doen als je zelf de Condottiere bent.,
+Laboratorium;5;lila;Gedurende je beurt mag je éénmaal een bouwkaart afleggen. Je krijgt daarvoor een goudstuk terug.,,
+Werkplaats;5;lila;Je mag tijdens je beurt éénmaal drie goudstukken betalen om twee bouwkaarten te trekken.,,
+Observatorium;5;lila;Als je aan het begin van je beurt voor een bouwkaart kiest, dan mag je er drie trekken, er vervolgens één uitkiezen en beide andere onder de trekstapel leggen.
+Bibliotheek;6;lila;Als je aan het begin van je beurt kaarten trekt, mag je ze beide houden.,
+School voor magiers;6;lila;Tijdens de inkomensfasen neemt de School voor magiërs een kleur naar keuze aan. Je krijgt derhalve een goudstuk als je de Koning, de Prediker, de Koopman of de Condottiere bent.
+Drakenpoort;6;lila;Dit prestigieuze gebouw kost 6 goudstukken en levert aan het einde van het spel 8 punten op.,,
+Universiteit;6;lila;Dit prestigieuze gebouw kost 6 goudstukken en levert aan het einde van het spel 8 punten op.,,

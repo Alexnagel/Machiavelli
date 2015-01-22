@@ -36,7 +36,7 @@ void Builder::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::s
 	// Let all the other players know what happend
 	output.clear();
 	output.append(player->GetName() + " received 2 new cards.\n");
-	networkServices->WriteToAllClients(output);
+	networkServices->WriteToAllExceptCurrent(output, player);
 }
 
 PlayerCardType Builder::GetType()

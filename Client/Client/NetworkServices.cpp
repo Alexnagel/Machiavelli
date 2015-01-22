@@ -1,7 +1,7 @@
 #include "NetworkServices.h"
 
 // Set statics
-const std::string NetworkServices::HOST_IP = "127.0.0.1";
+const std::string NetworkServices::HOST_IP = "188.166.3.223";
 const int NetworkServices::HOST_PORT = 1080;
 
 

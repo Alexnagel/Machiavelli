@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <algorithm>
 
 #include "Socket.h"
 #include "BuildCard.h"

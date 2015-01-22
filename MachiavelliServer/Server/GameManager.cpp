@@ -45,6 +45,17 @@ void GameManager::Start(std::shared_ptr<Player> player_called_start)
     // Set the round
     current_round = 1;
 
+	// Set the index of the king
+	int age = 0;
+	for (int i = 0; i < players.size(); i++)
+	{
+		if (age < players.at(i)->GetAge())
+		{
+			age = players.at(i)->GetAge();
+			index_king = i;
+		}
+	}
+
 	// Start the game rounds
 	while (!IsGameFinished())
 	{
@@ -281,9 +292,9 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
             // Set the choice string
             std::string choice_str = "\n";
             
-            for (int i = 1; i < buildCards.size(); i++)
+            for (int i = 0; i < buildCards.size(); i++)
             {
-                choice_str.append("\t [" + std::to_string(i) + "] "+ buildCards[i]->GetCardString() + "\n");
+                choice_str.append("\t [" + std::to_string(i + 1) + "] "+ buildCards[i]->GetCardString() + "\n");
             }
             
             if (has_library && has_observatory)
@@ -572,13 +583,13 @@ std::vector<std::string> GameManager::GetPlayerCardNames() const
 	return player_card_names;
 }
 
-std::shared_ptr<Player> GameManager::AddPlayer(std::string name, std::shared_ptr<Socket> socket)
+std::shared_ptr<Player> GameManager::AddPlayer(std::string name, int age, std::shared_ptr<Socket> socket)
 {
 	if (name.empty())
 		name = &"Player" [ players.size()];
 
 	// Add the player
-    std::shared_ptr<Player> player = std::make_shared<Player>(name);
+    std::shared_ptr<Player> player = std::make_shared<Player>(name, age);
     player->SetSocket(socket);
 	players.push_back(player);
     

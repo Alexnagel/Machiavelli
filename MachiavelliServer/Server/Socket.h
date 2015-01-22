@@ -31,7 +31,7 @@ typedef long ssize_t;
 #include <stdexcept>
 #include <memory>
 
-#include "throw.h"
+#include "Throw.h"
 
 class Socket
 {

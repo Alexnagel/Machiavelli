@@ -689,7 +689,7 @@ void GameManager::GameFinished()
 	}
 
 	// Sort result
-	std::sort(result_list.begin(), result_list.end(), [](std::pair<std::string, int>& first, std::pair<std::string, int>& second)
+	std::sort(result_list.begin(), result_list.end(), [](std::pair<std::string, int> first, std::pair<std::string, int> second)
 	{
 		return first.second > second.second;
 	});

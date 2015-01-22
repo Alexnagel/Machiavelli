@@ -4,7 +4,7 @@ const int NetworkServices::PORT = 1080;
 static Sync_queue<ClientCommand> queue;
 
 NetworkServices::NetworkServices(std::unique_ptr<GameManager> p_gameManager):
-    gameManager(std::move(p_gameManager)), game_started(false)
+    gameManager(std::move(p_gameManager))
 {
 }
 
@@ -43,6 +43,10 @@ void NetworkServices::ListenForClients()
         catch (const std::exception& ex) {
             std::cerr << ex.what() << ", resuming..." << '\n';
         }
+        catch(...)
+        {
+            // no idea
+        }
     }
 }
 
@@ -57,9 +61,16 @@ void NetworkServices::ConsumeCommand()
                 client->write(command.get_cmd());
             }
             catch (const std::exception& ex) {
-                client->write("Sorry, ");
-                client->write(ex.what());
-                client->write("\n");
+                try {
+                    client->write("Sorry, ");
+                    client->write(ex.what());
+                    client->write("\n");
+                }
+                catch (...)
+                {
+                    //client disconnected
+                    break;
+                }
             }
             catch (...) {
                 client->write("Sorry, something went wrong during handling of your request.\n");
@@ -119,7 +130,7 @@ void NetworkServices::HandleClient(Socket *socket)
     player->GetSocket()->write("To start the game enter 'start'.\n");
     player->GetSocket()->write("> \n");
     
-    while (true) { // game loop
+    while (player->IsConnected()) { // game loop
         try {
             // read first line of request
             std::string cmd;
@@ -128,14 +139,14 @@ void NetworkServices::HandleClient(Socket *socket)
             {
                 cmd = Utils::ToLowerCase(player->GetSocket()->readline());
                 
-                if (cmd == "<connectionclosed>")
-                    break;
-                
                 std::cerr << "client (" << player->GetSocket()->get() << ") said: " << cmd << '\n';
             }
             
             if (CheckForKeywords(cmd, player) == KeywordReturn::QUIT)
+            {
+                DisconnectClient(player);
                 break;
+            }
         }
         catch (const std::exception& ex) {
             player->GetSocket()->write("ERROR: ");
@@ -146,11 +157,12 @@ void NetworkServices::HandleClient(Socket *socket)
             player->GetSocket()->write("ERROR: something went wrong during handling of your request. Sorry!\n");
         }
     }
-    player->GetSocket()->close();
 }
 
-KeywordReturn NetworkServices::CheckForKeywords(std::string cmd, std::shared_ptr<Player> player)
+KeywordReturn NetworkServices::CheckForKeywords(std::string cmd, std::shared_ptr<Player> p_player)
 {
+    std::shared_ptr<Player> player = std::shared_ptr<Player>(p_player);
+    
     ClientCommand command{ cmd, player->GetSocket() };
     
     if (cmd == "quit")
@@ -164,7 +176,6 @@ KeywordReturn NetworkServices::CheckForKeywords(std::string cmd, std::shared_ptr
         if (gameManager->GetPlayerAmount() > 1)
         {
             gameManager->Start(player);
-            game_started = true;
         }
         else
         {
@@ -179,7 +190,7 @@ KeywordReturn NetworkServices::CheckForKeywords(std::string cmd, std::shared_ptr
         }
         return KeywordReturn::STARTGAME;
     }
-    else if (cmd == "info" && game_started)
+    else if (cmd == "info" && !gameManager->IsGameFinished())
     {
         // Show the player info
         command = ClientCommand{ player->GetPlayerInfo(), player->GetSocket() };
@@ -187,6 +198,8 @@ KeywordReturn NetworkServices::CheckForKeywords(std::string cmd, std::shared_ptr
         
         return KeywordReturn::INFO;
     }
+    else if (cmd == "<connectionclosed>")
+        return KeywordReturn::QUIT;
     
     return KeywordReturn::NONE;
 }
@@ -231,7 +244,7 @@ std::string NetworkServices::PromptClient(std::shared_ptr<Player> player)
     
     std::string answer;
     
-    while (answer.empty())
+    while (answer.empty() && player->IsConnected())
     {
         try
         {
@@ -241,20 +254,40 @@ std::string NetworkServices::PromptClient(std::shared_ptr<Player> player)
             {
                 KeywordReturn returnVal = CheckForKeywords(answer, player);
                 if (returnVal == KeywordReturn::QUIT)
+                {
+                    DisconnectClient(player);
                     break;
+                }
                 
                 if (returnVal != KeywordReturn::NONE)
                     answer = "";
             }
         }
+        catch (std::system_error &e)
+        {
+            std::cerr << "Something went wrong reading the client response, client disconnected" << '\n';
+            DisconnectClient(player);
+            break;
+        }
         catch (...)
         {
             std::cerr << "Something went wrong reading the client response" << '\n';
+            answer = "";
+            break;
         }
     }
     
     player->GetSocket()->SetClientPrompted(false);
     return answer;
+}
+
+void NetworkServices::DisconnectClient(std::shared_ptr<Player> player)
+{
+    player->PlayerDisconnected();
+    gameManager->RemovePlayer(player);
+    gameManager->ConnectionLost();
+    
+    player->GetSocket()->close();
 }
 
 NetworkServices::~NetworkServices()

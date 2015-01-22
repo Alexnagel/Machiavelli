@@ -74,14 +74,35 @@ void GameManager::Start(std::shared_ptr<Player> player_called_start)
 			// Clear the cards of the player
 			players.at(i)->ClearPlayerCards();
 		}
-		GetPlayerCard();
+        
+        try {
+            GetPlayerCard();
+        }
+        catch(std::system_error &e)
+        {
+            // a player has disconnected
+            break;
+        }
 
-		// Start round
-		StartRound();
+        try {
+            // Start round
+            StartRound();
+        }
+        catch(std::system_error &e)
+        {
+            // a player has disconnected
+            break;
+        }
 	}
 
 	// Finish the game
 	GameFinished();
+}
+
+void GameManager::ConnectionLost()
+{
+    networkServices->WriteToAllClients("A player has disconnected from the game! Sadly we can't continue the game without the player.\n The game will be ending now, you can stay connected and wait for another player. \n");
+    
 }
 
 void GameManager::GetPlayerCard()
@@ -603,6 +624,16 @@ std::shared_ptr<Player> GameManager::AddPlayer(std::string name, int age, std::s
     return player;
 }
 
+void GameManager::RemovePlayer(std::shared_ptr<Player> player)
+{
+    auto itr = std::find(players.begin(), players.end(), player);
+    
+    if (itr != players.end())
+    {
+        players.erase(itr);
+    }
+}
+
 void GameManager::PrintPlayerCardDeck(std::shared_ptr<Socket> socket)
 {
 	std::string availableCards = "Available cards:\n\n";
@@ -723,6 +754,9 @@ void GameManager::GameFinished()
 
 bool GameManager::IsGameFinished()
 {
+    if (players.size() < 2)
+        return true;
+    
 	for (int i = 0; i < players.size(); i++)
 	{
 		std::vector<std::shared_ptr<BuildCard>> build_cards = players.at(i)->GetBuildedBuildings();

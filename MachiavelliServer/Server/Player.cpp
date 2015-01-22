@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(std::string name, int age) : name(name), age(age), gold(2), points(0)
+Player::Player(std::string name, int age) : name(name), age(age), gold(2), points(0), isConnected(true)
 {
 }
 
@@ -79,6 +79,10 @@ bool Player::HasUsedCharacteristic()
     return used_characteristic;
 }
 
+bool Player::IsConnected()
+{
+    return isConnected;
+}
 
 // Setters
 void Player::SetCurrentPlayerCard(std::shared_ptr<PlayerCard> player_card)
@@ -132,6 +136,11 @@ void Player::SetUsedCharacteristic(bool used)
 void Player::SetBuildCards(std::vector<std::shared_ptr<BuildCard>> build_cards)
 {
 	this->build_card_collection = build_cards;
+}
+
+void Player::PlayerDisconnected()
+{
+    isConnected = false;
 }
 
 std::string Player::GetPlayerInfo()

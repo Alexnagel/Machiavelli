@@ -37,7 +37,7 @@ void PlayerCard::ShowBuildCards(std::shared_ptr<GameManager> manager, std::share
 	output.append("Received cards:\n");
 	for (int i = 0; i < cards.size(); i++)
 	{
-		output.append("- Name = " + cards.at(i)->GetName() + ", Cost = " + std::to_string(cards.at(i)->GetCost()) + ", Color = " + "\n");//+ cards.at(i)->GetColor());
+		output.append("- Name: " + cards.at(i)->GetName() + ", Cost: " + std::to_string(cards.at(i)->GetCost()) + ", Color: " + cards.at(i)->GetColorString() + "\n");
 	}
 
 	networkServices->WriteToClient(output, socket, true);

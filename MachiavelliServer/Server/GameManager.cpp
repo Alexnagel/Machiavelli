@@ -284,6 +284,7 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
             // Add the two gold
             player->AddGold(2);
             
+            networkServices->WriteToClient("<line>\n", socket);
             networkServices->WriteToClient("You have chosen to receive two gold. You now have " + std::to_string(player->GetGold()) + " gold.\n", socket);
             option_chosen = true;
         }
@@ -379,15 +380,18 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
         }
 		else if (chosen_option == "3" && !player->HasUsedCharacteristic())
 		{
+            networkServices->WriteToClient("<line>\n", socket);
 			std::shared_ptr<PlayerCard> card = player->GetCurrentPlayerCard();
 			card->PerformCharacteristic(shared_from_this(), player);
 		}
         else if (chosen_option == "4" && laboratory_index != -1)
         {
+            networkServices->WriteToClient("<line>\n", socket);
             player->GetBuildCard(laboratory_index)->UseCardSpecial(std::shared_ptr<GameManager>(this), player);
         }
         else if (chosen_option == "5" && smithy_index != -1)
         {
+            networkServices->WriteToClient("<line>\n", socket);
             player->GetBuildCard(smithy_index)->UseCardSpecial(std::shared_ptr<GameManager>(this), player);
         }
         else
@@ -400,6 +404,7 @@ void GameManager::ShowBuildingOptions(std::shared_ptr<Player> player)
 	int counter = 0;
     std::shared_ptr<Socket> socket = player->GetSocket();
 	
+    networkServices->WriteToClient("<line>\n", socket);
     bool card_chosen = false;
 	while (!card_chosen || !player->HasUsedCharacteristic())
 	{

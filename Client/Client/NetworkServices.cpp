@@ -1,8 +1,8 @@
 #include "NetworkServices.h"
 
 // Set statics
-const std::string NetworkServices::HOST_IP = "127.0.0.1";
-//const std::string NetworkServices::HOST_IP = "188.166.3.223";
+//const std::string NetworkServices::HOST_IP = "127.0.0.1";
+const std::string NetworkServices::HOST_IP = "188.166.3.223";
 const int NetworkServices::HOST_PORT = 1080;
 
 
@@ -43,7 +43,6 @@ bool NetworkServices::IsConnected()
 void NetworkServices::WaitForThreads()
 {
     serverHandler.join();
-    userHandler.join();
 }
 
 void NetworkServices::ConsumeServerCommands()
@@ -64,7 +63,7 @@ void NetworkServices::ConsumeServerCommands()
                 WriteCommand("<stoplistening>\n");
                 continue;
             }
-            if (cmd == "<line>\n")
+            if (cmd == "<line>")
             {
                 cmd = "";
                 for (int i = 0; i < 80; i++)
@@ -72,9 +71,10 @@ void NetworkServices::ConsumeServerCommands()
                     cmd.append("-");
                 }
             }
-            if (cmd == "<connectionlost>\n")
+            if (cmd == "<connectionlost>")
             {
                 std::cerr << "The connection to the server has been lost \n";
+                isConnected = false;
                 break;
             }
 
@@ -97,7 +97,7 @@ void NetworkServices::ConsumeUserCommands()
 	std::string s;
 
 	// Get the user input line
-	while (getline(std::cin, s))
+	while (getline(std::cin, s) && isConnected)
 	{
 		// Write the command to the server
 		WriteCommand(s);

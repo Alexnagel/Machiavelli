@@ -39,6 +39,7 @@ public:
 private:
     static const int PORT;
     std::unique_ptr<GameManager> gameManager;
+    bool game_started;
     
     std::unique_ptr<ServerSocket> serverSocket;
     

@@ -4,7 +4,7 @@ const int NetworkServices::PORT = 1080;
 static Sync_queue<ClientCommand> queue;
 
 NetworkServices::NetworkServices(std::unique_ptr<GameManager> p_gameManager):
-    gameManager(std::move(p_gameManager))
+    gameManager(std::move(p_gameManager)), game_started(false)
 {
 }
 
@@ -159,6 +159,7 @@ KeywordReturn NetworkServices::CheckForKeywords(std::string cmd, std::shared_ptr
         if (gameManager->GetPlayerAmount() > 1)
         {
             gameManager->Start(player);
+            game_started = true;
         }
         else
         {
@@ -168,12 +169,12 @@ KeywordReturn NetworkServices::CheckForKeywords(std::string cmd, std::shared_ptr
             output.append("\n");
             
             // Show the error message
-            command = ClientCommand{ output, player->GetSocket() };
+            command = ClientCommand{ output, player->GetSocket(), true };
             queue.put(command);
         }
         return KeywordReturn::STARTGAME;
     }
-    else if (cmd == "info")
+    else if (cmd == "info" && game_started)
     {
         // Show the player info
         command = ClientCommand{ player->GetPlayerInfo(), player->GetSocket() };

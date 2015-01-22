@@ -24,6 +24,11 @@ bool NetworkServices::ConnectToServer()
 		isConnected = false;
 		return false;
 	}
+    catch(...)
+    {
+        isConnected = false;
+        return false;
+    }
 
 	isConnected = true;
 	return true;
@@ -72,7 +77,12 @@ void NetworkServices::ConsumeServerCommands()
 		catch (std::exception &e)
 		{
 			std::cerr << e.what();
+            break;
 		}
+        catch(...)
+        {
+            break;
+        }
 	}
 }
 

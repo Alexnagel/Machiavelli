@@ -74,6 +74,10 @@ void GameManager::Start(std::shared_ptr<Player> player_called_start)
 			// Clear the cards of the player
 			players.at(i)->ClearPlayerCards();
 		}
+
+		// Clear stolen and murdered person
+		killed_player = PlayerCardType::NONE;
+		robbed_player = PlayerCardType::NONE;
         
         try {
             GetPlayerCard();

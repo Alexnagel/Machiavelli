@@ -319,6 +319,7 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
                 for (std::shared_ptr<BuildCard> card : buildCards)
                 {
                     card_string.append("   " + card->GetCardString() + "\n");
+					player->AddBuildCard(card);
                 }
                 networkServices->WriteToClient(card_string, socket);
                 option_chosen = true;

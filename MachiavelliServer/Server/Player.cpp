@@ -186,9 +186,9 @@ std::string Player::GetPlayerInfo()
 
 int Player::GetSpecialIndex(BuildingEnum buildingType)
 {
-    for (int i = 0; i < build_card_collection.size(); i++)
+    for (int i = 0; i < builded_buildings.size(); i++)
     {
-        if (build_card_collection[i]->GetBuildingType() == buildingType)
+		if (builded_buildings[i]->GetBuildingType() == buildingType)
             return i;
     }
     return -1;

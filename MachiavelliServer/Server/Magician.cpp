@@ -148,7 +148,7 @@ void Magician::ReplaceCards(std::shared_ptr<GameManager> manager, std::shared_pt
 		output.append("Choose the number of the card you want to remove from your deck: \n");
 		for (int i = 0; i < cards.size(); i++)
 		{
-			output.append(std::to_string(i) + ": name = " + cards.at(i)->GetName() + ", cost = " + std::to_string(cards.at(i)->GetCost()) + " \n");
+			output.append(std::to_string(i) + ": Name: " + cards.at(i)->GetName() + ", Cost: " + std::to_string(cards.at(i)->GetCost()) + ", Color: " + cards.at(i)->GetColorString() + " \n");
 		}
 		output.append("End: This will mean you are done chosing cards.");
 		networkServices->WriteToClient(output, socket, true);

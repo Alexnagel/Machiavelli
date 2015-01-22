@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(std::string name) : name(name), gold(2), points(0)
+Player::Player(std::string name, int age) : name(name), age(age), gold(2), points(0)
 {
 }
 
@@ -67,6 +67,11 @@ int Player::GetPoints()
 int Player::GetGold()
 {
 	return gold;
+}
+
+int Player::GetAge()
+{
+	return age;
 }
 
 bool Player::HasUsedCharacteristic()

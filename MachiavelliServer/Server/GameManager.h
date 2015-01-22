@@ -71,7 +71,7 @@ public:
 	std::vector<std::shared_ptr<BuildCard>> TakeCards(int amount);
 
 	// Setters
-    std::shared_ptr<Player> AddPlayer(std::string name, std::shared_ptr<Socket> socket);
+    std::shared_ptr<Player> AddPlayer(std::string name, int age, std::shared_ptr<Socket> socket);
 	void SetKilledPlayer(PlayerCardType type);
 	void SetRobbedPlayer(PlayerCardType type);
 	void AddBuildCard(std::shared_ptr<BuildCard> build_card);

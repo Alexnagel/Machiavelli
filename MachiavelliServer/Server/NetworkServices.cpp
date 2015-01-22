@@ -91,7 +91,25 @@ void NetworkServices::HandleClient(Socket *socket)
         }
     }
     
-    std::shared_ptr<Player> player = gameManager->AddPlayer(username, std::make_shared<Socket>(*socket));
+	socket->write("What is your age?\n");
+	socket->write("> \n");
+
+	int age = 0;
+	bool age_set = false;
+	while (!age_set)
+	{
+		try
+		{
+			age = std::atoi(socket->readline().c_str());
+			age_set = true;
+		}
+		catch (...)
+		{
+			std::cerr << "hmm";
+		}
+	}
+
+    std::shared_ptr<Player> player = gameManager->AddPlayer(username, age, std::make_shared<Socket>(*socket));
     
     // Create a welcome message
     player->GetSocket()->write("Welcome " + player->GetName() + "!\n\n");

@@ -18,12 +18,13 @@ private:
 	std::vector<std::shared_ptr<BuildCard>> build_card_collection;
 	std::vector<std::shared_ptr<PlayerCard>> player_card_collection;
 	std::shared_ptr<PlayerCard> current_player_card;
+	int age;
 	int gold;
 	int points;
     bool used_characteristic;
 
 public:
-	Player(std::string name);
+	Player(std::string name, int age);
 	~Player();
 
 	// Getters
@@ -35,6 +36,7 @@ public:
 	std::vector<std::shared_ptr<BuildCard>> GetAllBuildCards();
 	std::vector<std::shared_ptr<BuildCard>> GetBuildedBuildings();
 	std::vector<std::shared_ptr<PlayerCard>> GetPlayerCards();
+	int GetAge();
 	int GetPoints();
 	int GetGold();
     bool HasUsedCharacteristic();

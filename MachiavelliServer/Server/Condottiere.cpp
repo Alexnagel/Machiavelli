@@ -107,46 +107,41 @@ void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, st
 		while (!building_destroyed)
 		{
 			output.clear();
-			std::string input = Utils::ToLowerCase(networkServices->PromptClient(player));
+			std::string input = Utils::ToLowerAndTrim(networkServices->PromptClient(player));
 
-			try
-			{
-				int number = std::atoi(input.c_str());
+            int number = Utils::ParseInt(input);
+            if (number == -1)
+                networkServices->WriteToClient("This is not a valid option.\n", socket);
 
-				// Check if this number exists
-				if (number < build_cards.size())
-				{
-					if (build_cards.at(number)->GetBuildingType() != BuildingEnum::KEEP)
-					{
-						if (player->GetGold() >= (build_cards.at(number)->GetCost() - 1))
-						{
-							// Remove the building
-							std::shared_ptr<BuildCard> build_card = std::make_shared<BuildCard>(*build_cards.at(number).get());
-							chosen_player->DestroyBuilding(build_card);
-							manager->AddBuildCard(build_card);
-							building_destroyed = true;
+            // Check if this number exists
+            if (number < build_cards.size())
+            {
+                if (build_cards.at(number)->GetBuildingType() != BuildingEnum::KEEP)
+                {
+                    if (player->GetGold() >= (build_cards.at(number)->GetCost() - 1))
+                    {
+                        // Remove the building
+                        std::shared_ptr<BuildCard> build_card = std::make_shared<BuildCard>(*build_cards.at(number).get());
+                        chosen_player->DestroyBuilding(build_card);
+                        manager->AddBuildCard(build_card);
+                        building_destroyed = true;
 
-							name_destroyed_building = build_card->GetName();
-							player->RemoveGold(build_card->GetCost() - 1);
+                        name_destroyed_building = build_card->GetName();
+                        player->RemoveGold(build_card->GetCost() - 1);
 
-							// Set the output
-							output.append("You have destroyed building: " + name_destroyed_building + ", ");
-							output.append("it cost you " + std::to_string(build_card->GetCost() - 1) + ", ");
-							output.append("You got " + std::to_string(player->GetGold()) + " gold left.\n");
-						}
-						else
-							output = "You can't remove this building, you only got " + std::to_string(player->GetGold()) + " gold.\n";
-					}
-					else
-						output = "You can't remove this building, because it's a keep.\n";
-				}
-				else
-					output = "This is not a valid choice.\n";
-			}
-			catch (...)
-			{
-				output = "This is not a valid choice.\n";
-			}
+                        // Set the output
+                        output.append("You have destroyed building: " + name_destroyed_building + ", ");
+                        output.append("it cost you " + std::to_string(build_card->GetCost() - 1) + ", ");
+                        output.append("You got " + std::to_string(player->GetGold()) + " gold left.\n");
+                    }
+                    else
+                        output = "You can't remove this building, you only got " + std::to_string(player->GetGold()) + " gold.\n";
+                }
+                else
+                    output = "You can't remove this building, because it's a keep.\n";
+            }
+            else
+                output = "This is not a valid choice.\n";
 
 			networkServices->WriteToClient(output, socket, true);
 		}

@@ -148,14 +148,14 @@ void Magician::ReplaceCards(std::shared_ptr<GameManager> manager, std::shared_pt
 		output.append("Choose the number of the card you want to remove from your deck: \n");
 		for (int i = 0; i < cards.size(); i++)
 		{
-			output.append(std::to_string(i) + ": Name: " + cards.at(i)->GetName() + ", Cost: " + std::to_string(cards.at(i)->GetCost()) + ", Color: " + cards.at(i)->GetColorString() + " \n");
+			output.append("   " + std::to_string(i) + ": " + cards[i]->GetCardString() + " \n");
 		}
-		output.append("End: This will mean you are done chosing cards.");
+		output.append("   End: This will mean you are done chosing cards.");
 		networkServices->WriteToClient(output, socket, true);
 
 		// Choose a card
 		output.clear();
-		std::string input = Utils::ToLowerCase(networkServices->PromptClient(player));
+		std::string input = Utils::ToLowerAndTrim(networkServices->PromptClient(player));
 		if (input == "end" && chosen_cards.size() > 0)
 		{
 			cards_chosen = true;
@@ -200,7 +200,8 @@ void Magician::ReplaceCards(std::shared_ptr<GameManager> manager, std::shared_pt
 	// Let all the other players know what happend
 	output.clear();
 	output.append(player->GetName() + " Replaced " + std::to_string(chosen_cards.size()) + " of his cards with new cards.\n");
-	networkServices->WriteToAllClients(output);
+	networkServices->WriteToAllExceptCurrent(output, player);
+    networkServices->WriteToAllClients("<line>\n");
 }
 
 PlayerCardType Magician::GetType()

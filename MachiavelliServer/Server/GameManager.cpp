@@ -106,7 +106,7 @@ void GameManager::Start(std::shared_ptr<Player> player_called_start)
 
 void GameManager::ConnectionLost()
 {
-    networkServices->WriteToAllClients("A player has disconnected from the game! Sadly we can't continue the game without the player.\n The game will be ending now, you can stay connected and wait for another player. \n");
+    networkServices->WriteToAllClients("A player has disconnected from the game! Sadly we can't continue the game without the player.\n The game will be ending now, you can stay connected and wait for another player.\n");
     
 }
 
@@ -286,7 +286,12 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
         networkServices->WriteToClient(player_options, socket, true);
         
         std::string chosen_option = networkServices->PromptClient(player);
-        if (chosen_option == "1")
+        
+        int ichosen_option = Utils::ParseInt(chosen_option);
+        if (ichosen_option == -1) // invalid parse
+            networkServices->WriteToClient("This is not a valid option\n", socket);
+        
+        if (ichosen_option == 1)
         {
             // Add the two gold
             player->AddGold(2);
@@ -295,7 +300,7 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
             networkServices->WriteToClient("You have chosen to receive two gold. You now have " + std::to_string(player->GetGold()) + " gold.\n", socket);
             option_chosen = true;
         }
-        else if (chosen_option == "2")
+        else if (ichosen_option == 2)
         {
             std::vector<std::shared_ptr<BuildCard>> buildCards = std::vector<std::shared_ptr<BuildCard>>
             {
@@ -303,14 +308,15 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
                 building_card_deck.Pop()
             };
             
+            // Check if player has constructed observatory
             bool has_observatory = player->GetSpecialIndex(BuildingEnum::OBSERVATORY) != -1;
             if (has_observatory)
             {
                 buildCards.push_back(building_card_deck.Pop());
             }
             
+            // Check if player has constructed library
             bool has_library = player->GetSpecialIndex(BuildingEnum::LIBRARY) != -1;
-            
             if (has_library && !has_observatory)
             {
                 networkServices->WriteToClient("Because you have a library you receive both cards. You receive the following cards: \n", socket);
@@ -319,11 +325,11 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
                 for (std::shared_ptr<BuildCard> card : buildCards)
                 {
                     card_string.append("   " + card->GetCardString() + "\n");
-					player->AddBuildCard(card);
+                    player->AddBuildCard(card);
                 }
                 networkServices->WriteToClient(card_string, socket);
                 option_chosen = true;
-                continue;
+                break;
             }
             
             // Set the choice string
@@ -349,28 +355,15 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
                 
                 std::string chosen_card = Utils::ToLowerAndTrim(networkServices->PromptClient(player));
                 
-                int iChoice = -1;
-                try
-                {
-                    iChoice = std::stoi(chosen_card);
-                }
-                catch (std::invalid_argument &e)
-                {
-                    // invalid parse
+                int iChoice = Utils::ParseInt(chosen_card);
+                if (iChoice == -1) // invalid parse
                     networkServices->WriteToClient("This is not a valid option\n", socket);
-                    continue;
-                }
-                catch (std::out_of_range &e)
-                {
-                    // overflow
-                    networkServices->WriteToClient("This is not a valid option\n", socket);
-                    continue;
-                }
                 
                 if (iChoice > 0 && iChoice <= buildCards.size())
                 {
                     player->AddBuildCard(buildCards[iChoice - 1]);
                     
+                    // temporary save the card
                     chosen_card = buildCards[iChoice - 1]->GetName();
                     buildCards.erase(buildCards.begin() + (iChoice - 1));
                     
@@ -386,19 +379,22 @@ void GameManager::ShowPlayerOptions(std::shared_ptr<Player> player)
             
             option_chosen = true;
         }
-		else if (chosen_option == "3" && !player->HasUsedCharacteristic())
+		else if (ichosen_option == 3 && !player->HasUsedCharacteristic())
 		{
+            // Perform player characteristic
             networkServices->WriteToClient("<line>\n", socket);
 			std::shared_ptr<PlayerCard> card = player->GetCurrentPlayerCard();
 			card->PerformCharacteristic(shared_from_this(), player);
 		}
-        else if (chosen_option == "4" && laboratory_index != -1)
+        else if (ichosen_option == 4 && laboratory_index != -1)
         {
+            // If user has laboratory  use special
             networkServices->WriteToClient("<line>\n", socket);
             player->GetBuildCard(laboratory_index)->UseCardSpecial(std::shared_ptr<GameManager>(this), player);
         }
-        else if (chosen_option == "5" && smithy_index != -1)
+        else if (ichosen_option == 5 && smithy_index != -1)
         {
+            // If user has smithy use special
             networkServices->WriteToClient("<line>\n", socket);
             player->GetBuildCard(smithy_index)->UseCardSpecial(std::shared_ptr<GameManager>(this), player);
         }
@@ -435,10 +431,12 @@ void GameManager::ShowBuildingOptions(std::shared_ptr<Player> player)
 		if (!player->HasUsedCharacteristic())
 			player_build_cards.append("\t0: Use characteristic \n");
         
+        // laboratory option
         int laboratory_index = player->GetSpecialIndex(BuildingEnum::LABORATORY);
         if (laboratory_index != -1)
             player_build_cards.append("\t Lab: Use Laboratory special\n");
         
+        // Smithy option
         int smithy_index = player->GetSpecialIndex(BuildingEnum::SMITHY);
         if (smithy_index != -1)
             player_build_cards.append("\t Smithy: Use Smithy special\n");
@@ -450,9 +448,11 @@ void GameManager::ShowBuildingOptions(std::shared_ptr<Player> player)
 		networkServices->WriteToClient(player_build_cards, socket, true);
 
 		// Let the player make a choice
-		std::string choice = Utils::ToLowerCase(networkServices->PromptClient(player));
-		if (choice == "stop")
+		std::string choice = Utils::ToLowerAndTrim(networkServices->PromptClient(player));
+		
+        if (choice == "stop")
 			return;
+        
         else if (choice == "lab" && laboratory_index != -1)
         {
             player->GetBuildCard(laboratory_index)->UseCardSpecial(std::shared_ptr<GameManager>(this), player);
@@ -465,25 +465,9 @@ void GameManager::ShowBuildingOptions(std::shared_ptr<Player> player)
         }
 		else
 		{
-			std::string trim_choice = Utils::trim(choice);
-
-			int iChoice = -1;
-			try
-			{
-				iChoice = std::stoi(choice);
-			}
-			catch (std::invalid_argument &e)
-			{
-				// invalid parse
-				networkServices->WriteToClient("This is not a valid option\n", socket);
-				continue;
-			}
-			catch (std::out_of_range &e)
-			{
-				// overflow
-				networkServices->WriteToClient("This is not a valid option\n", socket);
-				continue;
-			}
+            int iChoice = Utils::ParseInt(choice);
+            if (iChoice == -1) // invalid parse
+                networkServices->WriteToClient("This is not a valid option\n", socket);
 
 			if (iChoice == 0)
 			{

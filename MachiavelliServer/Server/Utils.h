@@ -21,5 +21,6 @@ public:
     static std::string &rtrim(std::string &s);
     static std::string &trim(std::string &s);
     static std::string ToLowerAndTrim(std::string string);
+    static int ParseInt(std::string stoi);
 };
 

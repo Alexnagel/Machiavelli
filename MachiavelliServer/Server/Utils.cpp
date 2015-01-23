@@ -31,6 +31,25 @@ std::string Utils::ToLowerCase(std::string string)
 	return string;
 }
 
+int Utils::ParseInt(std::string stoi)
+{
+    int number = -1;
+    try
+    {
+        number = std::stoi(stoi);
+        return number;
+    }
+    catch (std::invalid_argument &e)
+    {
+        // invalid parse
+        return -1;
+    }
+    catch (std::out_of_range &e)
+    {
+        // overflow
+        return -1;
+    }
+}
 
 
 // trim from start

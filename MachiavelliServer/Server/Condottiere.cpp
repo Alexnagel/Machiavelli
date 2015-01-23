@@ -44,14 +44,14 @@ void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, st
 			output.append("Buildings: \n");
 			for (int x = 0; x < build_cards.size(); x++)
 			{
-				output.append("- " + build_cards.at(x)->GetName() + ", " + std::to_string(build_cards.at(x)->GetCost() - 1) + "\n");
+				output.append("- Name: " + build_cards.at(x)->GetName() + ", Cost: " + std::to_string(build_cards.at(x)->GetCost() - 1) + ", Color: " + build_cards.at(x)->GetColorString() + "\n");
 			}
 		}
 	}
 
 	if (players_available)
 	{
-		output.append("\n");
+		output.append("Stop: Will stop the characteristic.\n\n");
 		output.append("Choose the number of the player you want to destroy a building from: \n");
 		networkServices->WriteToClient(output, socket, true);
 
@@ -62,6 +62,12 @@ void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, st
 		{
 			output.clear();
 			std::string input = Utils::ToLowerCase(networkServices->PromptClient(player));
+
+			if (input == "stop")
+			{
+				player->SetUsedCharacteristic(true);
+				return;
+			}
 
 			try
 			{
@@ -95,9 +101,9 @@ void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, st
 		for (int i = 0; i < build_cards.size(); i++)
 		{
 			if (build_cards.at(i)->GetBuildingType() != BuildingEnum::KEEP)
-				output.append(std::to_string(i) + ": " + build_cards.at(i)->GetName() + ", cost: " + std::to_string(build_cards.at(i)->GetCost() - 1) + "\n");
+				output.append(std::to_string(i) + ": " + build_cards.at(i)->GetName() + ", Cost: " + std::to_string(build_cards.at(i)->GetCost() - 1) + ", Color: " + build_cards.at(i)->GetColorString() + "\n");
 		}
-		output.append("\n");
+		output.append("Stop: Will stop the characteristic.\n\n");
 		output.append("Choose the number of the building you want to destroy: \n");
 		networkServices->WriteToClient(output, socket, true);
 
@@ -108,6 +114,12 @@ void Condottiere::PerformCharacteristic(std::shared_ptr<GameManager> manager, st
 		{
 			output.clear();
 			std::string input = Utils::ToLowerAndTrim(networkServices->PromptClient(player));
+
+			if (input == "stop")
+			{
+				player->SetUsedCharacteristic(true);
+				return;
+			}
 
             int number = Utils::ParseInt(input);
             if (number == -1)

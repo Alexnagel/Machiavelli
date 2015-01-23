@@ -1,5 +1,6 @@
 #include "Utils.h"
 #include <functional>
+#include <string>
 #include <cctype>
 
 int Utils::seed = std::random_device()();

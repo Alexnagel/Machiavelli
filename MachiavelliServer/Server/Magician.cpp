@@ -31,7 +31,8 @@ void Magician::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::
 	// Print all the players
 	output.append("As a magician you have two options: \n");
 	output.append("1: You can trade your cards with another player.\n");
-	output.append("2: Remove some cards from your hand and take the same amount from the deck.\n\n");
+	output.append("2: Remove some cards from your hand and take the same amount from the deck.\n");
+	output.append("Stop: Will stop the characteristic.\n\n");
 	output.append("Please enter the number of the action you want to perform:\n");
 	networkServices->WriteToClient(output, socket, true);
 
@@ -51,6 +52,10 @@ void Magician::PerformCharacteristic(std::shared_ptr<GameManager> manager, std::
 		{
 			ReplaceCards(manager, player);
 			action_chosen = true;
+		}
+		else if (input == "stop")
+		{
+			return;
 		}
 		else
 		{
@@ -81,7 +86,7 @@ void Magician::TradeCards(std::shared_ptr<GameManager> manager, std::shared_ptr<
 			output.append(std::to_string(i) + ": " + players.at(i)->GetName() + ", Cards: " + std::to_string(players.at(i)->GetAllBuildCards().size()) + "\n");
 		}
 	}
-	output.append("\n");
+	output.append("Stop: Will stop the characteristic.\n\n");
 	output.append("Choose the player where you want to chance cards with: \n");
 	networkServices->WriteToClient(output, socket, true);
 
@@ -92,6 +97,9 @@ void Magician::TradeCards(std::shared_ptr<GameManager> manager, std::shared_ptr<
 	{
 		output.clear();
 		std::string input = Utils::ToLowerCase(networkServices->PromptClient(player));
+
+		if (input == "stop")
+			return;
 
 		try
 		{
@@ -156,7 +164,7 @@ void Magician::ReplaceCards(std::shared_ptr<GameManager> manager, std::shared_pt
 		// Choose a card
 		output.clear();
 		std::string input = Utils::ToLowerAndTrim(networkServices->PromptClient(player));
-		if (input == "end" && chosen_cards.size() > 0)
+		if (input == "end")// && chosen_cards.size() > 0)
 		{
 			cards_chosen = true;
 		}

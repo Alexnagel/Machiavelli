@@ -150,7 +150,7 @@ void Magician::ReplaceCards(std::shared_ptr<GameManager> manager, std::shared_pt
 		{
 			output.append("   " + std::to_string(i) + ": " + cards[i]->GetCardString() + " \n");
 		}
-		output.append("   End: This will mean you are done chosing cards.");
+		output.append("   End: This will mean you are done chosing cards.\n");
 		networkServices->WriteToClient(output, socket, true);
 
 		// Choose a card
@@ -184,18 +184,21 @@ void Magician::ReplaceCards(std::shared_ptr<GameManager> manager, std::shared_pt
 		networkServices->WriteToClient(output, socket, true);
 	}
 
-	// Take new cards and add them to the players deck
-	std::vector<std::shared_ptr<BuildCard>> received_cards = manager->TakeCards(chosen_cards.size());
-	player->AddBuildCards(received_cards);
-
-	// Add removed cards to the deck
-	for (int i = 0; i < chosen_cards.size(); i++)
-	{
-		manager->AddBuildCard(chosen_cards.at(i));
-	}
-
-	// Show the cards
-	ShowBuildCards(manager, player, received_cards);
+	if (chosen_cards.size() > 0)
+    {
+        // Take new cards and add them to the players deck
+        std::vector<std::shared_ptr<BuildCard>> received_cards = manager->TakeCards(chosen_cards.size());
+        player->AddBuildCards(received_cards);
+        
+        // Add removed cards to the deck
+        for (int i = 0; i < chosen_cards.size(); i++)
+        {
+            manager->AddBuildCard(chosen_cards.at(i));
+        }
+        
+        // Show the cards
+        ShowBuildCards(manager, player, received_cards);
+    }
 
 	// Let all the other players know what happend
 	output.clear();

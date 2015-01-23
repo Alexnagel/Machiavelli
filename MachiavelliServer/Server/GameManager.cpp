@@ -106,7 +106,7 @@ void GameManager::Start(std::shared_ptr<Player> player_called_start)
 
 void GameManager::ConnectionLost()
 {
-    networkServices->WriteToAllClients("A player has disconnected from the game! Sadly we can't continue the game without the player.\n The game will be ending now, you can stay connected and wait for another player.\n");
+    networkServices->WriteToAllClients("A player has disconnected from the game! Sadly we can't continue the game without the player.\n The game will be ending now.\n");
     
 }
 
